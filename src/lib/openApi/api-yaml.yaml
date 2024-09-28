@@ -1,0 +1,1101 @@
+openapi: 3.0.0
+paths:
+  /users/get-all-guru:
+    get:
+      operationId: UserController_getAllGuru
+      summary: Get All Guru
+      parameters: []
+      responses:
+        '200':
+          description: ''
+      tags:
+        - User
+  /users/get-all-siswa:
+    get:
+      operationId: UserController_getAllSiswa
+      summary: Get All Siswa
+      parameters: []
+      responses:
+        '200':
+          description: ''
+      tags:
+        - User
+  /users/create:
+    post:
+      operationId: UserController_create
+      summary: Create User
+      parameters: []
+      requestBody:
+        required: true
+        description: Create a new User
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateUserDto'
+      responses:
+        '201':
+          description: ''
+      tags:
+        - User
+  /users/get-all:
+    get:
+      operationId: UserController_getAll
+      summary: Get All User
+      parameters: []
+      responses:
+        '200':
+          description: ''
+      tags:
+        - User
+  /users/find-one-guru/{id}:
+    get:
+      operationId: UserController_finOneGuru
+      summary: Find One Guru
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: number
+      responses:
+        '200':
+          description: ''
+      tags:
+        - User
+  /users/find-one-siswa/{id}:
+    get:
+      operationId: UserController_finOneSiswa
+      summary: Find One Siswa
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: number
+      responses:
+        '200':
+          description: ''
+      tags:
+        - User
+  /users/update/{id}:
+    patch:
+      operationId: UserController_update
+      summary: Update User
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: number
+      requestBody:
+        required: true
+        description: Update User
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateUserDto'
+      responses:
+        '200':
+          description: ''
+      tags:
+        - User
+  /users/toggle-active/{id}:
+    patch:
+      operationId: UserController_toggleActiveStatus
+      summary: Update is Active User
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: number
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateIsActiveDto'
+      responses:
+        '200':
+          description: ''
+      tags:
+        - User
+  /users/delete/{id}:
+    delete:
+      operationId: UserController_delete
+      summary: Delete User
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: number
+      responses:
+        '200':
+          description: ''
+      tags:
+        - User
+  /users/get-me:
+    get:
+      operationId: UserController_userGetMe
+      summary: User Get Me
+      parameters: []
+      responses:
+        '200':
+          description: ''
+      tags:
+        - User
+  /users/update-profile:
+    patch:
+      operationId: UserController_updateProfileUSer
+      summary: Update User
+      parameters: []
+      requestBody:
+        required: true
+        description: Update User
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateUserDto'
+      responses:
+        '200':
+          description: ''
+      tags:
+        - User
+  /pelajaran/create:
+    post:
+      operationId: PelajaranController_create
+      summary: Create Pelajaran
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreatePelajaranDto'
+      responses:
+        '201':
+          description: ''
+      tags:
+        - Pelajaran
+  /pelajaran/get-all:
+    get:
+      operationId: PelajaranController_findAll
+      summary: Get All Pelajaran
+      parameters: []
+      responses:
+        '200':
+          description: ''
+      tags:
+        - Pelajaran
+  /pelajaran/get-by-id/{id}:
+    get:
+      operationId: PelajaranController_findOne
+      summary: Get One Pelajaran
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: number
+      responses:
+        '200':
+          description: ''
+      tags:
+        - Pelajaran
+  /pelajaran/get-by-sekolah-jenjang:
+    get:
+      operationId: PelajaranController_findBySekolahAndJenjang
+      summary: Get All Pelajaran sekolah? jenjang?
+      parameters:
+        - name: sekolah
+          required: true
+          in: query
+          schema:
+            type: string
+        - name: jenjang
+          required: true
+          in: query
+          schema:
+            type: number
+      responses:
+        '200':
+          description: ''
+      tags:
+        - Pelajaran
+  /pelajaran/update/{id}:
+    patch:
+      operationId: PelajaranController_update
+      summary: Update Pelajaran
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: number
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdatePelajaranDto'
+      responses:
+        '200':
+          description: ''
+      tags:
+        - Pelajaran
+  /pelajaran/delete/{id}:
+    delete:
+      operationId: PelajaranController_remove
+      summary: Delete Pelajaran
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: number
+      responses:
+        '200':
+          description: ''
+      tags:
+        - Pelajaran
+  /materi/create:
+    post:
+      operationId: MateriController_create
+      summary: Create Materi
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/CreateMateriDto'
+      responses:
+        '201':
+          description: ''
+      tags:
+        - Materi
+  /materi/get-all:
+    get:
+      operationId: MateriController_findAll
+      summary: Get All Materi
+      parameters: []
+      responses:
+        '200':
+          description: ''
+      tags:
+        - Materi
+  /materi/get-by-id/{id}:
+    get:
+      operationId: MateriController_findOne
+      summary: Get Materi By ID
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: number
+      responses:
+        '200':
+          description: ''
+      tags:
+        - Materi
+  /materi/update/{id}:
+    patch:
+      operationId: MateriController_update
+      summary: Update Materi
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: number
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/UpdateMateriDto'
+      responses:
+        '200':
+          description: ''
+      tags:
+        - Materi
+  /materi/delete/{id}:
+    delete:
+      operationId: MateriController_remove
+      summary: Delete Materi
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: number
+      responses:
+        '200':
+          description: ''
+      tags:
+        - Materi
+  /tugas/create:
+    post:
+      operationId: TugasController_create
+      summary: Create Tugas
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/CreateTugasDto'
+      responses:
+        '201':
+          description: ''
+      tags:
+        - Tugas
+      security:
+        - bearer: []
+  /tugas/get-all:
+    get:
+      operationId: TugasController_findAll
+      summary: Get All Tugas
+      parameters: []
+      responses:
+        '200':
+          description: ''
+      tags:
+        - Tugas
+      security:
+        - bearer: []
+  /tugas/get-by-id/{id}:
+    get:
+      operationId: TugasController_findOne
+      summary: Get One Tugas
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: number
+      responses:
+        '200':
+          description: ''
+      tags:
+        - Tugas
+      security:
+        - bearer: []
+  /tugas/update/{id}:
+    patch:
+      operationId: TugasController_update
+      summary: Update Tugas
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: number
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/UpdateTugasDto'
+      responses:
+        '200':
+          description: ''
+      tags:
+        - Tugas
+      security:
+        - bearer: []
+  /tugas/delete/{id}:
+    delete:
+      operationId: TugasController_remove
+      summary: Delete Tugas
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: number
+      responses:
+        '200':
+          description: ''
+      tags:
+        - Tugas
+      security:
+        - bearer: []
+  /pengumpulan/create:
+    post:
+      operationId: PengumpulanController_create
+      summary: Create Pengumpulan
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/CreatePengumpulanDto'
+      responses:
+        '201':
+          description: ''
+      tags:
+        - Pengumpulan
+  /pengumpulan/get-all:
+    get:
+      operationId: PengumpulanController_findAll
+      summary: Get All Pengumpulan
+      parameters: []
+      responses:
+        '200':
+          description: ''
+      tags:
+        - Pengumpulan
+  /pengumpulan/get-by-id/{id}:
+    get:
+      operationId: PengumpulanController_findOne
+      summary: Get One Pengumpulan
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: number
+      responses:
+        '200':
+          description: ''
+      tags:
+        - Pengumpulan
+  /pengumpulan/update/{id}:
+    patch:
+      operationId: PengumpulanController_update
+      summary: Update Pengumpulan
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: number
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/UpdatePengumpulanDto'
+      responses:
+        '200':
+          description: ''
+      tags:
+        - Pengumpulan
+  /pengumpulan/delete/{id}:
+    delete:
+      operationId: PengumpulanController_remove
+      summary: Delete Pengumpulan
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: number
+      responses:
+        '200':
+          description: ''
+      tags:
+        - Pengumpulan
+  /nilai/create:
+    post:
+      operationId: NilaiController_create
+      summary: Create Nilai
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateNilaiDto'
+      responses:
+        '201':
+          description: ''
+      tags:
+        - Nilai
+  /nilai/get-all:
+    get:
+      operationId: NilaiController_findAll
+      summary: Get All Nilai
+      parameters: []
+      responses:
+        '200':
+          description: ''
+      tags:
+        - Nilai
+  /nilai/get-by-id/{id}:
+    get:
+      operationId: NilaiController_findOne
+      summary: Get One Nilai
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: number
+      responses:
+        '200':
+          description: ''
+      tags:
+        - Nilai
+  /nilai/update/{id}:
+    patch:
+      operationId: NilaiController_update
+      summary: Update Nilai
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: number
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateNilaiDto'
+      responses:
+        '200':
+          description: ''
+      tags:
+        - Nilai
+  /nilai/delete/{id}:
+    delete:
+      operationId: NilaiController_remove
+      summary: Delete Nilai
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: number
+      responses:
+        '200':
+          description: ''
+      tags:
+        - Nilai
+  /user-on-materi/create:
+    post:
+      operationId: UserOnMateriController_create
+      summary: Create UserOnMateri
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateUserOnMateriDto'
+      responses:
+        '201':
+          description: ''
+      tags:
+        - User On Materi
+      security:
+        - bearer: []
+  /user-on-materi/get-all:
+    get:
+      operationId: UserOnMateriController_findAll
+      summary: Get All UserOnMateri
+      parameters: []
+      responses:
+        '200':
+          description: ''
+      tags:
+        - User On Materi
+      security:
+        - bearer: []
+  /user-on-materi/get-by-materi-id/{materiId}:
+    get:
+      operationId: UserOnMateriController_findOneByMateriId
+      summary: Get One By Materi Id UserOnMateri
+      parameters:
+        - name: materiId
+          required: true
+          in: path
+          schema:
+            type: number
+      responses:
+        '200':
+          description: ''
+      tags:
+        - User On Materi
+      security:
+        - bearer: []
+  /user-on-materi/get-by-user-id/{userId}:
+    get:
+      operationId: UserOnMateriController_findOneByUserId
+      summary: Get One By User Id UserOnMateri
+      parameters:
+        - name: userId
+          required: true
+          in: path
+          schema:
+            type: number
+      responses:
+        '200':
+          description: ''
+      tags:
+        - User On Materi
+      security:
+        - bearer: []
+  /user-on-materi/delete/{userId}/{materiId}:
+    delete:
+      operationId: UserOnMateriController_remove
+      summary: Delete UserOnMateri
+      parameters:
+        - name: userId
+          required: true
+          in: path
+          schema:
+            type: number
+        - name: materiId
+          required: true
+          in: path
+          schema:
+            type: number
+      responses:
+        '200':
+          description: ''
+      tags:
+        - User On Materi
+      security:
+        - bearer: []
+  /auth/register:
+    post:
+      operationId: AuthController_register
+      summary: Register
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RegisterDto'
+      responses:
+        '201':
+          description: ''
+      tags:
+        - Authentication
+  /auth/login:
+    post:
+      operationId: AuthController_login
+      summary: Login
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LoginDto'
+            examples:
+              loginAdmin:
+                summary: Admin Login
+                description: Digunakan untuk login sebagai admin
+                value:
+                  username: admin
+                  password: admin12345678
+                  rememberMe: true
+              guruSmpNegeri2Barat:
+                summary: Guru SMP Negeri 2 Barat Login
+                description: Digunakan untuk login sebagai Guru SMP Negeri 2 Barat
+                value:
+                  username: gurusmpnegeri2barat
+                  password: gurusmpnegeri2barat
+                  rememberMe: true
+              guruSmpNegeri1Lembeyan:
+                summary: Guru SMP Negeri 1 Lembeyan Login
+                description: Digunakan untuk login sebagai Guru SMP Negeri 1 Lembeyan
+                value:
+                  username: guruSmpNegeri1Lembeyan
+                  password: gurusmpnegeri1lembeyan
+                  rememberMe: true
+      responses:
+        '201':
+          description: ''
+      tags:
+        - Authentication
+  /auth/logout:
+    post:
+      operationId: AuthController_logout
+      summary: Logout
+      parameters: []
+      responses:
+        '201':
+          description: ''
+      tags:
+        - Authentication
+  /auth/autologin:
+    post:
+      operationId: AuthController_autoLogin
+      summary: Autologin
+      parameters: []
+      responses:
+        '201':
+          description: ''
+      tags:
+        - Authentication
+  /auth/get-me:
+    get:
+      operationId: AuthController_getMe
+      summary: Get Me
+      parameters: []
+      responses:
+        '200':
+          description: ''
+      tags:
+        - Authentication
+info:
+  title: API E-iM3
+  description: API Development Aplikasi E-iM3
+  version: 0.1.9-demo
+  contact: {}
+tags: []
+servers:
+  - url: https://rehan.niznet.my.id
+    description: Production Server
+  - url: http://localhost:6948
+    description: Dev Server Port 6948
+components:
+  securitySchemes:
+    bearer:
+      scheme: bearer
+      bearerFormat: JWT
+      type: http
+  schemas:
+    CreateUserDto:
+      type: object
+      properties:
+        nama_lengkap:
+          type: string
+        email:
+          type: string
+        username:
+          type: string
+        password:
+          type: string
+        confPassword:
+          type: string
+        roleId:
+          type: number
+        asal_sekolah:
+          type: string
+        isActive:
+          type: boolean
+      required:
+        - nama_lengkap
+        - username
+        - password
+        - confPassword
+        - roleId
+        - isActive
+    UpdateUserDto:
+      type: object
+      properties:
+        nama_lengkap:
+          type: string
+        email:
+          type: string
+        username:
+          type: string
+        password:
+          type: string
+        confPassword:
+          type: string
+        asal_sekolah:
+          type: string
+        isActive:
+          type: boolean
+      required:
+        - nama_lengkap
+        - username
+        - password
+        - confPassword
+        - isActive
+    UpdateIsActiveDto:
+      type: object
+      properties:
+        isActive:
+          type: boolean
+      required:
+        - isActive
+    CreatePelajaranDto:
+      type: object
+      properties:
+        jenjang_kelas:
+          type: number
+          example: 1
+        asal_sekolah:
+          type: string
+          example: 1
+        nama_pelajaran:
+          type: string
+          example: Pelajaran A
+      required:
+        - jenjang_kelas
+        - asal_sekolah
+        - nama_pelajaran
+    UpdatePelajaranDto:
+      type: object
+      properties:
+        jenjang_kelas:
+          type: number
+          example: 1
+        asal_sekolah:
+          type: string
+          example: 1
+        nama_pelajaran:
+          type: string
+          example: Pelajaran A
+      required:
+        - jenjang_kelas
+        - asal_sekolah
+        - nama_pelajaran
+    CreateMateriDto:
+      type: object
+      properties:
+        pelajaranId:
+          type: number
+          description: ID pelajaran yang terkait dengan materi
+          example: 1
+        nama_materi:
+          type: string
+          description: Nama materi
+          example: Materi Matematika
+        isi_materi:
+          type: string
+          description: Isi materi
+          example: Konten materi
+      required:
+        - pelajaranId
+        - nama_materi
+        - isi_materi
+    UpdateMateriDto:
+      type: object
+      properties:
+        pelajaranId:
+          type: number
+          description: ID pelajaran yang terkait dengan materi
+          example: 1
+        nama_materi:
+          type: string
+          description: Nama materi
+          example: Materi Matematika
+        isi_materi:
+          type: string
+          description: Isi materi
+          example: Konten materi
+      required:
+        - pelajaranId
+        - nama_materi
+        - isi_materi
+    CreateTugasDto:
+      type: object
+      properties:
+        materiId:
+          type: number
+          description: ID materi yang terkait dengan tugas
+          example: 1
+        nama_tugas:
+          type: string
+          description: Nama tugas
+          example: Tugas Matematika
+        isi_tugas:
+          description: Isi tugas dalam format JSON
+          example:
+            - id: 5
+              title: Apa simbol kimia untuk air?
+              answer: H2O
+              points: 5
+              content: Apa simbol kimia untuk air?
+            - id: 6
+              type: multiple-choice
+              title: Apa ibu kota dari Australia?
+              points: 10
+              content: Apa ibu kota dari Australia?
+              options:
+                - text: Sydney
+                  isCorrect: false
+                - text: Melbourne
+                  isCorrect: false
+                - text: Canberra
+                  isCorrect: true
+                - text: Brisbane
+                  isCorrect: false
+          type: array
+          items:
+            type: string
+        deadline:
+          format: date-time
+          type: string
+          description: Tanggal batas waktu tugas
+          example: '2024-12-31T23:59:59Z'
+      required:
+        - materiId
+        - nama_tugas
+        - isi_tugas
+        - deadline
+    UpdateTugasDto:
+      type: object
+      properties:
+        materiId:
+          type: number
+          description: ID materi yang terkait dengan tugas
+          example: 1
+        nama_tugas:
+          type: string
+          description: Nama tugas
+          example: Tugas Matematika
+        isi_tugas:
+          description: Isi tugas dalam format JSON
+          example:
+            - id: 5
+              title: Apa simbol kimia untuk air?
+              answer: H2O
+              points: 5
+              content: Apa simbol kimia untuk air?
+            - id: 6
+              type: multiple-choice
+              title: Apa ibu kota dari Australia?
+              points: 10
+              content: Apa ibu kota dari Australia?
+              options:
+                - text: Sydney
+                  isCorrect: false
+                - text: Melbourne
+                  isCorrect: false
+                - text: Canberra
+                  isCorrect: true
+                - text: Brisbane
+                  isCorrect: false
+          type: array
+          items:
+            type: string
+        deadline:
+          format: date-time
+          type: string
+          description: Tanggal batas waktu tugas
+          example: '2024-12-31T23:59:59Z'
+      required:
+        - materiId
+        - nama_tugas
+        - isi_tugas
+        - deadline
+    CreatePengumpulanDto:
+      type: object
+      properties:
+        tugasId:
+          type: number
+          description: ID tugas yang terkait dengan pengumpulan
+          example: 1
+        isi_pengumpulan:
+          description: Isi pengumpulan dalam format JSON
+          example:
+            - id: 5
+              answer: H2O
+            - id: 6
+              answer: Canberra
+          type: array
+          items:
+            type: string
+      required:
+        - tugasId
+        - isi_pengumpulan
+    UpdatePengumpulanDto:
+      type: object
+      properties:
+        tugasId:
+          type: number
+          description: ID tugas yang terkait dengan pengumpulan
+          example: 1
+        isi_pengumpulan:
+          description: Isi pengumpulan dalam format JSON
+          example:
+            - id: 5
+              answer: H2O
+            - id: 6
+              answer: Canberra
+          type: array
+          items:
+            type: string
+      required:
+        - tugasId
+        - isi_pengumpulan
+    CreateNilaiDto:
+      type: object
+      properties:
+        pengumpulanId:
+          type: number
+          description: ID Pengumpulan yang terkait dengan nilai
+          example: 1
+        nilai:
+          type: number
+          description: Nilai yang diberikan
+          example: 85
+      required:
+        - pengumpulanId
+        - nilai
+    UpdateNilaiDto:
+      type: object
+      properties:
+        pengumpulanId:
+          type: number
+          description: ID Pengumpulan yang terkait dengan nilai
+          example: 1
+        nilai:
+          type: number
+          description: Nilai yang diberikan
+          example: 85
+      required:
+        - pengumpulanId
+        - nilai
+    CreateUserOnMateriDto:
+      type: object
+      properties:
+        materiId:
+          type: number
+          description: ID materi yang terkait dengan pengguna
+          example: 1
+      required:
+        - materiId
+    RegisterDto:
+      type: object
+      properties:
+        nama_lengkap:
+          type: string
+        email:
+          type: string
+        username:
+          type: string
+        password:
+          type: string
+        confPassword:
+          type: string
+        roleId:
+          type: number
+        asal_sekolah:
+          type: string
+        isActive:
+          type: boolean
+      required:
+        - nama_lengkap
+        - username
+        - password
+        - confPassword
+        - roleId
+        - isActive
+    LoginDto:
+      type: object
+      properties:
+        username:
+          type: string
+        password:
+          type: string
+        rememberMe:
+          type: boolean
+      required:
+        - username
+        - password
+        - rememberMe

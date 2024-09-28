@@ -1,0 +1,81 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --foreground-rgb: 0, 0, 0;
+  --background-start-rgb: 214, 219, 220;
+  --background-end-rgb: 255, 255, 255;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --foreground-rgb: 255, 255, 255;
+    --background-start-rgb: 0, 0, 0;
+    --background-end-rgb: 0, 0, 0;
+  }
+}
+
+body {
+  color: rgb(var(--foreground-rgb));
+  background: linear-gradient(
+      to bottom,
+      transparent,
+      rgb(var(--background-end-rgb))
+    )
+    rgb(var(--background-start-rgb));
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}
+
+.is-active {
+  font-weight: bold;
+}
+
+/* styles/globals.css atau styles/tiptap.css */
+/* styles/globals.css */
+
+.tiptap {
+  @apply bg-gray-100 p-4 rounded-lg shadow-md;
+}
+
+.tiptap h1 {
+  @apply text-4xl font-bold text-gray-900;
+}
+
+.tiptap h2 {
+  @apply text-3xl font-bold text-gray-900;
+}
+
+.tiptap h3 {
+  @apply text-2xl font-bold text-gray-900;
+}
+
+.tiptap h4 {
+  @apply text-xl font-bold text-gray-900;
+}
+
+.tiptap h5 {
+  @apply text-lg font-bold text-gray-900;
+}
+
+.tiptap h6 {
+  @apply text-base font-bold text-gray-900;
+}
+
+.tiptap p {
+  @apply text-gray-800 leading-relaxed;
+}
+
+.tiptap img {
+  @apply my-4 max-w-full rounded-lg shadow-md;
+}
+
+.tiptap iframe {
+  @apply my-4 w-full max-w-full rounded-lg shadow-md;
+}
+
