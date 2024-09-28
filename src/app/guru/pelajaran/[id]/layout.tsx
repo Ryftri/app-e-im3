@@ -4,9 +4,9 @@ export default function PelajaranLayoutById({
     children: React.ReactNode;
   }>) {
     return (
-        <div>
+        <>
             {children}
-        </div>
+        </>
     );
   }
   

@@ -6,8 +6,7 @@ import { GetMeResponse } from "@/types/GetMeResponse";
 import { RegisterResponse } from "@/types/RegisterResponse";
 import { getCookie } from "cookies-next";
 import { GlobalResponse } from "@/types/GlobalResponse";
-
-
+import { GetOnePelajaran } from "@/types/response/GetOnePelajaran";
 
 export const injectedRtkApi = api.injectEndpoints({
   endpoints: (build) => ({
@@ -148,6 +147,9 @@ export const injectedRtkApi = api.injectEndpoints({
         url: `/pelajaran/update/${queryArg.id}`,
         method: "PATCH",
         body: queryArg.updatePelajaranDto,
+        headers: {
+          "Authorization": `Bearer ${getCookie('refreshToken')}`
+        },
       }),
     }),
     pelajaranControllerRemove: build.mutation<
@@ -461,7 +463,7 @@ export type PelajaranControllerCreateApiArg = {
 };
 export type PelajaranControllerFindAllApiResponse = GetAllPelajaran;
 export type PelajaranControllerFindAllApiArg = void;
-export type PelajaranControllerFindOneApiResponse = unknown;
+export type PelajaranControllerFindOneApiResponse = GetOnePelajaran;
 export type PelajaranControllerFindOneApiArg = {
   id: number;
 };
@@ -470,7 +472,7 @@ export type PelajaranControllerFindBySekolahAndJenjangApiArg = {
   sekolah: string;
   jenjang: number;
 };
-export type PelajaranControllerUpdateApiResponse = unknown;
+export type PelajaranControllerUpdateApiResponse = GlobalResponse;
 export type PelajaranControllerUpdateApiArg = {
   id: number;
   updatePelajaranDto: UpdatePelajaranDto;
