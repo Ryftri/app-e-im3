@@ -4,8 +4,8 @@ import { usePelajaranControllerFindAllQuery } from "@/lib/redux/services/api/end
 import { RootState } from "@/lib/redux/store"
 import { useSelector } from "react-redux"
 import DashboardLayoutGuru from "@/components/DashboardLayoutGuru"
-import { Spinner } from "flowbite-react";
 import { useEffect } from "react";
+import LoadingSkeletonDashboardGuru from "./loading";
 
 export default function GuruPage () {
     const user = useSelector((state: RootState) => state.user)
@@ -18,14 +18,14 @@ export default function GuruPage () {
     return (
         <>
         {isLoadingAllPelajaran ? 
-        <Spinner size="lg" /> :
+        <LoadingSkeletonDashboardGuru/> :
         isErrorAllPelajaran ? 
         <>
         <h1>Ada masalah silahkan refresh halaman</h1>
         </> :
         getAllPelajaran ?
         <>
-        <h1>Selamat Datang {user.nama_lengkap}</h1>
+        <h1 className="text-2xl font-bold">Dashboard Guru</h1>
         <DashboardLayoutGuru
         data={{
             jumlahPelajaran: getAllPelajaran.pelajaran.length

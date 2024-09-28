@@ -3,6 +3,7 @@
 import { usePelajaranControllerRemoveMutation } from "@/lib/redux/services/api/endpoints/ApiEiM3";
 import { Pelajaran } from "@/types/GetAllPelajaran";
 import { Button, Card, Modal, Spinner } from "flowbite-react";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 export const InfoCardPelajaran = ({ 
@@ -16,6 +17,7 @@ export const InfoCardPelajaran = ({
     const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
     const [deletePelajaran] = usePelajaranControllerRemoveMutation();
     const [isLoadingDeletePelajaran, setIsLoadingDeletePelajaran] = useState<boolean>(false)
+    const router = useRouter()
 
     const openDeleteModal = (pelajaran: Pelajaran) => {
       setSelectedPelajaran(pelajaran);
@@ -54,7 +56,7 @@ export const InfoCardPelajaran = ({
           </p>
 
           <div className="flex w-full justify-between space-x-4">
-            <Button className="flex-grow" onClick={() => console.log(pelajaran)}>
+            <Button className="flex-grow" onClick={() => router.push(`/guru/pelajaran/${pelajaran.id}`)}>
               Detail
             </Button>
             <Button className="flex-grow" color={'failure'} onClick={() => openDeleteModal(pelajaran)}>

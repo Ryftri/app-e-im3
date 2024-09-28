@@ -6,6 +6,7 @@ import { Pelajaran } from "@/types/GetAllPelajaran";
 import { Button, Modal, Spinner } from "flowbite-react";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import LoadingSkeletonListPelajaran from "./loading";
 
 
 export default function PelajaranPage() {
@@ -17,7 +18,7 @@ export default function PelajaranPage() {
   }, [refetchPelajaran]);
 
   if (isLoadingAllPelajaran || isRefetchPelajaran) {
-    return <Spinner size="lg" />;
+    return <LoadingSkeletonListPelajaran />;
   }
 
   if (isErrorAllPelajaran) {
