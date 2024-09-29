@@ -46,16 +46,17 @@ export const InfoCardPelajaran = ({
 
     return (
       <>
-        <Card className="max-w-sm">
-          <h5 className="text-2xl font-bold">{pelajaran.nama_pelajaran}</h5>
-          <p className="text-gray-500">
-            <strong>Sekolah :</strong> {pelajaran.asal_sekolah}
-          </p>
-          <p className="text-gray-500">
-            <strong>Kelas   :</strong> {pelajaran.jenjang_kelas}
-          </p>
-
-          <div className="flex w-full justify-between space-x-4">
+        <Card className="max-w-sm flex flex-col justify-between min-h-[200px]">
+          <div className="flex-grow">
+            <h5 className="text-2xl font-bold">{pelajaran.nama_pelajaran}</h5>
+            <p className="text-gray-500">
+              <strong>Sekolah :</strong> {pelajaran.asal_sekolah}
+            </p>
+            <p className="text-gray-500">
+              <strong>Kelas :</strong> {pelajaran.jenjang_kelas}
+            </p>
+          </div>
+          <div className="flex w-full justify-between space-x-4 mt-4">
             <Button className="flex-grow" onClick={() => router.push(`/guru/pelajaran/${pelajaran.id}`)}>
               Detail
             </Button>

@@ -8,6 +8,7 @@ import ToastNotification from '@/components/ToastNotification';
 import { isGlobalResponse } from '@/lib/utils/isGlobalResponse';
 import { GlobalResponse } from '@/types/GlobalResponse';
 import { useRouter } from 'next/navigation';
+import LoadingSkeletonEditPelajaran from './loading';
 
 export default function EditPelajaranPage({ params }: { params: { id: string } }) {
     const { data: getPelajaran, isLoading: isLoadingPelajaran, isError: isErrorPelajaran, refetch: refetchPelajaran, isFetching: isRefetchPelajaran } = usePelajaranControllerFindOneQuery({
@@ -110,6 +111,10 @@ export default function EditPelajaranPage({ params }: { params: { id: string } }
             setToastType('error');
         }
     };
+
+    if(isLoadingPelajaran || isRefetchPelajaran) {
+        return <LoadingSkeletonEditPelajaran/>
+    }
     
     return (
     <>

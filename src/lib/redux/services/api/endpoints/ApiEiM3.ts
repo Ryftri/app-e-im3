@@ -172,6 +172,10 @@ export const injectedRtkApi = api.injectEndpoints({
         url: `/materi/create`,
         method: "POST",
         body: queryArg.createMateriDto,
+        headers: {
+          "Authorization": `Bearer ${getCookie('refreshToken')}`,
+          'Content-Type': 'multipart/form-data',
+        }
       }),
     }),
     materiControllerFindAll: build.query<
@@ -483,7 +487,7 @@ export type PelajaranControllerRemoveApiArg = {
 };
 export type MateriControllerCreateApiResponse = unknown;
 export type MateriControllerCreateApiArg = {
-  createMateriDto: CreateMateriDto;
+  createMateriDto: FormData;
 };
 export type MateriControllerFindAllApiResponse = unknown;
 export type MateriControllerFindAllApiArg = void;
