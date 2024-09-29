@@ -37,6 +37,12 @@ export const axiosBaseQuery =
           message: message || "Terjadi Kesalahan",
         };
 
+        if (err.response?.status === 401) {
+          if (typeof window !== "undefined") {
+            window.location.href = '/';
+          }
+        }
+
         return {
           error
         };
