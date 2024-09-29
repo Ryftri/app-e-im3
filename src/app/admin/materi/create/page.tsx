@@ -1,106 +1,145 @@
-"use client"
+'use client'
 
-import { useForm } from "react-hook-form";
-import { useState } from "react";
-import { useRouter } from "next/navigation";
-import { useMateriControllerCreateMutation } from "@/lib/redux/services/api/endpoints/ApiEiM3";
-import TiptapEditor from "@/components/TiptapEditor";
-import { TextInput } from "flowbite-react";
+import React, { ChangeEvent, FormEvent, useState } from 'react';
+import { TextInput, Textarea, Button, Label, FileInput, Modal, Alert, Spinner } from 'flowbite-react';
+import { useRouter, useSearchParams } from 'next/navigation';
+import { useMateriControllerCreateMutation } from '@/lib/redux/services/api/endpoints/ApiEiM3';
+import ToastNotification from '@/components/ToastNotification';
+import TiptapEditor from '@/components/TiptapEditor';
 
-interface CreateMateriFormData {
-  pelajaranId: number;
-  nama_materi: string;
-  file: FileList; // Assuming the file input is a FileList
-}
-
-const CreateMateri = () => {
-  const { register, handleSubmit, reset } = useForm<CreateMateriFormData>();
-  const [createMateri] = useMateriControllerCreateMutation();
+const TambahMateri = () => {
   const router = useRouter();
-  const [loading, setLoading] = useState(false);
-  const [editorContent, setEditorContent] = useState<string>("");
+  const [ createMateri, { isLoading: isLoadingCreateMateri } ] = useMateriControllerCreateMutation()
+  const searchParams = useSearchParams();
+  const pelajaranId = searchParams.get('pelajaranId')
+  const namaPelajaran = searchParams.get('namaPelajaran')
+  const [namaMateri, setNamaMateri] = useState('');
+  const [isiMateri, setIsiMateri] = useState('');
+  const [files, setFiles] = useState<File[]>([]);
+  const [errorMessage, setErrorMessage] = useState('');
+  const [showToast, setShowToast] = useState(false);
+  const [toastMessage, setToastMessage] = useState('');
+  const [toastType, setToastType] = useState<'success' | 'error' | 'warning'>('error');
 
-  const onSubmit = async (data: CreateMateriFormData) => {
+  const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const selectedFiles = Array.from(event.target.files || []);
+    if (files.length + selectedFiles.length > 10) {
+      setErrorMessage('Maksimum 10 file yang diizinkan.');
+      return;
+    }
+    setFiles([...files, ...selectedFiles]);
+  };
+
+  const removeFile = (index: number) => {
+    const newFiles = files.filter((_, i) => i !== index);
+    setFiles(newFiles);
+  };
+
+  const handleSubmit = async (event: FormEvent) => {
+    event.preventDefault();
+
     try {
-      setLoading(true);
       const formData = new FormData();
-      formData.append("pelajaranId", `${data.pelajaranId}`);
-      formData.append("nama_materi", data.nama_materi);
-      formData.append("file", data.file[0]); // Assuming the file is selected
-      formData.append("file_url", ''); // Or get URL from file upload response
-      formData.append("isi_materi", editorContent);
+      formData.append('pelajaranId', pelajaranId ?? '');
+      formData.append('nama_materi', namaMateri);
+      formData.append('isi_materi', isiMateri);
+      files.forEach((file) => {
+        formData.append('files', file);
+      });
 
-      // Mengirim data materi ke server
-      // await createMateri({
-      //   createMateriDto: formData
-      // });
-      reset();
-    //   router.push('/admin/materi'); // Arahkan pengguna ke halaman materi setelah submit
+      const response = await createMateri({
+          createMateriDto: formData
+      }).unwrap()
+
+      setToastMessage(response.message as string)
+      setToastType('success')
+      router.back()
     } catch (error) {
-      console.error("Error creating materi:", error);
-    } finally {
-      setLoading(false);
+      
     }
   };
 
   return (
-    <div className="container mx-auto p-4">
-      <h1 className="text-2xl font-bold mb-4">Buat Materi Baru</h1>
-      <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-        <div>
-          <label htmlFor="pelajaranId">
-            ID Pelajaran
-          </label>
+    <>
+      <form onSubmit={handleSubmit} className="max-w-lg mx-auto p-5 space-y-4">
+        <h2 className="text-2xl font-bold">Tambah Materi</h2>
+
+        {errorMessage && (
+          <Alert color="failure" onDismiss={() => setErrorMessage('')}>
+            {errorMessage}
+          </Alert>
+        )}
+
+      <div>
+          <Label htmlFor="namaPelajaran" value="Nama Pelajaran" />
           <TextInput
-            id="pelajaranId"
-            type="text"
-            required={true}
+              type="text"
+              id="namaPelajaran"
+              value={namaPelajaran || ''}
+              readOnly
+              required
+              disabled
           />
-        </div>
+      </div>
 
         <div>
-          <label htmlFor="nama_materi">
-            Nama Materi
-          </label>
+          <Label htmlFor="nama_materi" value="Nama Materi" />
           <TextInput
+            type="text"
             id="nama_materi"
-            type="text"
-            required={true}
+            value={namaMateri}
+            onChange={(e) => setNamaMateri(e.target.value)}
+            required
           />
         </div>
 
         <div>
-          <label htmlFor="file">
-            Upload File (PDF/Word)
-          </label>
-          <input
-            id="file"
-            type="file"
-            accept=".pdf,.doc,.docx"
-            {...register("file", { required: true })}
-            className="mt-1 block w-full"
+          <Label htmlFor="isi_materi" value="Isi Materi" />
+          <TiptapEditor
+            content={isiMateri}
+            onChange={setIsiMateri}
           />
         </div>
 
         <div>
-          <label htmlFor="isi_materi">
-            Isi Materi
-          </label>
-          <TiptapEditor content="" onChange={(content) => setEditorContent(content)} />
+          <Label htmlFor="files" value="Upload Files (Maks. 10 file)" />
+          <FileInput
+            id="files"
+            multiple
+            onChange={handleFileChange}
+          />
+          <ul className="mt-2">
+            {files.map((file, index) => (
+              <li key={index} className="flex justify-between items-center mt-1">
+                <span>{file.name}</span>
+                <Button
+                  type="button"
+                  color="failure"
+                  onClick={() => removeFile(index)}>
+                  Hapus
+                </Button>
+              </li>
+            ))}
+          </ul>
         </div>
 
-        <button
-          type="submit"
-          className={`mt-4 px-4 py-2 bg-blue-500 text-white rounded-md ${
-            loading ? "opacity-50 cursor-not-allowed" : ""
-          }`}
-          disabled={loading}
-        >
-          {loading ? "Loading..." : "Buat Materi"}
-        </button>
+        <Button type="submit" className="bg-blue-500 text-white" disabled={isLoadingCreateMateri}>
+          {isLoadingCreateMateri ? 
+            <Spinner/> : "Tambah Materi"
+          }
+        </Button>
       </form>
-    </div>
+      {showToast && (
+        <div className="fixed bottom-4 right-4">
+          <ToastNotification
+            message={toastMessage}
+            type={toastType}
+            onClose={() => setShowToast(false)}
+          />
+        </div>
+      )}
+    </>
   );
 };
 
-export default CreateMateri;
+export default TambahMateri;

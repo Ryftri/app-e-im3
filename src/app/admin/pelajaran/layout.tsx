@@ -1,12 +1,11 @@
 export default function PelajaranLayout({
     children,
-  }: Readonly<{
+}: Readonly<{
     children: React.ReactNode;
-  }>) {
+}>) {
     return (
         <div>
             {children}
         </div>
     );
-  }
-  
+}

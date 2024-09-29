@@ -8,6 +8,7 @@ import moment from 'moment';
 import 'moment/locale/id';
 import 'moment-timezone';
 import { useRouter } from "next/navigation";
+import InfoCardMateri from "@/components/materi/InfoCardMateri";
 
 export default function PelajaranPageById({ params }: { params: { id: string } }) {
   const { data: getPelajaran, isLoading: isLoadingPelajaran, isError: isErrorPelajaran, refetch: refetchPelajaran, isFetching: isRefetchPelajaran } = usePelajaranControllerFindOneQuery({
@@ -73,29 +74,11 @@ export default function PelajaranPageById({ params }: { params: { id: string } }
           {getPelajaran.pelajaran.materi.length === 0 ? (
             <p className="text-gray-400">Materi masih kosong</p>
           ) : (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-              {getPelajaran.pelajaran.materi.map((materi) => (
-                <Card className="max-w-sm" key={materi.id}>
-                  <h5 className="text-xl font-bold">{materi.nama_materi}</h5>
-                  <p className="text-gray-300">
-                    <strong>Isi Materi :</strong> {materi.isi_materi}
-                  </p>
-                  <p className="text-gray-300">
-                    <strong>Kreator :</strong> {materi.creatorId}
-                  </p>
-                  <p className="text-gray-300">
-                    <strong>Dibuat :</strong> {new Date(materi.createdAt).toLocaleDateString()}
-                  </p>
-                  <p className="text-gray-300">
-                    <strong>Diubah :</strong> {new Date(materi.updatedAt).toLocaleDateString()}
-                  </p>
-                  {/* Tombol Edit Materi */}
-                  <Button className="mt-4" onClick={() => handleEditMateri(materi.id)}>
-                    Edit Materi
-                  </Button>
-                </Card>
-              ))}
-            </div>
+            <InfoCardMateri 
+              materis={getPelajaran.pelajaran.materi}
+              refetchPelajaran={refetchPelajaran}
+              routeRole="guru"
+            />
           )}
         </>
       ) : (

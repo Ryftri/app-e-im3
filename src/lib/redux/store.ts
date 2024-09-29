@@ -1,7 +1,7 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import showSideBarSlice from "./features/showSideBar/showSideBarSlice";
 import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
-import { userReducer} from "./features/users/usersSlice";
+import { userReducer } from "./features/users/usersSlice";
 import { ApiEiM3Slice } from "./services/api/ApiEiM3Slice";
 import { loadFromLocalStorage } from "../localStorage/localStorageHelper";
 import { persistReducer, persistStore } from "redux-persist";
@@ -30,7 +30,7 @@ const persistConfig = {
     storage,
     blacklist: [ApiEiM3Slice.reducerPath, 'isLogin', 'questions']
 };
-  
+
 const rootReducer = combineReducers({
     showSideBar: showSideBarSlice,
     user: userReducer,
@@ -38,15 +38,21 @@ const rootReducer = combineReducers({
     questions: questionsReducer,
     [ApiEiM3Slice.reducerPath]: ApiEiM3Slice.reducer,
 });
-  
+
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 
 export const store = configureStore({
     reducer: persistedReducer,
     middleware: (getDefaultMiddleware) => getDefaultMiddleware({
         serializableCheck: {
-            ignoredActions: ['persist/PERSIST'],
-            ignoredActionPaths: ['payload.data'],
+            ignoredActions: [
+                'persist/PERSIST',
+                'api/executeMutation'
+            ],
+            ignoredActionPaths: [
+                'payload.data',
+                'meta.arg.originalArgs'
+            ],
             ignoredPaths: ['api'],
         },
     }).concat(ApiEiM3Slice.middleware),

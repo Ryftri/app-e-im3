@@ -9,9 +9,11 @@ import { useState } from "react";
 export const InfoCardPelajaran = ({ 
   pelajaran,
   refetchPelajaran,
+  routeRole,
 }: { 
   pelajaran: Pelajaran;
-  refetchPelajaran: () => void
+  refetchPelajaran: () => void;
+  routeRole: string
   }) => {
     const [selectedPelajaran, setSelectedPelajaran] = useState<Pelajaran | null>(null);
     const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
@@ -57,7 +59,7 @@ export const InfoCardPelajaran = ({
             </p>
           </div>
           <div className="flex w-full justify-between space-x-4 mt-4">
-            <Button className="flex-grow" onClick={() => router.push(`/guru/pelajaran/${pelajaran.id}`)}>
+            <Button className="flex-grow" onClick={() => router.push(`/${routeRole}/pelajaran/${pelajaran.id}`)}>
               Detail
             </Button>
             <Button className="flex-grow" color={'failure'} onClick={() => openDeleteModal(pelajaran)}>
