@@ -28,12 +28,13 @@ const LogoutButton: React.FC = () => {
         secure: true,
         sameSite: 'none',
       })
-      router.push('/')
     } catch (error) {
       setToastMessage('Failed to logout');
       setToastType('error');
       setShowToast(true);
       console.error('Failed to logout:', error);
+    } finally {
+      router.replace('/')
     }
   };
 

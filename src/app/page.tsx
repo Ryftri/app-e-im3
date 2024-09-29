@@ -75,11 +75,11 @@ export default function Home() {
         }
         
         if(getMeResponse.user.role === 'admin') {
-          router.push("/admin")
+          router.replace("/admin")
         } else if (getMeResponse.user.role === 'guru') {
-          router.push("/guru")
+          router.replace("/guru")
         } else if (getMeResponse.user.role === 'siswa') {
-          router.push("/siswa")
+          router.replace("/siswa")
         } else {
           setErrorMessage("Role tidak dikenali")
         }
@@ -131,11 +131,11 @@ export default function Home() {
         }
         
         if(getMeResponse.user.role === 'admin') {
-          router.push("/admin")
+          router.replace("/admin")
         } else if (getMeResponse.user.role === 'guru') {
-          router.push("/guru")
+          router.replace("/guru")
         } else if (getMeResponse.user.role === 'siswa') {
-          router.push("/siswa")
+          router.replace("/siswa")
         } else {
           setErrorMessage("Role tidak dikenali")
         }
@@ -191,11 +191,11 @@ export default function Home() {
       setToastType('success');
       setShowToast(true);
       if(getMe.user.role === 'admin') {
-        router.push("/admin")
+        router.replace("/admin")
       } else if (getMe.user.role === 'guru') {
-        router.push("/guru")
+        router.replace("/guru")
       } else if (getMe.user.role === 'siswa') {
-        router.push("/siswa")
+        router.replace("/siswa")
       } else {
         setErrorMessage("Role tidak dikenali")
       }
