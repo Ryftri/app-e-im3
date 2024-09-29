@@ -65,7 +65,7 @@ export default function PelajaranPageById({ params }: { params: { id: string } }
 
           <div className="flex justify-between items-center mb-4">
             <h3 className="text-2xl font-bold">List Materi</h3>
-            <Button onClick={() => router.push('/materi/create')}>
+            <Button onClick={() => router.push(`/guru/materi/create?pelajaranId=${getPelajaran.pelajaran.id}&namaPelajaran=${getPelajaran.pelajaran.nama_pelajaran}`)}>
               Tambah Materi
             </Button>
           </div>
