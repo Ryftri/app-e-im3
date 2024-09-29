@@ -7,6 +7,7 @@ import { RegisterResponse } from "@/types/RegisterResponse";
 import { getCookie } from "cookies-next";
 import { GlobalResponse } from "@/types/GlobalResponse";
 import { GetOnePelajaran } from "@/types/response/GetOnePelajaran";
+import { GetOneMateri } from "@/types/GetMateriByIdResponse";
 
 export const injectedRtkApi = api.injectEndpoints({
   endpoints: (build) => ({
@@ -14,13 +15,23 @@ export const injectedRtkApi = api.injectEndpoints({
       UserControllerGetAllGuruApiResponse,
       UserControllerGetAllGuruApiArg
     >({
-      query: () => ({ url: `/users/get-all-guru` }),
+      query: () => ({
+        url: `/users/get-all-guru`,
+        headers: {
+          "Authorization": `Bearer ${getCookie('refreshToken')}`
+        },
+      }),
     }),
     userControllerGetAllSiswa: build.query<
       UserControllerGetAllSiswaApiResponse,
       UserControllerGetAllSiswaApiArg
     >({
-      query: () => ({ url: `/users/get-all-siswa` }),
+      query: () => ({
+        url: `/users/get-all-siswa`,
+        headers: {
+          "Authorization": `Bearer ${getCookie('refreshToken')}`
+        },
+      }),
     }),
     userControllerCreate: build.mutation<
       UserControllerCreateApiResponse,
@@ -172,6 +183,10 @@ export const injectedRtkApi = api.injectEndpoints({
         url: `/materi/create`,
         method: "POST",
         body: queryArg.createMateriDto,
+        headers: {
+          "Authorization": `Bearer ${getCookie('refreshToken')}`,
+          'Content-Type': 'multipart/form-data',
+        }
       }),
     }),
     materiControllerFindAll: build.query<
@@ -184,7 +199,12 @@ export const injectedRtkApi = api.injectEndpoints({
       MateriControllerFindOneApiResponse,
       MateriControllerFindOneApiArg
     >({
-      query: (queryArg) => ({ url: `/materi/get-by-id/${queryArg.id}` }),
+      query: (queryArg) => ({
+        url: `/materi/get-by-id/${queryArg.id}`,
+        headers: {
+          "Authorization": `Bearer ${getCookie('refreshToken')}`,
+        }
+      }),
     }),
     materiControllerUpdate: build.mutation<
       MateriControllerUpdateApiResponse,
@@ -203,6 +223,9 @@ export const injectedRtkApi = api.injectEndpoints({
       query: (queryArg) => ({
         url: `/materi/delete/${queryArg.id}`,
         method: "DELETE",
+        headers: {
+          "Authorization": `Bearer ${getCookie('refreshToken')}`,
+        }
       }),
     }),
     tugasControllerCreate: build.mutation<
@@ -481,13 +504,13 @@ export type PelajaranControllerRemoveApiResponse = unknown;
 export type PelajaranControllerRemoveApiArg = {
   id: number;
 };
-export type MateriControllerCreateApiResponse = unknown;
+export type MateriControllerCreateApiResponse = GlobalResponse;
 export type MateriControllerCreateApiArg = {
-  createMateriDto: CreateMateriDto;
+  createMateriDto: FormData;
 };
 export type MateriControllerFindAllApiResponse = unknown;
 export type MateriControllerFindAllApiArg = void;
-export type MateriControllerFindOneApiResponse = unknown;
+export type MateriControllerFindOneApiResponse = GetOneMateri;
 export type MateriControllerFindOneApiArg = {
   id: number;
 };
@@ -496,7 +519,7 @@ export type MateriControllerUpdateApiArg = {
   id: number;
   updateMateriDto: UpdateMateriDto;
 };
-export type MateriControllerRemoveApiResponse = unknown;
+export type MateriControllerRemoveApiResponse = GlobalResponse;
 export type MateriControllerRemoveApiArg = {
   id: number;
 };

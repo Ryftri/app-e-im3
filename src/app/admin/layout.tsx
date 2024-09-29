@@ -10,7 +10,7 @@ export default function Admin ({
     children: React.ReactNode;
   }>) {
     return (
-      <div id="section__content" className="sm:ml-64">
+      <div id="section__content">
         <div className="flex pt-16 lg:pt-12 md:pt-12 sm:pt-16 overflow-hidden bg-gray-50 dark:bg-gray-900 h-screen">
           <SidebarAdmin />
           <div className="relative w-full h-full overflow-y-auto bg-gray-50 dark:bg-gray-900">

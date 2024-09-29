@@ -1,13 +1,11 @@
 "use client"
 
 import React, { useCallback, useEffect } from 'react';
-import { EditorContent, useEditor } from '@tiptap/react';
+import { BubbleMenu, EditorContent, useEditor } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
 import Heading from '@tiptap/extension-heading';
-import Image from '@tiptap/extension-image';
 import Youtube from '@tiptap/extension-youtube';
-import { Editor } from '@tiptap/core';
-import { Button } from 'flowbite-react'; // Import Flowbite React components
+import { Button, Card } from 'flowbite-react'; // Import Flowbite React components
 
 interface TiptapEditorProps {
   content: string;
@@ -19,7 +17,6 @@ const TiptapEditor: React.FC<TiptapEditorProps> = ({ content, onChange }) => {
     extensions: [
       StarterKit,
       Heading.configure({ levels: [1, 2, 3, 4, 5, 6] }),
-      Image,
       Youtube,
     ],
     content,
@@ -27,13 +24,6 @@ const TiptapEditor: React.FC<TiptapEditorProps> = ({ content, onChange }) => {
       onChange(editor.getHTML());
     },
   });
-
-  const addImage = useCallback(() => {
-    const url = window.prompt('Enter image URL');
-    if (url) {
-      editor?.chain().focus().setImage({ src: url }).run();
-    }
-  }, [editor]);
 
   const addYoutubeVideo = useCallback(() => {
     const url = window.prompt('Enter YouTube URL');
@@ -50,31 +40,54 @@ const TiptapEditor: React.FC<TiptapEditorProps> = ({ content, onChange }) => {
 
   return (
     <div>
-      <div className="editor-menu">
+      <BubbleMenu editor={editor}>
+        <Button.Group>
+          <Button 
+            size="xs"
+            gradientDuoTone="purpleToBlue"
+            onClick={() => editor?.chain().focus().toggleBold().run()}
+            outline={!editor?.isActive('bold') || false}
+          >
+            Bold
+          </Button>
+          <Button 
+            size="xs"
+            gradientDuoTone="purpleToBlue"
+            onClick={() => editor?.chain().focus().toggleItalic().run()} 
+            outline={!editor?.isActive('italic') || false}
+          >
+            Italic
+          </Button>
+        </Button.Group>
+      </BubbleMenu>
+      <div className="editor-menu flex space-x-2 mb-4">
         <Button
-          color="primary"
-          outline={editor?.isActive('heading', { level: 1 }) || false}
+          size="xs"
+          gradientDuoTone="purpleToBlue"
+          outline={!editor?.isActive('heading', { level: 1 }) || false}
           onClick={() => editor?.chain().focus().toggleHeading({ level: 1 }).run()}
         >
           Heading 1
         </Button>
         <Button
-          color="primary"
-          outline={editor?.isActive('heading', { level: 2 }) || false}
+          size="xs"
+          gradientDuoTone="purpleToBlue"
+          outline={!editor?.isActive('heading', { level: 2 }) || false}
           onClick={() => editor?.chain().focus().toggleHeading({ level: 2 }).run()}
         >
           Heading 2
         </Button>
         <Button
-          color="primary"
-          outline={editor?.isActive('heading', { level: 3 }) || false}
+          size="xs"
+          gradientDuoTone="purpleToBlue"
+          outline={!editor?.isActive('heading', { level: 3 }) || false}
           onClick={() => editor?.chain().focus().toggleHeading({ level: 3 }).run()}
         >
           Heading 3
         </Button>
-        {/* Add other buttons for headings and features */}
-        <Button onClick={addImage}>Add Image</Button>
-        <Button onClick={addYoutubeVideo}>Add YouTube Video</Button>
+        {/* <Button size="xs" onClick={addYoutubeVideo}>
+          Add YouTube Video
+        </Button> */}
       </div>
       <div className="tiptap">
         <EditorContent editor={editor} />

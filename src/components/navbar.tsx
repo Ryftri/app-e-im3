@@ -29,9 +29,9 @@ export function NavbarComponent() {
         <span className="self-center whitespace-nowrap text-xl font-semibold dark:text-white">Aplikasi E-iM3</span>
       </Navbar.Brand>
 
-      <div>
+      {/* <div>
         <Button>Akun</Button>
-      </div>
+      </div> */}
     </Navbar>
   );
 }

@@ -42,6 +42,7 @@ export default function PelajaranPage() {
           pelajaran: pelajaranData
         }}
         refetchPelajaran={refetchPelajaran}
+        routeRole="guru"
       />
     </>
   );

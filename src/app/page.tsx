@@ -155,7 +155,6 @@ export default function Home() {
     event.preventDefault();
     try {
       const response = await login({ loginDto: { username, password, rememberMe } }).unwrap();
-      console.log('Fetch', response)
       const getMe = Convert.toGetMeResponse(JSON.stringify(response))
       const expirationDate = new Date();
       expirationDate.setDate(expirationDate.getDate() + 7);
