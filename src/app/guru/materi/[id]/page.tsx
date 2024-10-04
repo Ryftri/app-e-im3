@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import LoadingSkeletonGetOnePelajaran from "../../pelajaran/[id]/loading";
 import { Alert, Button, Card, ListGroup } from "flowbite-react";
+import LoadingSkeletonGetOneMateri from "./loading";
 
 export default function MateriPageById({ params }: { params: { id: string } }) {
     const { data: getMateri, isLoading: isLoadingMateri, isError: isErrorMateri, refetch: refetchMateri, isFetching: isRefetchMateri, error: errorMateriFetch } = useMateriControllerFindOneQuery({
@@ -19,7 +20,7 @@ export default function MateriPageById({ params }: { params: { id: string } }) {
     }, [refetchMateri])
 
     if(isLoadingMateri || isRefetchMateri) {
-        return <LoadingSkeletonGetOnePelajaran/>
+        return <LoadingSkeletonGetOneMateri/>
     }
 
     if (isErrorMateri) {
