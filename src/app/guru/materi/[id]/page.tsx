@@ -36,14 +36,23 @@ export default function MateriPageById({ params }: { params: { id: string } }) {
         {getMateri ? 
             <div className="p-4">
                 <Card>
-                    <h2 className="text-xl font-semibold mb-4">{getMateri.materi.nama_materi}</h2>
+                    <div className="flex items-center justify-between mb-4">
+                        <h2 className="text-xl font-semibold">{getMateri.materi.nama_materi}</h2>
+                        
+                        <Button
+                        color="warning"
+                        onClick={() => router.push(`/guru/materi/edit?materiId=${getMateri.materi.id}&pelajaranId=${getMateri.materi.pelajaranId}`)}
+                        >
+                        Edit
+                        </Button>
+                    </div>
                     <TiptapView content={getMateri.materi.isi_materi} onChange={() => {}} />
             
                     <h3 className="text-lg font-semibold mt-6">File Materi</h3>
                     <ListGroup>
                         {getMateri.materi.files.map((file: any, index: number) => (
                         <ListGroup.Item key={index} className="flex justify-between" onClick={() => window.open(file.fileUrl, '_blank')}>
-                            <a href={file.fileUrl} target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:underline">
+                            <a rel="noopener noreferrer" className="text-blue-500 hover:underline">
                             {file.originalName}
                             </a>
                         </ListGroup.Item>

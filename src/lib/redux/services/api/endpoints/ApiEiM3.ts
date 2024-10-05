@@ -214,6 +214,9 @@ export const injectedRtkApi = api.injectEndpoints({
         url: `/materi/update/${queryArg.id}`,
         method: "PATCH",
         body: queryArg.updateMateriDto,
+        headers: {
+          "Authorization": `Bearer ${getCookie('refreshToken')}`,
+        }
       }),
     }),
     materiControllerRemove: build.mutation<
@@ -514,10 +517,10 @@ export type MateriControllerFindOneApiResponse = GetOneMateri;
 export type MateriControllerFindOneApiArg = {
   id: number;
 };
-export type MateriControllerUpdateApiResponse = unknown;
+export type MateriControllerUpdateApiResponse = GlobalResponse;
 export type MateriControllerUpdateApiArg = {
   id: number;
-  updateMateriDto: UpdateMateriDto;
+  updateMateriDto: FormData;
 };
 export type MateriControllerRemoveApiResponse = GlobalResponse;
 export type MateriControllerRemoveApiArg = {
