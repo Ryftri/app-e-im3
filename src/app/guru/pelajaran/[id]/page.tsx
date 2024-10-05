@@ -40,19 +40,19 @@ export default function PelajaranPageById({ params }: { params: { id: string } }
         <>
           <Card className="mb-5">
             <h5 className="text-2xl font-bold">{getPelajaran.pelajaran.nama_pelajaran}</h5>
-            <p className="text-gray-300">
+            <p className="text-gray-700 dark:text-gray-300">
               <strong>Sekolah :</strong> {getPelajaran.pelajaran.asal_sekolah}
             </p>
-            <p className="text-gray-300">
+            <p className="text-gray-700 dark:text-gray-300">
               <strong>Kelas :</strong> {getPelajaran.pelajaran.jenjang_kelas}
             </p>
-            <p className="text-gray-300">
+            <p className="text-gray-700 dark:text-gray-300">
               <strong>Dibuat :</strong> {moment.tz(getPelajaran.pelajaran.createdAt, 'Asia/Jakarta').locale('id').format('dddd, D MMMM YYYY')}
             </p>
-            <p className="text-gray-300">
+            <p className="text-gray-700 dark:text-gray-300">
               <strong>Diubah :</strong> {moment.tz(getPelajaran.pelajaran.updatedAt, 'Asia/Jakarta').locale('id').format('dddd, D MMMM YYYY')}
             </p>
-            <p className="text-gray-300">
+            <p className="text-gray-700 dark:text-gray-300">
               <strong>Kreator :</strong> {getPelajaran.pelajaran.creator.nama_lengkap}
             </p>
             {/* Tombol Edit Pelajaran */}

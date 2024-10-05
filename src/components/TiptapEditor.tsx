@@ -25,6 +25,12 @@ const TiptapEditor: React.FC<TiptapEditorProps> = ({ content, onChange }) => {
     },
   });
 
+  useEffect(() => {
+    if (editor && content !== editor.getHTML()) {
+      editor.commands.setContent(content);
+    }
+  }, [editor, content]);
+
   const addYoutubeVideo = useCallback(() => {
     const url = window.prompt('Enter YouTube URL');
     if (url) {
