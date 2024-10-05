@@ -62,13 +62,13 @@ export default function InfoCardMateri({
                 {materis.map((materi) => (
                 <Card className="max-w-sm" key={materi.id}>
                     <h5 className="text-xl font-bold">{materi.nama_materi}</h5>
-                    <p className="text-gray-300">
+                    <p className="text-gray-700 dark:text-gray-300">
                     <strong>Kreator :</strong> {materi.creatorId}
                     </p>
-                    <p className="text-gray-300">
+                    <p className="text-gray-700 dark:text-gray-300">
                     <strong>Dibuat :</strong> {moment.tz(materi.createdAt, 'Asia/Jakarta').locale('id').format('dddd, D MMMM YYYY')}
                     </p>
-                    <p className="text-gray-300">
+                    <p className="text-gray-700 dark:text-gray-300">
                     <strong>Diubah :</strong> {moment.tz(materi.updatedAt, 'Asia/Jakarta').locale('id').format('dddd, D MMMM YYYY')}
                     </p>
 

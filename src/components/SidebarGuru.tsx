@@ -33,6 +33,9 @@ export function SidebarGuru() {
                 {/* <Sidebar.Item href="/kelas" as={Link}icon={SiGoogleclassroom}>
                   Kelas
                 </Sidebar.Item> */}
+                <Sidebar.Item href="/guru" as={Link} icon={RiDashboardFill}>
+                  Dashboard
+                </Sidebar.Item>
                 <Sidebar.Item href="/guru/pelajaran" as={Link} icon={FaBook}>
                   Pelajaran
                 </Sidebar.Item>
