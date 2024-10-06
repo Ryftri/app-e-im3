@@ -42,21 +42,21 @@ export function SidebarAdmin() {
                   <Sidebar.Item href="/admin/siswa" icon={PiStudentBold} as={Link}>Siswa</Sidebar.Item>
                   <Sidebar.Item href="/admin/create-user" icon={AiOutlineUserAdd} as={Link}>Tambah User</Sidebar.Item>
                 </Sidebar.Collapse>
-                <Sidebar.Item href="/admin/kelas" as={Link} icon={SiGoogleclassroom}>
+                {/* <Sidebar.Item href="/admin/kelas" as={Link} icon={SiGoogleclassroom}>
                   Kelas
-                </Sidebar.Item>
+                </Sidebar.Item> */}
                 <Sidebar.Item href="/admin/pelajaran" as={Link} icon={FaBook}>
                   Pelajaran
                 </Sidebar.Item>
-                <Sidebar.Item href="/admin/materi" as={Link} icon={FaBookOpen}>
+                {/* <Sidebar.Item href="/admin/materi" as={Link} icon={FaBookOpen}>
                   Materi
-                </Sidebar.Item>
-                <Sidebar.Item href="/admin/tugas" as={Link} icon={FaTasks}>
+                </Sidebar.Item> */}
+                {/* <Sidebar.Item href="/admin/tugas" as={Link} icon={FaTasks}>
                   Tugas
                 </Sidebar.Item>
                 <Sidebar.Item href="/admin/pengumpulan" as={Link} icon={HiOutlineCollection}>
                   Pengumpulan
-                </Sidebar.Item>
+                </Sidebar.Item> */}
                 <Sidebar.Item icon={RiLogoutBoxLine}>
                   <LogoutButton />
                 </Sidebar.Item>

@@ -7,6 +7,7 @@ import { RootState, useAppSelector } from "@/lib/redux/store";
 import { Spinner } from "flowbite-react";
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
+import LoadingSkeletonDashboardAdmin from "./loading";
 
 export default function AdminPage () {
     const user = useSelector((state: RootState) => state.user)
@@ -23,14 +24,14 @@ export default function AdminPage () {
     return (
         <>
         {loadingAllGuru || loadingAllSiswa || loadingAllPelajaran || isRefetchGuru || isRefetchSiswa || isRefetchPelajaran ?
-        <Spinner size="lg" /> :
+        <LoadingSkeletonDashboardAdmin /> :
         isErrorAllGuru || isErrorAllSiswa || isErrorAllPelajaran ? 
         <>
         <h1>Ada masalah silahkan refresh halaman</h1>
         </>
         : getAllGuru && getAllSiswa && getAllPelajaran ?
         <>
-        <h1>Selamat Datang {user.nama_lengkap}</h1>
+        <h1 className="text-2xl font-bold">Dashboard Admin</h1>
         <DashboardLayoutAdmin data={{
             jumlahGuru: getAllGuru.guru.length,
             jumlahSiswa: getAllSiswa.siswa.length,

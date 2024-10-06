@@ -2,12 +2,10 @@
 
 import { Label, TextInput, Checkbox, Button, Card, Alert, Spinner } from "flowbite-react";
 import { useEffect, useState } from "react";
-import { HiInformationCircle } from 'react-icons/hi'
 import { RootState, useAppDispatch } from "@/lib/redux/store";
 import { user } from "@/lib/redux/features/users/usersSlice";
 import { Convert } from "@/types/GetMeResponse";
 import { useRouter } from "next/navigation";
-import Cookies from "js-cookie";
 import axios from "axios";
 import { useSelector } from "react-redux";
 import { setIsLogin } from "@/lib/redux/features/isLogin/isLogin";
@@ -17,9 +15,10 @@ import { useAuthControllerLoginMutation } from "@/lib/redux/services/api/endpoin
 import Link from "next/link";
 import { GlobalResponse } from "@/types/GlobalResponse";
 import { isGlobalResponse } from "@/lib/utils/isGlobalResponse";
+import LoadingText from "@/components/animations/LoadingTextToPage";
 
 export default function Home() {
-  const [login, { isLoading: isLoadingLogin, error, data }] = useAuthControllerLoginMutation();
+  const [login, { isLoading: isLoadingLogin, error, data, isSuccess }] = useAuthControllerLoginMutation();
   const [isLoading, setIsLoading] = useState(false);
   const dispatch = useAppDispatch();
   const isLogin = useSelector((state: RootState) => state.isLogin.isLogin)
@@ -87,7 +86,11 @@ export default function Home() {
       .catch(err => {
       })
       .finally(() => {
-        setIsLoading(false)
+        if(!isSuccess) {
+          setIsLoading(false)
+        } else {
+          setIsLoading(true)
+        }
       })
       return;
     }
@@ -146,7 +149,11 @@ export default function Home() {
         setShowToast(true);
       })
       .finally(() => {
-        setIsLoading(false)
+        if(!isSuccess) {
+          setIsLoading(false)
+        } else {
+          setIsLoading(true)
+        }
       })
     }
   }, [router])
@@ -254,13 +261,20 @@ export default function Home() {
               />
               <Label htmlFor="remember">Remember me</Label>
             </div>
-            <Button type="submit" disabled={isLoadingLogin}>
-              {isLoadingLogin ? 
-              <>
-                <Spinner/>
-                <span className="pl-3">Tunggu...</span>
-              </>
-              : 'Login'}
+            <Button
+              type="submit"
+              disabled={isLoadingLogin || isSuccess}
+            >
+              {isLoadingLogin ? (
+                <>
+                  <Spinner />
+                  <span className="pl-3">Tunggu...</span>
+                </>
+              ) : isSuccess ? (
+                <LoadingText />
+              ) : (
+                "Login"
+              )}
             </Button>
           </form>
           
