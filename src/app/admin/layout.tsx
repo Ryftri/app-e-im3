@@ -15,7 +15,7 @@ export default function Admin ({
           <SidebarAdmin />
           <div className="relative w-full h-full overflow-y-auto bg-gray-50 dark:bg-gray-900">
             <main>
-              <div className="px-4 pt-6">
+              <div className="px-4 pt-8">
                 {children}
               </div>
             </main>

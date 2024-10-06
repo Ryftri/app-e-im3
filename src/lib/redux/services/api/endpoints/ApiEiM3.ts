@@ -8,6 +8,7 @@ import { getCookie } from "cookies-next";
 import { GlobalResponse } from "@/types/GlobalResponse";
 import { GetOnePelajaran } from "@/types/response/GetOnePelajaran";
 import { GetOneMateri } from "@/types/GetMateriByIdResponse";
+import { AutoLoginResponse } from "@/types/AutoLoginResponse";
 
 export const injectedRtkApi = api.injectEndpoints({
   endpoints: (build) => ({
@@ -430,7 +431,12 @@ export const injectedRtkApi = api.injectEndpoints({
       AuthControllerAutoLoginApiResponse,
       AuthControllerAutoLoginApiArg
     >({
-      query: () => ({ url: `/auth/autologin`, method: "POST" }),
+      query: () => ({ 
+        url: `/auth/autologin`, method: "POST",
+        headers: {
+          'Authorization': `Bearer ${getCookie('refreshToken')}`,
+        }, 
+      }),
     }),
     authControllerGetMe: build.query<
       AuthControllerGetMeApiResponse,
@@ -612,7 +618,7 @@ export type AuthControllerLoginApiArg = {
 };
 export type AuthControllerLogoutApiResponse = unknown;
 export type AuthControllerLogoutApiArg = void;
-export type AuthControllerAutoLoginApiResponse = unknown;
+export type AuthControllerAutoLoginApiResponse = AutoLoginResponse;
 export type AuthControllerAutoLoginApiArg = void;
 export type AuthControllerGetMeApiResponse = unknown;
 export type AuthControllerGetMeApiArg = void;
