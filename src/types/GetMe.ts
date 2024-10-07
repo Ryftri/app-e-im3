@@ -11,6 +11,7 @@ export interface GetMe {
     id:           number;
     nama_lengkap: string;
     role:         string;
+    asal_sekolah: null | string;
 }
 
 // Converts JSON strings to/from your types
@@ -182,5 +183,6 @@ const typeMap: any = {
         { json: "id", js: "id", typ: 0 },
         { json: "nama_lengkap", js: "nama_lengkap", typ: "" },
         { json: "role", js: "role", typ: "" },
+        { json: "asal_sekolah", js: "asal_sekolah", typ: u(null, "") },
     ], false),
 };

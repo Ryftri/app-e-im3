@@ -4,10 +4,12 @@ import { DataPelajaran } from "@/lib/interfaces/DataPelajaran";
 const PelajaranDashboard = ({ 
   data,
   refetchPelajaran,
-  routeRole
+  routeRole,
+  setCurrentPage,
 }: { 
   data: DataPelajaran;
   refetchPelajaran: () => void;
+  setCurrentPage: (page: number) => void;
   routeRole: string
 }) => {
     return (
@@ -18,6 +20,7 @@ const PelajaranDashboard = ({
             pelajaran={pelajaran}
             refetchPelajaran={refetchPelajaran}
             routeRole={routeRole}
+            setCurrentPage={setCurrentPage}
           />
         ))}
       </div>

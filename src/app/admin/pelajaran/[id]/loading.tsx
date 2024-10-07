@@ -57,6 +57,13 @@ export default function LoadingSkeletonGetOnePelajaran() {
               <div className="h-10 bg-gray-300 rounded w-1/2 mt-4"></div>
             </Card>
           ))}
+          <div className="flex justify-center mt-4">
+            <div className="flex space-x-4">
+              <div className="h-8 w-20 bg-gray-300 rounded"></div> {/* Skeleton untuk Previous */}
+              <div className="h-8 w-20 bg-gray-300 rounded"></div> {/* Skeleton untuk Page Number */}
+              <div className="h-8 w-20 bg-gray-300 rounded"></div> {/* Skeleton untuk Next */}
+            </div>
+          </div>
         </div>
       </>
     );

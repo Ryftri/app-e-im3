@@ -8,13 +8,17 @@ import ToastNotification from '@/components/ToastNotification';
 import { isGlobalResponse } from '@/lib/utils/isGlobalResponse';
 import { GlobalResponse } from '@/types/GlobalResponse';
 import { useRouter } from 'next/navigation';
+import { useSelector } from 'react-redux';
+import { RootState } from '@/lib/redux/store';
+import FlexibleLoadingText from '@/components/animations/FlexibleLoadingTextToPage';
 
 export default function CreatePelajaranPage() {
     const router = useRouter();
-    const [createPelajaran, { isLoading: isLoadingCreatePelajaran, error: errorCreatePelajaran }] = usePelajaranControllerCreateMutation()
+    const [createPelajaran, { isLoading: isLoadingCreatePelajaran, error: errorCreatePelajaran, isSuccess: isSuccessCreatePelajaran }] = usePelajaranControllerCreateMutation()
+    const userData = useSelector((state: RootState) => state.user)
     const [formData, setFormData] = useState<CreatePelajaranDto>({
         jenjang_kelas: 1,
-        asal_sekolah: '',
+        asal_sekolah: userData.asal_sekolah ?? "",
         nama_pelajaran: '',
     });
 
@@ -32,27 +36,27 @@ export default function CreatePelajaranPage() {
     const handleCloseJenjangModal = () => setIsJenjangModalOpen(false);
 
     const handleSelectSekolah = (sekolah: string) => {
-    setFormData({
-        ...formData,
-        asal_sekolah: sekolah,
-    });
-    handleCloseSekolahModal();
+        setFormData({
+            ...formData,
+            asal_sekolah: sekolah,
+        });
+        handleCloseSekolahModal();
     };
 
     const handleSelectJenjang = (jenjang: number) => {
-    setFormData({
-        ...formData,
-        jenjang_kelas: jenjang,
-    });
-    handleCloseJenjangModal();
+        setFormData({
+            ...formData,
+            jenjang_kelas: jenjang,
+        });
+        handleCloseJenjangModal();
     };
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setFormData({
-        ...formData,
-        [name]: value,
-    });
+        const { name, value } = e.target;
+        setFormData({
+            ...formData,
+            [name]: value,
+        });
     };
 
     const handleSubmit = async (event: React.FormEvent) => {
@@ -123,13 +127,13 @@ export default function CreatePelajaranPage() {
             <TextInput
                 type="text"
                 name="asal_sekolah"
-                value={formData.asal_sekolah}
-                onChange={handleInputChange}
-                placeholder="Pilih asal sekolah"
+                value={userData.asal_sekolah ?? ""}
+                // onChange={handleInputChange}
+                placeholder="Asal sekolah"
                 disabled
                 required
             />
-            <Button onClick={handleOpenSekolahModal} className="ml-2">Pilih Sekolah</Button>
+            {/* <Button onClick={handleOpenSekolahModal} className="ml-2">Pilih Sekolah</Button> */}
             </div>
         </div>
 
@@ -152,11 +156,16 @@ export default function CreatePelajaranPage() {
 
         {/* Submit Button */}
         <div>
-            <Button type="submit" disabled={isLoadingCreatePelajaran}>
+            <Button type="submit" disabled={isLoadingCreatePelajaran || isSuccessCreatePelajaran}>
                 {isLoadingCreatePelajaran ?
-                <Spinner />
-                :
-                "Simpan Pelajaran"
+                <FlexibleLoadingText
+                    textMessage={"Menyimpan pelajaran"}
+                />
+                : isSuccessCreatePelajaran ?
+                <FlexibleLoadingText
+                    textMessage={"Kembali ke Halaman Sebelumnya"}
+                />
+                : "Simpan Pelajaran"
                 }
             </Button>
         </div>

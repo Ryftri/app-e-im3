@@ -9,9 +9,10 @@ import { deleteCookie, setCookie } from 'cookies-next';
 import { ToastType } from '@/types/Toas';
 import ToastNotification from './ToastNotification';
 import { useRouter } from 'next/navigation';
+import FlexibleLoadingText from './animations/FlexibleLoadingTextToPage';
 
 const LogoutButton: React.FC = () => {
-  const [logout, { isLoading }] = useAuthControllerLogoutMutation();
+  const [logout, { isLoading, isSuccess }] = useAuthControllerLogoutMutation();
   const dispatch = useAppDispatch();
   const [showToast, setShowToast] = useState(false);
   const [toastMessage, setToastMessage] = useState('');
@@ -40,8 +41,17 @@ const LogoutButton: React.FC = () => {
 
   return (
     <>
-      <Button onClick={handleLogout} disabled={isLoading}>
-        {isLoading ? <Spinner size="sm" /> : 'Logout'}
+      <Button onClick={handleLogout} disabled={isLoading || isSuccess}>
+          {isLoading ? 
+            <FlexibleLoadingText 
+              textMessage='Memproses logout'
+            />
+          : isSuccess ?
+            <FlexibleLoadingText 
+              textMessage='Kembali ke halaman login'
+            />
+          :'Logout'
+        }
       </Button>
       {showToast && (
         <div className="fixed bottom-4 right-4">

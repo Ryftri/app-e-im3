@@ -13,11 +13,13 @@ import { useRouter } from "next/navigation";
 export default function InfoCardMateri({ 
     materis,
     refetchPelajaran,
-    routeRole
+    routeRole,
+    setCurrentPage,
 } : {
     materis: Materi[],
     refetchPelajaran: () => void;
-    routeRole: string
+    routeRole: string;
+    setCurrentPage: (page: number) => void;
 }
 ) {
     const router = useRouter()
@@ -42,6 +44,7 @@ export default function InfoCardMateri({
                 setToastMessage(`${response.message}`)
                 refetchPelajaran();
                 setIsDeleteModalOpen(false);
+                setCurrentPage(1)
             } catch (error) {
                 setToastType('error')
                 setToastMessage(`${error}`)

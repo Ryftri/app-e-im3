@@ -3,7 +3,7 @@
 import PelajaranDashboard from "@/components/PelajaranDashboard";
 import { usePelajaranControllerFindAllQuery, usePelajaranControllerRemoveMutation } from "@/lib/redux/services/api/endpoints/ApiEiM3";
 import { Pelajaran } from "@/types/GetAllPelajaran";
-import { Button, Modal, Spinner } from "flowbite-react";
+import { Button, Modal, Pagination, Spinner } from "flowbite-react";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import LoadingSkeletonListPelajaran from "./loading";
@@ -12,6 +12,9 @@ import LoadingSkeletonListPelajaran from "./loading";
 export default function PelajaranPage() {
   const { data: getAllPelajaran, isLoading: isLoadingAllPelajaran, isError: isErrorAllPelajaran, refetch: refetchPelajaran, isFetching: isRefetchPelajaran } = usePelajaranControllerFindAllQuery();
   const router = useRouter();
+
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 6;
 
   useEffect(() => {
     refetchPelajaran();
@@ -26,6 +29,12 @@ export default function PelajaranPage() {
   }
 
   const pelajaranData = getAllPelajaran?.pelajaran || [];
+  const totalPelajaran = pelajaranData.length;
+  const totalPages = Math.ceil(totalPelajaran / itemsPerPage);
+
+  const indexOfLastPelajaran = currentPage * itemsPerPage;
+  const indexOfFirstPelajaran = indexOfLastPelajaran - itemsPerPage;
+  const currentPelajaran = pelajaranData.slice(indexOfFirstPelajaran, indexOfLastPelajaran);
 
   return (
     <>
@@ -39,11 +48,23 @@ export default function PelajaranPage() {
       {/* Dashboard Pelajaran */}
       <PelajaranDashboard
         data={{
-          pelajaran: pelajaranData
+          pelajaran: currentPelajaran
         }}
+        setCurrentPage={setCurrentPage}
         refetchPelajaran={refetchPelajaran}
         routeRole="guru"
       />
+
+      <div className="flex justify-center mt-4">
+        <Pagination
+          currentPage={currentPage}
+          totalPages={totalPages}
+          onPageChange={(page) => setCurrentPage(page)}
+          showIcons
+          previousLabel="Kembali"
+          nextLabel="Lanjutkan"
+        />
+      </div>
     </>
   );
 }
