@@ -6,7 +6,8 @@ import { Convert } from '@/types/GetMe';
 const initialUserState: GetMe = {
     id: 0,
     nama_lengkap: "",
-    role: ""
+    role: "",
+    asal_sekolah: ""
 };
 
 
@@ -28,6 +29,7 @@ const userSlice = createSlice({
         state.id = data.payload.id
         state.nama_lengkap = data.payload.nama_lengkap
         state.role = data.payload.role
+        state.asal_sekolah = data.payload.asal_sekolah
       })
   },
 });

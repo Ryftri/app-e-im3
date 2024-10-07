@@ -69,7 +69,7 @@ export const InfoCardPelajaran = ({
         </Card>
 
         {/* Modal Konfirmasi Penghapusan */}
-        <Modal show={isDeleteModalOpen} onClose={closeDeleteModal}>
+        <Modal show={isDeleteModalOpen} onClose={!isLoadingDeletePelajaran ? closeDeleteModal : undefined}>
           <Modal.Header>Konfirmasi Penghapusan</Modal.Header>
           <Modal.Body>
             <p>Apakah Anda yakin ingin menghapus pelajaran <strong>{selectedPelajaran?.nama_pelajaran}</strong>?</p>
@@ -81,7 +81,7 @@ export const InfoCardPelajaran = ({
               "Hapus"
               }
             </Button>
-            <Button color="gray" onClick={closeDeleteModal}>
+            <Button color="gray" onClick={closeDeleteModal} disabled={isLoadingDeletePelajaran}>
               Batal
             </Button>
           </Modal.Footer>
