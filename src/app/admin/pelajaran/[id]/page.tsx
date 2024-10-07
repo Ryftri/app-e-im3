@@ -1,8 +1,8 @@
 'use client'
 
 import { usePelajaranControllerFindOneQuery } from "@/lib/redux/services/api/endpoints/ApiEiM3";
-import { Button, Card, Modal, Spinner } from "flowbite-react";
-import { useEffect } from "react";
+import { Button, Card, Modal, Pagination, Spinner } from "flowbite-react";
+import { useEffect, useState } from "react";
 import LoadingSkeletonGetOnePelajaran from "./loading";
 import moment from 'moment';
 import 'moment/locale/id';
@@ -15,6 +15,9 @@ export default function PelajaranPageById({ params }: { params: { id: string } }
     id: Number(params.id)
   });
   const router = useRouter()
+
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 2;
   
   useEffect(() => {
     refetchPelajaran()
@@ -33,6 +36,14 @@ export default function PelajaranPageById({ params }: { params: { id: string } }
   if(isLoadingPelajaran || isRefetchPelajaran) {
     return <LoadingSkeletonGetOnePelajaran/>
   }
+
+  const materiData = getPelajaran?.pelajaran.materi || [];
+  const totalMateri = materiData.length;
+  const totalPages = Math.ceil(totalMateri / itemsPerPage);
+
+  const indexOfLastMateri = currentPage * itemsPerPage;
+  const indexOfFirstMateri = indexOfLastMateri - itemsPerPage;
+  const currentMateri = materiData.slice(indexOfFirstMateri, indexOfLastMateri);
 
   return (
     <>
@@ -74,11 +85,25 @@ export default function PelajaranPageById({ params }: { params: { id: string } }
           {getPelajaran.pelajaran.materi.length === 0 ? (
             <p className="text-gray-400">Materi masih kosong</p>
           ) : (
-            <InfoCardMateri 
-              materis={getPelajaran.pelajaran.materi}
-              refetchPelajaran={refetchPelajaran}
-              routeRole="admin"
-            />
+            <>
+              <InfoCardMateri 
+                materis={currentMateri}
+                refetchPelajaran={refetchPelajaran}
+                routeRole="admin"
+                setCurrentPage={setCurrentPage}
+              />
+
+              <div className="flex justify-center mt-4">
+                  <Pagination
+                    currentPage={currentPage}
+                    totalPages={totalPages}
+                    onPageChange={(page) => setCurrentPage(page)}
+                    showIcons
+                    previousLabel="Kembali"
+                    nextLabel="Lanjutkan"
+                  />
+              </div>
+            </>
           )}
         </>
       ) : (

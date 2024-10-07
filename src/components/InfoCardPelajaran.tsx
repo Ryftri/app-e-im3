@@ -10,9 +10,11 @@ export const InfoCardPelajaran = ({
   pelajaran,
   refetchPelajaran,
   routeRole,
+  setCurrentPage,
 }: { 
   pelajaran: Pelajaran;
   refetchPelajaran: () => void;
+  setCurrentPage: (page: number) => void;
   routeRole: string
   }) => {
     const [selectedPelajaran, setSelectedPelajaran] = useState<Pelajaran | null>(null);
@@ -33,6 +35,7 @@ export const InfoCardPelajaran = ({
           await deletePelajaran({ id: selectedPelajaran.id });
           refetchPelajaran();
           setIsDeleteModalOpen(false);
+          setCurrentPage(1)
         } catch (error) {
           console.error('Gagal menghapus pelajaran:', error);
         } finally {

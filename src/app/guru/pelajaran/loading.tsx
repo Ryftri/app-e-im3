@@ -21,6 +21,15 @@ export default function LoadingSkeletonListPelajaran() {
           </Card>
         ))}
       </div>
+
+      {/* Skeleton untuk Pagination */}
+      <div className="flex justify-center mt-4 animate-pulse">
+        <div className="flex space-x-2">
+          <div className="h-8 w-20 bg-gray-300 rounded"></div> {/* Skeleton untuk Previous */}
+          <div className="h-8 w-20 bg-gray-300 rounded"></div> {/* Skeleton untuk Page Number */}
+          <div className="h-8 w-20 bg-gray-300 rounded"></div> {/* Skeleton untuk Next */}
+        </div>
+      </div>
     </>
   );
 }
