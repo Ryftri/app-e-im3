@@ -81,9 +81,12 @@ export default function InfoCardMateri({
                         >
                             Detail
                         </Button>
-                        <Button className="flex-grow" color={'failure'} onClick={() => openDeleteModal(materi)}>
-                            Hapus
-                        </Button>
+                        {routeRole === 'siswa' ? 
+                            ''
+                            : <Button className="flex-grow" color={'failure'} onClick={() => openDeleteModal(materi)}>
+                                Hapus
+                              </Button>
+                        }
                     </div>
                 </Card>
                 ))}

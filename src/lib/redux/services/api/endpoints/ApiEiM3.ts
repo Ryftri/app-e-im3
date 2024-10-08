@@ -9,6 +9,7 @@ import { GlobalResponse } from "@/types/GlobalResponse";
 import { GetOnePelajaran } from "@/types/response/GetOnePelajaran";
 import { GetOneMateri } from "@/types/GetMateriByIdResponse";
 import { AutoLoginResponse } from "@/types/AutoLoginResponse";
+import { GetPelajaranbyQueryParams } from "@/types/response/GetPelajaranByQueryParams";
 
 export const injectedRtkApi = api.injectEndpoints({
   endpoints: (build) => ({
@@ -149,6 +150,9 @@ export const injectedRtkApi = api.injectEndpoints({
       query: (queryArg) => ({
         url: `/pelajaran/get-by-sekolah-jenjang`,
         params: { sekolah: queryArg.sekolah, jenjang: queryArg.jenjang },
+        headers: {
+          "Authorization": `Bearer ${getCookie('refreshToken')}`
+        },
       }),
     }),
     pelajaranControllerUpdate: build.mutation<
@@ -499,7 +503,7 @@ export type PelajaranControllerFindOneApiResponse = GetOnePelajaran;
 export type PelajaranControllerFindOneApiArg = {
   id: number;
 };
-export type PelajaranControllerFindBySekolahAndJenjangApiResponse = unknown;
+export type PelajaranControllerFindBySekolahAndJenjangApiResponse = GetPelajaranbyQueryParams;
 export type PelajaranControllerFindBySekolahAndJenjangApiArg = {
   sekolah: string;
   jenjang: number;
