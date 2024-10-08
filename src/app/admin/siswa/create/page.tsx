@@ -4,22 +4,20 @@ import { FormEvent, useState } from 'react';
 import { Button, TextInput, Label, Select, Spinner, Card, } from 'flowbite-react';
 import ToastNotification from '@/components/ToastNotification';
 import { ToastType } from '@/types/Toas';
-import { useAuthControllerRegisterMutation } from '@/lib/redux/services/api/endpoints/ApiEiM3';
-import { daftarSekolah } from '@/types/ListSekolah';
+import { useUserControllerCreateMutation } from '@/lib/redux/services/api/endpoints/ApiEiM3';
 import { GlobalResponse } from '@/types/GlobalResponse';
 import { useRouter } from 'next/navigation';
 
-function RegisterGuru() {
+function CreateSiswa() {
   const router = useRouter();
 
-  const [register, { isLoading, isError, error: errorToregister, data }] = useAuthControllerRegisterMutation();
+  const [createUser, { isLoading, isError, error: errorToregister, data }] = useUserControllerCreateMutation();
   const [namaLengkap, setNamaLengkap] = useState('');
   const [email, setEmail] = useState('');
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [confPassword, setConfPassword] = useState('');
-  const [roleId] = useState(2);
-  const [asalSekolah, setAsalSekolah] = useState('');
+  const [roleId] = useState(3);
   const [toastMessage, setToastMessage] = useState('');
   const [toastType, setToastType] = useState<ToastType>('success');
   const [showToast, setShowToast] = useState(false);
@@ -34,18 +32,17 @@ function RegisterGuru() {
         return;
       }
   
-      const registerData = {
+      const userData = {
         nama_lengkap: namaLengkap,
         email: email || undefined,
         username,
         password,
         confPassword,
         roleId,
-        asal_sekolah: asalSekolah,
-        isActive: false,
+        isActive: true,
       };
   
-      const response = await register({ registerDto: registerData })
+      const response = await createUser({ createUserDto: userData })
   
       console.log(response)
       const error : GlobalResponse = response.error as GlobalResponse
@@ -71,7 +68,7 @@ function RegisterGuru() {
     <div className="flex-grow flex justify-center items-center">
       <Card className="w-full max-w-lg">
         <form className="flex flex-col gap-4" onSubmit={handleSubmit}>
-          <h1 className="text-center font-bold text-2xl">Daftar Sebagai Guru</h1>
+          <h1 className="text-center font-bold text-2xl">Tambah Siswa</h1>
           
           <div className="flex gap-4">
             <div className="flex flex-col w-1/2">
@@ -130,21 +127,6 @@ function RegisterGuru() {
                   required
                 />
               </div>
-
-              <div>
-                <Label htmlFor="asalSekolah" className="block mb-2">Asal Sekolah</Label>
-                <Select
-                    id="asalSekolah"
-                    value={asalSekolah}
-                    onChange={(e) => setAsalSekolah(e.target.value)}
-                    required
-                >
-                    <option value="" disabled>Pilih Asal Sekolah</option>
-                    {daftarSekolah.map((sekolah, index) => (
-                        <option key={index} value={sekolah.toUpperCase()}>{sekolah.toUpperCase()}</option>
-                    ))}
-                </Select>
-              </div>
             </div>
           </div>
 
@@ -159,7 +141,7 @@ function RegisterGuru() {
                 <Spinner />
                 <span className="pl-3">Tunggu...</span>
               </>
-            : 'Daftar'
+            : 'Tambah'
             }
           </Button>
         </form>
@@ -178,4 +160,4 @@ function RegisterGuru() {
   );
 }
 
-export default RegisterGuru;
+export default CreateSiswa;

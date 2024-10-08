@@ -68,7 +68,7 @@ function RegisterGuru() {
     <div className="flex-grow flex justify-center items-center">
       <Card className="w-full max-w-lg">
         <form className="flex flex-col gap-4" onSubmit={handleSubmit}>
-          <h1 className="text-center font-bold text-2xl">Daftar Sebagai Guru</h1>
+          <h1 className="text-center font-bold text-2xl">Daftar Sebagai Siswa</h1>
           
           <div className="flex gap-4">
             <div className="flex flex-col w-1/2">

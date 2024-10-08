@@ -1,12 +1,12 @@
 'use client'
 
 import { usePelajaranControllerRemoveMutation } from "@/lib/redux/services/api/endpoints/ApiEiM3";
-import { Pelajaran } from "@/types/GetAllPelajaran";
+import { Pelajaran } from "@/types/response/GetPelajaranByQueryParams";
 import { Button, Card, Modal, Spinner } from "flowbite-react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
-export const InfoCardPelajaran = ({ 
+export const InfoCardPelajaranSiswa = ({ 
   pelajaran,
   refetchPelajaran,
   routeRole,
@@ -95,4 +95,4 @@ export const InfoCardPelajaran = ({
         </Modal>
       </>
     );
-  };
+};

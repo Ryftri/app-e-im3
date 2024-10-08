@@ -4,15 +4,15 @@ import { FormEvent, useState } from 'react';
 import { Button, TextInput, Label, Select, Spinner, Card, } from 'flowbite-react';
 import ToastNotification from '@/components/ToastNotification';
 import { ToastType } from '@/types/Toas';
-import { useAuthControllerRegisterMutation } from '@/lib/redux/services/api/endpoints/ApiEiM3';
+import { useUserControllerCreateMutation } from '@/lib/redux/services/api/endpoints/ApiEiM3';
 import { daftarSekolah } from '@/types/ListSekolah';
 import { GlobalResponse } from '@/types/GlobalResponse';
 import { useRouter } from 'next/navigation';
 
-function RegisterGuru() {
+function CreateGuru() {
   const router = useRouter();
 
-  const [register, { isLoading, isError, error: errorToregister, data }] = useAuthControllerRegisterMutation();
+  const [createUser, { isLoading, isError, error: errorToregister, data }] = useUserControllerCreateMutation();
   const [namaLengkap, setNamaLengkap] = useState('');
   const [email, setEmail] = useState('');
   const [username, setUsername] = useState('');
@@ -34,7 +34,7 @@ function RegisterGuru() {
         return;
       }
   
-      const registerData = {
+      const userData = {
         nama_lengkap: namaLengkap,
         email: email || undefined,
         username,
@@ -42,10 +42,10 @@ function RegisterGuru() {
         confPassword,
         roleId,
         asal_sekolah: asalSekolah,
-        isActive: false,
+        isActive: true,
       };
   
-      const response = await register({ registerDto: registerData })
+      const response = await createUser({ createUserDto: userData })
   
       console.log(response)
       const error : GlobalResponse = response.error as GlobalResponse
@@ -71,7 +71,7 @@ function RegisterGuru() {
     <div className="flex-grow flex justify-center items-center">
       <Card className="w-full max-w-lg">
         <form className="flex flex-col gap-4" onSubmit={handleSubmit}>
-          <h1 className="text-center font-bold text-2xl">Daftar Sebagai Guru</h1>
+          <h1 className="text-center font-bold text-2xl">Tambah Guru</h1>
           
           <div className="flex gap-4">
             <div className="flex flex-col w-1/2">
@@ -159,7 +159,7 @@ function RegisterGuru() {
                 <Spinner />
                 <span className="pl-3">Tunggu...</span>
               </>
-            : 'Daftar'
+            : 'Tambah'
             }
           </Button>
         </form>
@@ -178,4 +178,4 @@ function RegisterGuru() {
   );
 }
 
-export default RegisterGuru;
+export default CreateGuru;

@@ -1,48 +1,37 @@
 // To parse this data:
 //
-//   import { Convert, GetSiswaByID } from "./file";
+//   import { Convert, GetPelajaranbyQueryParams } from "./file";
 //
-//   const getSiswaByID = Convert.toGetSiswaByID(json);
+//   const getPelajaranbyQueryParams = Convert.toGetPelajaranbyQueryParams(json);
 //
 // These functions will throw an error if the JSON doesn't
 // match the expected interface, even if the JSON is valid.
 
-export interface GetSiswaByID {
-    status:  string;
-    message: string;
-    siswa:   Siswa;
+export interface GetPelajaranbyQueryParams {
+    status:    string;
+    message:   string;
+    pelajaran: Pelajaran[];
 }
 
-export interface Siswa {
-    id:           number;
-    nama_lengkap: string;
-    username:     string;
-    email:        string;
-    isActive:     boolean;
-    materi:       MateriElement[];
-    pengumpulan:  any[];
-    createdAt:    Date;
-    updatedAt:    Date;
-}
-
-export interface MateriElement {
-    materiId: number;
-    materi:   MateriMateri;
-}
-
-export interface MateriMateri {
-    nama_materi: string;
+export interface Pelajaran {
+    id:             number;
+    jenjang_kelas:  number;
+    asal_sekolah:   string;
+    creatorId:      number;
+    nama_pelajaran: string;
+    createdAt:      Date;
+    updatedAt:      Date;
 }
 
 // Converts JSON strings to/from your types
 // and asserts the results of JSON.parse at runtime
 export class Convert {
-    public static toGetSiswaByID(json: string): GetSiswaByID {
-        return cast(JSON.parse(json), r("GetSiswaByID"));
+    public static toGetPelajaranbyQueryParams(json: string): GetPelajaranbyQueryParams {
+        return cast(JSON.parse(json), r("GetPelajaranbyQueryParams"));
     }
 
-    public static getSiswaByIDToJson(value: GetSiswaByID): string {
-        return JSON.stringify(uncast(value, r("GetSiswaByID")), null, 2);
+    public static getPelajaranbyQueryParamsToJson(value: GetPelajaranbyQueryParams): string {
+        return JSON.stringify(uncast(value, r("GetPelajaranbyQueryParams")), null, 2);
     }
 }
 
@@ -199,27 +188,18 @@ function r(name: string) {
 }
 
 const typeMap: any = {
-    "GetSiswaByID": o([
+    "GetPelajaranbyQueryParams": o([
         { json: "status", js: "status", typ: "" },
         { json: "message", js: "message", typ: "" },
-        { json: "siswa", js: "siswa", typ: r("Siswa") },
+        { json: "pelajaran", js: "pelajaran", typ: a(r("Pelajaran")) },
     ], false),
-    "Siswa": o([
+    "Pelajaran": o([
         { json: "id", js: "id", typ: 0 },
-        { json: "nama_lengkap", js: "nama_lengkap", typ: "" },
-        { json: "username", js: "username", typ: "" },
-        { json: "email", js: "email", typ: "" },
-        { json: "isActive", js: "isActive", typ: true },
-        { json: "materi", js: "materi", typ: a(r("MateriElement")) },
-        { json: "pengumpulan", js: "pengumpulan", typ: a("any") },
+        { json: "jenjang_kelas", js: "jenjang_kelas", typ: 0 },
+        { json: "asal_sekolah", js: "asal_sekolah", typ: "" },
+        { json: "creatorId", js: "creatorId", typ: 0 },
+        { json: "nama_pelajaran", js: "nama_pelajaran", typ: "" },
         { json: "createdAt", js: "createdAt", typ: Date },
         { json: "updatedAt", js: "updatedAt", typ: Date },
-    ], false),
-    "MateriElement": o([
-        { json: "materiId", js: "materiId", typ: 0 },
-        { json: "materi", js: "materi", typ: r("MateriMateri") },
-    ], false),
-    "MateriMateri": o([
-        { json: "nama_materi", js: "nama_materi", typ: "" },
     ], false),
 };

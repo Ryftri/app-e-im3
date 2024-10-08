@@ -9,6 +9,9 @@ import { GlobalResponse } from "@/types/GlobalResponse";
 import { GetOnePelajaran } from "@/types/response/GetOnePelajaran";
 import { GetOneMateri } from "@/types/GetMateriByIdResponse";
 import { AutoLoginResponse } from "@/types/AutoLoginResponse";
+import { GetPelajaranbyQueryParams } from "@/types/response/GetPelajaranByQueryParams";
+import { GetGuruByID } from "@/types/getGuruById";
+import { GetSiswaByID } from "@/types/GetSiswaById";
 
 export const injectedRtkApi = api.injectEndpoints({
   endpoints: (build) => ({
@@ -42,6 +45,9 @@ export const injectedRtkApi = api.injectEndpoints({
         url: `/users/create`,
         method: "POST",
         body: queryArg.createUserDto,
+        headers: {
+          "Authorization": `Bearer ${getCookie('refreshToken')}`
+        },
       }),
     }),
     userControllerGetAll: build.query<
@@ -54,13 +60,23 @@ export const injectedRtkApi = api.injectEndpoints({
       UserControllerFinOneGuruApiResponse,
       UserControllerFinOneGuruApiArg
     >({
-      query: (queryArg) => ({ url: `/users/find-one-guru/${queryArg.id}` }),
+      query: (queryArg) => ({ 
+        url: `/users/find-one-guru/${queryArg.id}`,
+        headers: {
+          "Authorization": `Bearer ${getCookie('refreshToken')}`
+        },
+      }),
     }),
     userControllerFinOneSiswa: build.query<
       UserControllerFinOneSiswaApiResponse,
       UserControllerFinOneSiswaApiArg
     >({
-      query: (queryArg) => ({ url: `/users/find-one-siswa/${queryArg.id}` }),
+      query: (queryArg) => ({ 
+        url: `/users/find-one-siswa/${queryArg.id}`,
+        headers: {
+          "Authorization": `Bearer ${getCookie('refreshToken')}`
+        }, 
+      }),
     }),
     userControllerUpdate: build.mutation<
       UserControllerUpdateApiResponse,
@@ -70,6 +86,9 @@ export const injectedRtkApi = api.injectEndpoints({
         url: `/users/update/${queryArg.id}`,
         method: "PATCH",
         body: queryArg.updateUserDto,
+        headers: {
+          "Authorization": `Bearer ${getCookie('refreshToken')}`
+        },
       }),
     }),
     userControllerToggleActiveStatus: build.mutation<
@@ -80,6 +99,9 @@ export const injectedRtkApi = api.injectEndpoints({
         url: `/users/toggle-active/${queryArg.id}`,
         method: "PATCH",
         body: queryArg.updateIsActiveDto,
+        headers: {
+          "Authorization": `Bearer ${getCookie('refreshToken')}`
+        },
       }),
     }),
     userControllerDelete: build.mutation<
@@ -89,6 +111,9 @@ export const injectedRtkApi = api.injectEndpoints({
       query: (queryArg) => ({
         url: `/users/delete/${queryArg.id}`,
         method: "DELETE",
+        headers: {
+          "Authorization": `Bearer ${getCookie('refreshToken')}`
+        },
       }),
     }),
     userControllerUserGetMe: build.query<
@@ -149,6 +174,9 @@ export const injectedRtkApi = api.injectEndpoints({
       query: (queryArg) => ({
         url: `/pelajaran/get-by-sekolah-jenjang`,
         params: { sekolah: queryArg.sekolah, jenjang: queryArg.jenjang },
+        headers: {
+          "Authorization": `Bearer ${getCookie('refreshToken')}`
+        },
       }),
     }),
     pelajaranControllerUpdate: build.mutation<
@@ -452,33 +480,33 @@ export type UserControllerGetAllGuruApiResponse = GetAllGuru;
 export type UserControllerGetAllGuruApiArg = void;
 export type UserControllerGetAllSiswaApiResponse = GetAllSiswa;
 export type UserControllerGetAllSiswaApiArg = void;
-export type UserControllerCreateApiResponse = unknown;
+export type UserControllerCreateApiResponse = GlobalResponse;
 export type UserControllerCreateApiArg = {
   /** Create a new User */
   createUserDto: CreateUserDto;
 };
 export type UserControllerGetAllApiResponse = unknown;
 export type UserControllerGetAllApiArg = void;
-export type UserControllerFinOneGuruApiResponse = unknown;
+export type UserControllerFinOneGuruApiResponse = GetGuruByID;
 export type UserControllerFinOneGuruApiArg = {
   id: number;
 };
-export type UserControllerFinOneSiswaApiResponse = unknown;
+export type UserControllerFinOneSiswaApiResponse = GetSiswaByID;
 export type UserControllerFinOneSiswaApiArg = {
   id: number;
 };
-export type UserControllerUpdateApiResponse = unknown;
+export type UserControllerUpdateApiResponse = GlobalResponse;
 export type UserControllerUpdateApiArg = {
   id: number;
   /** Update User */
   updateUserDto: UpdateUserDto;
 };
-export type UserControllerToggleActiveStatusApiResponse = unknown;
+export type UserControllerToggleActiveStatusApiResponse = GlobalResponse;
 export type UserControllerToggleActiveStatusApiArg = {
   id: number;
   updateIsActiveDto: UpdateIsActiveDto;
 };
-export type UserControllerDeleteApiResponse = unknown;
+export type UserControllerDeleteApiResponse = GlobalResponse;
 export type UserControllerDeleteApiArg = {
   id: number;
 };
@@ -499,7 +527,7 @@ export type PelajaranControllerFindOneApiResponse = GetOnePelajaran;
 export type PelajaranControllerFindOneApiArg = {
   id: number;
 };
-export type PelajaranControllerFindBySekolahAndJenjangApiResponse = unknown;
+export type PelajaranControllerFindBySekolahAndJenjangApiResponse = GetPelajaranbyQueryParams;
 export type PelajaranControllerFindBySekolahAndJenjangApiArg = {
   sekolah: string;
   jenjang: number;
