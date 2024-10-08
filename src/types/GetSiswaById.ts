@@ -18,20 +18,11 @@ export interface Siswa {
     nama_lengkap: string;
     username:     string;
     email:        string;
-    kelas:        Kela[];
+    isActive:     boolean;
     materi:       MateriElement[];
-    pengumpulan:  Pengumpulan[];
+    pengumpulan:  any[];
     createdAt:    Date;
     updatedAt:    Date;
-}
-
-export interface Kela {
-    kelasId: number;
-    kelas:   Kelas;
-}
-
-export interface Kelas {
-    nama_kelas: string;
 }
 
 export interface MateriElement {
@@ -41,17 +32,6 @@ export interface MateriElement {
 
 export interface MateriMateri {
     nama_materi: string;
-}
-
-export interface Pengumpulan {
-    id:              number;
-    isi_pengumpulan: IsiPengumpulan[];
-    nilai:           number | null;
-}
-
-export interface IsiPengumpulan {
-    id:     number;
-    answer: string;
 }
 
 // Converts JSON strings to/from your types
@@ -229,18 +209,11 @@ const typeMap: any = {
         { json: "nama_lengkap", js: "nama_lengkap", typ: "" },
         { json: "username", js: "username", typ: "" },
         { json: "email", js: "email", typ: "" },
-        { json: "kelas", js: "kelas", typ: a(r("Kela")) },
+        { json: "isActive", js: "isActive", typ: true },
         { json: "materi", js: "materi", typ: a(r("MateriElement")) },
-        { json: "pengumpulan", js: "pengumpulan", typ: a(r("Pengumpulan")) },
+        { json: "pengumpulan", js: "pengumpulan", typ: a("any") },
         { json: "createdAt", js: "createdAt", typ: Date },
         { json: "updatedAt", js: "updatedAt", typ: Date },
-    ], false),
-    "Kela": o([
-        { json: "kelasId", js: "kelasId", typ: 0 },
-        { json: "kelas", js: "kelas", typ: r("Kelas") },
-    ], false),
-    "Kelas": o([
-        { json: "nama_kelas", js: "nama_kelas", typ: "" },
     ], false),
     "MateriElement": o([
         { json: "materiId", js: "materiId", typ: 0 },
@@ -248,14 +221,5 @@ const typeMap: any = {
     ], false),
     "MateriMateri": o([
         { json: "nama_materi", js: "nama_materi", typ: "" },
-    ], false),
-    "Pengumpulan": o([
-        { json: "id", js: "id", typ: 0 },
-        { json: "isi_pengumpulan", js: "isi_pengumpulan", typ: a(r("IsiPengumpulan")) },
-        { json: "nilai", js: "nilai", typ: u(0, null) },
-    ], false),
-    "IsiPengumpulan": o([
-        { json: "id", js: "id", typ: 0 },
-        { json: "answer", js: "answer", typ: "" },
     ], false),
 };

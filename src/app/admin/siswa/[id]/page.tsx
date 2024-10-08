@@ -1,123 +1,83 @@
 "use client";
 
-import { Button, Card, Modal, Spinner } from "flowbite-react";
-import moment from "moment";
-import "moment/locale/id";
-import "moment-timezone";
-import {
-  useUserControllerDeleteMutation,
-  useUserControllerFinOneSiswaQuery,
-} from "@/lib/redux/services/api/endpoints/ApiEiM3";
-import { useEffect, useState } from "react";
+import { Button, Spinner, Card } from "flowbite-react";
 import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
+import { useUserControllerDeleteMutation, useUserControllerFinOneSiswaQuery } from "@/lib/redux/services/api/endpoints/ApiEiM3";
+import { ToastNotificationProps } from "@/types/Toas";
+import ToastNotification from "@/components/ToastNotification";
 
-export default function Page({ params }: { params: { id: string } }) {
-  const {
-    data,
-    isError,
-    error,
-    isLoading,
-    refetch,
-    isFetching,
-  } = useUserControllerFinOneSiswaQuery({
-    id: Number(params.id),
-  });
-  const [deleteSiswa, { isLoading: loadingDelete }] = useUserControllerDeleteMutation();
-  const [showModal, setShowModal] = useState(false);
-  const router = useRouter();
+export default function SiswaDetailPage({ params }: { params: { id: string } }) {
+    const { id } = params;
+    const { data, error, isLoading, refetch, isError, isFetching } = useUserControllerFinOneSiswaQuery({
+        id: Number(id)
+    });
+    const [deleteGuru, { isLoading: isLoadingDelete }] = useUserControllerDeleteMutation();
+    const router = useRouter();
 
-  const handleDelete = async () => {
-    try {
-      await deleteSiswa({ id: Number(params.id) });
-      setShowModal(false);
-      router.push("/admin/siswa"); // Arahkan kembali ke halaman utama setelah menghapus
-    } catch (error) {
-      console.error("Failed to delete siswa:", error);
+    const [toast, setToast] = useState<ToastNotificationProps | null>(null);
+
+    useEffect(() => {
+        refetch();
+    }, [refetch]);
+
+    const handleDelete = async () => {
+        try {
+            await deleteGuru({
+                id: Number(id)
+            }).unwrap();
+            setToast({
+                message: "Guru berhasil dihapus!",
+                type: "success",
+                onClose: () => setToast(null),
+            });
+            router.back(); // Redirect setelah menghapus
+        } catch (err) {
+            console.error("Failed to delete guru:", err);
+            setToast({
+                message: "Terjadi kesalahan saat menghapus guru.",
+                type: "error",
+                onClose: () => setToast(null),
+            });
+        }
+    };
+
+    if (isLoading || isFetching) {
+        return <div className="text-center"><Spinner size="xl" /></div>;
     }
-  };
 
-  useEffect(() => {
-    refetch();
-  }, [refetch]);
+    if (error) {
+        return <p>Error: {error.message}</p>;
+    }
 
-  return (
-    // <>
-    //   {isLoading || isFetching ? (
-    //     <div className="text-center">
-    //       <Spinner size="xl" />
-    //     </div>
-    //   ) : isError ? (
-    //     <h1>{`${error}`}</h1>
-    //   ) : data !== undefined && data.siswa !== null ? (
-    //     <>
-    //       <Card>
-    //         <h2 className="text-xl font-semibold">{data.siswa.nama_lengkap}</h2>
-    //         <p className="text-white">
-    //           Kelas: {data.siswa.kelas.map((k) => k.kelas.nama_kelas).join(", ")}
-    //         </p>
-    //         <p className="text-white">Email: {data.siswa.email}</p>
-    //         <p className="text-white">Username: {data.siswa.username}</p>
-    //         <p className="text-white">
-    //           Dibuat Pada:{" "}
-    //           {moment(data.siswa.createdAt)
-    //             .tz("Asia/Jakarta")
-    //             .format("DD MMMM YYYY")}
-    //         </p>
-    //         <p className="text-white">
-    //           Diubah Pada:{" "}
-    //           {moment(data.siswa.updatedAt)
-    //             .tz("Asia/Jakarta")
-    //             .format("DD MMMM YYYY")}
-    //         </p>
+    return (
+        <div className="p-4">
+            <h1 className="text-2xl font-bold mb-4">Detail Guru</h1>
+            <Card>
+                <h5 className="text-xl font-bold">{data?.siswa.nama_lengkap}</h5>
+                <p className="mt-2"><strong>Username:</strong> {data?.siswa.username}</p>
+                <p className="mt-2"><strong>Email:</strong> {data?.siswa.email}</p>
+                <p className="mt-2"><strong>Status:</strong> {data?.siswa.isActive ? "Aktif" : "Tidak Aktif"}</p>
+                <div className="flex mt-4 space-x-2">
+                    <Button onClick={() => router.push(`/admin/siswa/edit/${id}`)} color="warning">
+                        Edit
+                    </Button>
+                    <Button onClick={handleDelete} color="failure" disabled={isLoadingDelete}>
+                        {isLoadingDelete ? "Menghapus..." : "Hapus"}
+                    </Button>
+                </div>
+            </Card>
 
-    //         {/* Menambahkan pengumpulan tugas */}
-    //         <div className="mt-4">
-    //           <h3 className="text-lg font-semibold">Pengumpulan Tugas</h3>
-    //           {data.siswa.pengumpulan.length > 0 ? (
-    //             <ul>
-    //               {data.siswa.pengumpulan.map((pengumpulanItem) => (
-    //                 <li key={pengumpulanItem.id} className="mb-2">
-    //                   <p>Tugas ID: {pengumpulanItem.id}</p>
-    //                   <p>Jawaban: {pengumpulanItem.isi_pengumpulan.map((isi) => isi.answer).join(", ")}</p>
-    //                   <p>
-    //                     Nilai:{" "}
-    //                     {pengumpulanItem.nilai !== null
-    //                       ? pengumpulanItem.nilai
-    //                       : "Belum dinilai"}
-    //                   </p>
-    //                 </li>
-    //               ))}
-    //             </ul>
-    //           ) : (
-    //             <p className="text-white">Belum ada tugas yang dikumpulkan.</p>
-    //           )}
-    //         </div>
-
-    //         <div className="flex gap-2 mt-4">
-    //           <Button onClick={() => router.push(`edit/${params.id}`)}>Edit</Button>
-    //           <Button color="failure" onClick={() => setShowModal(true)}>
-    //             Hapus
-    //           </Button>
-    //         </div>
-    //       </Card>
-
-    //       <Modal show={showModal} onClose={() => setShowModal(false)}>
-    //         <Modal.Header>Konfirmasi Hapus</Modal.Header>
-    //         <Modal.Body>
-    //           <p>Apakah Anda yakin ingin menghapus siswa ini?</p>
-    //         </Modal.Body>
-    //         <Modal.Footer>
-    //           <Button onClick={handleDelete}>Hapus</Button>
-    //           <Button color="gray" onClick={() => setShowModal(false)}>
-    //             Batal
-    //           </Button>
-    //         </Modal.Footer>
-    //       </Modal>
-    //     </>
-    //   ) : (
-    //     <h1>User tidak ditemukan</h1>
-    //   )}
-    // </>
-    <></>
-  );
+            {/* Render Toast Notification */}
+            {toast && (
+                <div className="fixed bottom-4 right-4">
+                    <ToastNotification
+                        message={toast.message}
+                        type={toast.type}
+                        onClose={toast.onClose}
+                    />
+              </div>
+            )}
+        </div>
+    );
 }

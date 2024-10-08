@@ -8,23 +8,24 @@
 // match the expected interface, even if the JSON is valid.
 
 export interface GetGuruByID {
-    status: string;
+    status:  string;
     message: string;
-    guru: Guru;
+    guru:    Guru;
 }
 
 export interface Guru {
-    id: number;
-    nama_lengkap: string;
-    username: string;
-    email: string;
-    role: Role;
-    kelas: Kela[];
+    id:               number;
+    nama_lengkap:     string;
+    username:         string;
+    email:            string;
+    isActive:         boolean;
+    asal_sekolah:     string;
+    role:             Role;
     createdPelajaran: CreatedPelajaran[];
-    createdMateri: CreatedMateri[];
-    createdTugas: CreatedTugas[];
-    createdAt: Date;
-    updatedAt: Date;
+    createdMateri:    CreatedMateri[];
+    createdTugas:     any[];
+    createdAt:        Date;
+    updatedAt:        Date;
 }
 
 export interface CreatedMateri {
@@ -35,21 +36,8 @@ export interface CreatedPelajaran {
     nama_pelajaran: string;
 }
 
-export interface CreatedTugas {
-    nama_tugas: string;
-}
-
-export interface Kela {
-    kelas: Kelas;
-}
-
-export interface Kelas {
-    id: number;
-    nama_kelas: string;
-}
-
 export interface Role {
-    id: number;
+    id:   number;
     role: string;
 }
 
@@ -117,7 +105,7 @@ function transform(val: any, typ: any, getProps: any, key: any = '', parent: any
             const typ = typs[i];
             try {
                 return transform(val, typ, getProps);
-            } catch (_) { }
+            } catch (_) {}
         }
         return invalidValue(typs, val, key, parent);
     }
@@ -176,9 +164,9 @@ function transform(val: any, typ: any, getProps: any, key: any = '', parent: any
     if (Array.isArray(typ)) return transformEnum(typ, val);
     if (typeof typ === "object") {
         return typ.hasOwnProperty("unionMembers") ? transformUnion(typ.unionMembers, val)
-            : typ.hasOwnProperty("arrayItems") ? transformArray(typ.arrayItems, val)
-                : typ.hasOwnProperty("props") ? transformObject(getProps(typ), typ.additional, val)
-                    : invalidValue(typ, val, key, parent);
+            : typ.hasOwnProperty("arrayItems")    ? transformArray(typ.arrayItems, val)
+            : typ.hasOwnProperty("props")         ? transformObject(getProps(typ), typ.additional, val)
+            : invalidValue(typ, val, key, parent);
     }
     // Numbers can be parsed by Date but shouldn't be.
     if (typ === Date && typeof val !== "number") return transformDate(val);
@@ -228,11 +216,12 @@ const typeMap: any = {
         { json: "nama_lengkap", js: "nama_lengkap", typ: "" },
         { json: "username", js: "username", typ: "" },
         { json: "email", js: "email", typ: "" },
+        { json: "isActive", js: "isActive", typ: true },
+        { json: "asal_sekolah", js: "asal_sekolah", typ: "" },
         { json: "role", js: "role", typ: r("Role") },
-        { json: "kelas", js: "kelas", typ: a(r("Kela")) },
         { json: "createdPelajaran", js: "createdPelajaran", typ: a(r("CreatedPelajaran")) },
         { json: "createdMateri", js: "createdMateri", typ: a(r("CreatedMateri")) },
-        { json: "createdTugas", js: "createdTugas", typ: a(r("CreatedTugas")) },
+        { json: "createdTugas", js: "createdTugas", typ: a("any") },
         { json: "createdAt", js: "createdAt", typ: Date },
         { json: "updatedAt", js: "updatedAt", typ: Date },
     ], false),
@@ -241,16 +230,6 @@ const typeMap: any = {
     ], false),
     "CreatedPelajaran": o([
         { json: "nama_pelajaran", js: "nama_pelajaran", typ: "" },
-    ], false),
-    "CreatedTugas": o([
-        { json: "nama_tugas", js: "nama_tugas", typ: "" },
-    ], false),
-    "Kela": o([
-        { json: "kelas", js: "kelas", typ: r("Kelas") },
-    ], false),
-    "Kelas": o([
-        { json: "id", js: "id", typ: 0 },
-        { json: "nama_kelas", js: "nama_kelas", typ: "" },
     ], false),
     "Role": o([
         { json: "id", js: "id", typ: 0 },

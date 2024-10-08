@@ -40,7 +40,6 @@ export function SidebarAdmin() {
                 <Sidebar.Collapse icon={FaUsers} label="User">
                   <Sidebar.Item href="/admin/guru" icon={GiTeacher} as={Link}>Guru</Sidebar.Item>
                   <Sidebar.Item href="/admin/siswa" icon={PiStudentBold} as={Link}>Siswa</Sidebar.Item>
-                  <Sidebar.Item href="/admin/create-user" icon={AiOutlineUserAdd} as={Link}>Tambah User</Sidebar.Item>
                 </Sidebar.Collapse>
                 {/* <Sidebar.Item href="/admin/kelas" as={Link} icon={SiGoogleclassroom}>
                   Kelas
