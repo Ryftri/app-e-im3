@@ -6,11 +6,13 @@ import { useEffect, useState } from "react";
 import { useUserControllerFinOneGuruQuery, useUserControllerDeleteMutation } from "@/lib/redux/services/api/endpoints/ApiEiM3";
 import { ToastNotificationProps } from "@/types/Toas";
 import ToastNotification from "@/components/ToastNotification";
+import { getCookie } from "cookies-next";
 
 export default function GuruDetailPage({ params }: { params: { id: string } }) {
     const { id } = params;
     const { data, error, isLoading, refetch, isError, isFetching } = useUserControllerFinOneGuruQuery({
-        id: Number(id)
+        id: Number(id),
+        authorization: `Bearer ${getCookie('refreshToken')}`
     });
     const [deleteGuru, { isLoading: isLoadingDelete }] = useUserControllerDeleteMutation();
     const router = useRouter();
@@ -24,7 +26,8 @@ export default function GuruDetailPage({ params }: { params: { id: string } }) {
     const handleDelete = async () => {
         try {
             await deleteGuru({
-                id: Number(id)
+                id: Number(id),
+                authorization: `Bearer ${getCookie('refreshToken')}`
             }).unwrap();
             setToast({
                 message: "Guru berhasil dihapus!",

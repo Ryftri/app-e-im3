@@ -7,13 +7,15 @@ import { useUserControllerFinOneSiswaQuery, useUserControllerUpdateMutation } fr
 import { GlobalResponse } from '@/types/GlobalResponse';
 import { useRouter } from 'next/navigation';
 import { ToastType } from '@/types/Toas';
+import { getCookie } from 'cookies-next';
 
 function EditSiswa({ params }: { params: { id: string } }) {
   const router = useRouter();
   const { id } = params;
 
   const { data: siswaData, error: errorFetching, isLoading: isLoadingFetching } = useUserControllerFinOneSiswaQuery({
-    id: Number(id)
+    id: Number(id),
+    authorization: `Bearer ${getCookie('refreshToken')}`
   });
   const [updateUser, { isLoading: isUpdating, isError: isErrorUpdating, data: updatedData }] = useUserControllerUpdateMutation();
 
@@ -56,7 +58,8 @@ function EditSiswa({ params }: { params: { id: string } }) {
 
       const response = await updateUser({ 
         id: Number(id),
-        updateUserDto: updatedData 
+        updateUserDto: updatedData,
+        authorization: `Bearer ${getCookie('refreshToken')}`
       });
 
       if (response.error) {

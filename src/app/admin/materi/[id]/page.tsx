@@ -7,10 +7,12 @@ import { useEffect, useState } from "react";
 import LoadingSkeletonGetOnePelajaran from "../../pelajaran/[id]/loading";
 import { Alert, Button, Card, ListGroup } from "flowbite-react";
 import LoadingSkeletonGetOneMateri from "./loading";
+import { getCookie } from "cookies-next";
 
 export default function MateriPageById({ params }: { params: { id: string } }) {
     const { data: getMateri, isLoading: isLoadingMateri, isError: isErrorMateri, refetch: refetchMateri, isFetching: isRefetchMateri, error: errorMateriFetch } = useMateriControllerFindOneQuery({
-        id: Number(params.id)
+        id: Number(params.id),
+        authorization: `Bearer ${getCookie('refreshToken')}`
     });
     const [isiMateri, setIsiMateri] = useState('');
     const router = useRouter()

@@ -7,6 +7,7 @@ import { ToastType } from '@/types/Toas';
 import { useUserControllerCreateMutation } from '@/lib/redux/services/api/endpoints/ApiEiM3';
 import { GlobalResponse } from '@/types/GlobalResponse';
 import { useRouter } from 'next/navigation';
+import { getCookie } from 'cookies-next';
 
 function CreateSiswa() {
   const router = useRouter();
@@ -42,7 +43,10 @@ function CreateSiswa() {
         isActive: true,
       };
   
-      const response = await createUser({ createUserDto: userData })
+      const response = await createUser({ 
+        createUserDto: userData,
+        authorization: `Bearer ${getCookie('refreshToken')}` 
+      })
   
       console.log(response)
       const error : GlobalResponse = response.error as GlobalResponse

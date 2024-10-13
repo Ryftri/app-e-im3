@@ -6,6 +6,7 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import { useMateriControllerCreateMutation } from '@/lib/redux/services/api/endpoints/ApiEiM3';
 import ToastNotification from '@/components/ToastNotification';
 import TiptapEditor from '@/components/TiptapEditor';
+import { getCookie } from 'cookies-next';
 
 const TambahMateri = () => {
   const router = useRouter();
@@ -48,7 +49,8 @@ const TambahMateri = () => {
       });
 
       const response = await createMateri({
-          createMateriDto: formData
+          createMateriDto: formData,
+          authorization: `Bearer ${getCookie('refreshToken')}`
       }).unwrap()
 
       setToastMessage(response.message as string)

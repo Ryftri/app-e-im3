@@ -1,20 +1,16 @@
 import { GetAllGuru } from "@/types/GetAllGuru";
 import { ApiEiM3Slice as api } from "../ApiEiM3Slice";
 import { GetAllSiswa } from "@/types/GetAllSiswa";
-import { GetAllPelajaran } from "@/types/GetAllPelajaran";
-import { GetMeResponse } from "@/types/GetMeResponse";
-import { RegisterResponse } from "@/types/RegisterResponse";
-import { getCookie } from "cookies-next";
 import { GlobalResponse } from "@/types/GlobalResponse";
-import { GetOnePelajaran } from "@/types/response/GetOnePelajaran";
-import { GetOneMateri } from "@/types/GetMateriByIdResponse";
-import { AutoLoginResponse } from "@/types/AutoLoginResponse";
-import { GetPelajaranbyQueryParams } from "@/types/response/GetPelajaranByQueryParams";
 import { GetGuruByID } from "@/types/getGuruById";
 import { GetSiswaByID } from "@/types/GetSiswaById";
-import { GetTugasByID } from "@/types/response/GetTugasById";
-import { GetPengumpulanByID } from "@/types/response/GetPengumpulanById";
-
+import { GetAllPelajaran } from "@/types/GetAllPelajaran";
+import { GetOnePelajaran } from "@/types/response/GetOnePelajaran";
+import { GetPelajaranbyQueryParams } from "@/types/response/GetPelajaranByQueryParams";
+import { GetOneMateri } from "@/types/GetMateriByIdResponse";
+import { RegisterResponse } from "@/types/RegisterResponse";
+import { GetMeResponse } from "@/types/GetMeResponse";
+import { AutoLoginResponse } from "@/types/AutoLoginResponse";
 const injectedRtkApi = api.injectEndpoints({
   endpoints: (build) => ({
     userControllerGetAllGuru: build.query<
@@ -306,10 +302,7 @@ const injectedRtkApi = api.injectEndpoints({
       PengumpulanControllerFindOneApiResponse,
       PengumpulanControllerFindOneApiArg
     >({
-      query: (queryArg) => ({ 
-        url: `/pengumpulan/get-by-id/${queryArg.id}`,
-        headers: { Authorization: queryArg.authorization }
-      }),
+      query: (queryArg) => ({ url: `/pengumpulan/get-by-id/${queryArg.id}` }),
     }),
     pengumpulanControllerUpdate: build.mutation<
       PengumpulanControllerUpdateApiResponse,
@@ -319,7 +312,6 @@ const injectedRtkApi = api.injectEndpoints({
         url: `/pengumpulan/update/${queryArg.id}`,
         method: "PATCH",
         body: queryArg.updatePengumpulanDto,
-        headers: { Authorization: queryArg.authorization },
       }),
     }),
     pengumpulanControllerRemove: build.mutation<
@@ -329,7 +321,6 @@ const injectedRtkApi = api.injectEndpoints({
       query: (queryArg) => ({
         url: `/pengumpulan/delete/${queryArg.id}`,
         method: "DELETE",
-        headers: { Authorization: queryArg.authorization },
       }),
     }),
     nilaiControllerCreate: build.mutation<
@@ -560,31 +551,31 @@ export type MateriControllerRemoveApiArg = {
   /** Bearer [token] */
   authorization: string;
 };
-export type TugasControllerCreateApiResponse = GlobalResponse;
+export type TugasControllerCreateApiResponse = unknown;
 export type TugasControllerCreateApiArg = {
   /** Bearer [token] */
   authorization: string;
-  createTugasDto: FormData;
+  createTugasDto: CreateTugasDto;
 };
 export type TugasControllerFindAllApiResponse = unknown;
 export type TugasControllerFindAllApiArg = {
   /** Bearer [token] */
   authorization: string;
 };
-export type TugasControllerFindOneApiResponse = GetTugasByID;
+export type TugasControllerFindOneApiResponse = unknown;
 export type TugasControllerFindOneApiArg = {
   id: number;
   /** Bearer [token] */
   authorization: string;
 };
-export type TugasControllerUpdateApiResponse = GlobalResponse;
+export type TugasControllerUpdateApiResponse = unknown;
 export type TugasControllerUpdateApiArg = {
   id: number;
   /** Bearer [token] */
   authorization: string;
-  updateTugasDto: FormData;
+  updateTugasDto: UpdateTugasDto;
 };
-export type TugasControllerRemoveApiResponse = GlobalResponse;
+export type TugasControllerRemoveApiResponse = unknown;
 export type TugasControllerRemoveApiArg = {
   id: number;
   /** Bearer [token] */
@@ -598,21 +589,18 @@ export type PengumpulanControllerCreateApiArg = {
 };
 export type PengumpulanControllerFindAllApiResponse = unknown;
 export type PengumpulanControllerFindAllApiArg = void;
-export type PengumpulanControllerFindOneApiResponse = GetPengumpulanByID;
+export type PengumpulanControllerFindOneApiResponse = unknown;
 export type PengumpulanControllerFindOneApiArg = {
   id: number;
-  authorization: string;
 };
 export type PengumpulanControllerUpdateApiResponse = unknown;
 export type PengumpulanControllerUpdateApiArg = {
   id: number;
   updatePengumpulanDto: UpdatePengumpulanDto;
-  authorization: string;
 };
-export type PengumpulanControllerRemoveApiResponse = GlobalResponse;
+export type PengumpulanControllerRemoveApiResponse = unknown;
 export type PengumpulanControllerRemoveApiArg = {
   id: number;
-  authorization: string;
 };
 export type NilaiControllerCreateApiResponse = unknown;
 export type NilaiControllerCreateApiArg = {

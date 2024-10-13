@@ -5,7 +5,7 @@ import { Button, Spinner } from 'flowbite-react';
 import { useAuthControllerLogoutMutation } from '@/lib/redux/services/api/endpoints/ApiEiM3';
 import { setIsLogin } from '@/lib/redux/features/isLogin/isLogin';
 import { useAppDispatch } from '@/lib/redux/store';
-import { deleteCookie, setCookie } from 'cookies-next';
+import { deleteCookie, getCookie, setCookie } from 'cookies-next';
 import { ToastType } from '@/types/Toas';
 import ToastNotification from './ToastNotification';
 import { useRouter } from 'next/navigation';
@@ -21,7 +21,9 @@ const LogoutButton: React.FC = () => {
 
   const handleLogout = async () => {
     try {
-      await logout().unwrap();
+      await logout({
+        authorization: `Bearer ${getCookie('refreshToken')}`
+      }).unwrap();
       dispatch(setIsLogin(false));
       deleteCookie('refreshToken')
       deleteCookie('clientRefreshToken')

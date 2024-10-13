@@ -7,10 +7,12 @@ import { useEffect, useState } from "react";
 import LoadingSkeletonGetOnePelajaran from "../../pelajaran/[id]/loading";
 import { Alert, Button, Card, ListGroup } from "flowbite-react";
 import LoadingSkeletonGetOneMateri from "./loading";
+import { getCookie } from "cookies-next";
 
 export default function MateriPageById({ params }: { params: { id: string } }) {
     const { data: getMateri, isLoading: isLoadingMateri, isError: isErrorMateri, refetch: refetchMateri, isFetching: isRefetchMateri, error: errorMateriFetch } = useMateriControllerFindOneQuery({
-        id: Number(params.id)
+        id: Number(params.id),
+        authorization: `Bearer ${getCookie('refreshToken')}`
     });
     const [isiMateri, setIsiMateri] = useState('');
     const router = useRouter()
@@ -46,7 +48,7 @@ export default function MateriPageById({ params }: { params: { id: string } }) {
                         Edit
                         </Button>
                     </div>
-                    <TiptapView content={getMateri.materi.isi_materi} onChange={() => {}} />
+                    <TiptapView content={getMateri.materi.isi_materi ?? ""} onChange={() => {}} />
             
                     <h3 className="text-lg font-semibold mt-6">File Materi</h3>
                     <ListGroup>

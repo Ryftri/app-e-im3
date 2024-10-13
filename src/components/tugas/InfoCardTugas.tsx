@@ -1,7 +1,7 @@
-'use client'
+'use client';
 
-import { useMateriControllerRemoveMutation } from "@/lib/redux/services/api/endpoints/ApiEiM3";
-import { Materi } from "@/types/response/GetOnePelajaran";
+import { useTugasControllerRemoveMutation } from "@/lib/redux/services/api/endpoints/ApiEiM3";
+import { Tugas } from "@/types/response/GetOnePelajaran";
 import { Button, Card, HR, Modal, Spinner } from "flowbite-react";
 import { useState } from "react";
 import moment from 'moment';
@@ -11,87 +11,87 @@ import ToastNotification from "../ToastNotification";
 import { useRouter } from "next/navigation";
 import { getCookie } from "cookies-next";
 
-export default function InfoCardMateri({ 
-    materis,
+export default function InfoCardTugas({ 
+    tugas,
     refetchPelajaran,
     routeRole,
     setCurrentPage,
 } : {
-    materis: Materi[],
+    tugas: Tugas[],
     refetchPelajaran: () => void;
     routeRole: string;
     setCurrentPage: (page: number) => void;
-}
-) {
-    const router = useRouter()
-    const [ deleteMateri ] = useMateriControllerRemoveMutation()
-    const [isLoadingDeleteMateri, setIsLoadingDeleteMateri] = useState<boolean>(false)
-    const [selectMateri, setSelectMateri] = useState<Materi | null>(null);
+}) {
+    const router = useRouter();
+    const [deleteTugas] = useTugasControllerRemoveMutation();
+    const [isLoadingDeleteTugas, setIsLoadingDeleteTugas] = useState<boolean>(false);
+    const [selectTugas, setSelectTugas] = useState<Tugas | null>(null);
     const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
     const [toastMessage, setToastMessage] = useState<string | null>(null);
     const [toastType, setToastType] = useState<'success' | 'error' | 'warning' | null>(null);
 
-    const openDeleteModal = (materi: Materi) => {
-        setSelectMateri(materi);
+    const openDeleteModal = (tugas: Tugas) => {
+        setSelectTugas(tugas);
         setIsDeleteModalOpen(true);
     };
 
-    const handleDeleteMateri = async () => {
-        if (selectMateri) {
+    const handleDeleteTugas = async () => {
+        if (selectTugas) {
             try {
-                setIsLoadingDeleteMateri(true)
-                const response = await deleteMateri({ 
-                    id: selectMateri.id,
+                setIsLoadingDeleteTugas(true);
+                const response = await deleteTugas({ 
+                    id: selectTugas.id,
                     authorization: `Bearer ${getCookie('refreshToken')}`
                 }).unwrap();
-                setToastType('success')
-                setToastMessage(`${response.message}`)
+                setToastType('success');
+                setToastMessage(`${response.message}`);
                 refetchPelajaran();
                 setIsDeleteModalOpen(false);
-                setCurrentPage(1)
+                setCurrentPage(1);
             } catch (error) {
-                setToastType('error')
-                setToastMessage(`${error}`)
+                setToastType('error');
+                setToastMessage(`${error}`);
             } finally {
-                setIsLoadingDeleteMateri(false)
+                setIsLoadingDeleteTugas(false);
             }
         }
     };
 
     const closeDeleteModal = () => {
-        setSelectMateri(null);
+        setSelectTugas(null);
         setIsDeleteModalOpen(false);
     };
 
     return (
         <>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                {materis.map((materi) => (
-                <Card className="max-w-sm" key={materi.id}>
-                    <h5 className="text-xl font-bold">{materi.nama_materi}</h5>
+                {tugas.map((tugas) => (
+                <Card className="max-w-sm" key={tugas.id}>
+                    <h5 className="text-xl font-bold">{tugas.nama_tugas}</h5>
                     <HR />
                     <p className="text-gray-700 dark:text-gray-300">
-                    <strong>Kreator :</strong> {materi.creator.nama_lengkap}
+                        <strong>Kreator :</strong> {tugas.creator.nama_lengkap}
                     </p>
                     <p className="text-gray-700 dark:text-gray-300">
-                    <strong>Dibuat :</strong> {moment.tz(materi.createdAt, 'Asia/Jakarta').locale('id').format('dddd, D MMMM YYYY')}
+                        <strong>Dibuka :</strong> {moment.tz(tugas.openIn, 'Asia/Jakarta').locale('id').format('dddd, D MMMM YYYY')}
                     </p>
                     <p className="text-gray-700 dark:text-gray-300">
-                    <strong>Diubah :</strong> {moment.tz(materi.updatedAt, 'Asia/Jakarta').locale('id').format('dddd, D MMMM YYYY')}
+                        <strong>Deadline :</strong> {moment.tz(tugas.deadline, 'Asia/Jakarta').locale('id').format('dddd, D MMMM YYYY')}
                     </p>
 
                     <div className="flex w-full justify-between space-x-4 mt-4">
                         <Button className="flex-grow" 
-                            onClick={() => router.push(`/${routeRole}/materi/${materi.id}`)}
+                            onClick={() => router.push(`/${routeRole}/tugas/${tugas.id}`)}
                         >
                             Detail
                         </Button>
-                        {routeRole === 'siswa' ? 
+                        {routeRole === 'siswa' ? (
                             ''
-                            : <Button className="flex-grow" color={'failure'} onClick={() => openDeleteModal(materi)}>
+                        ) : (
+                            <Button className="flex-grow" color={'failure'} onClick={() => openDeleteModal(tugas)}>
                                 Hapus
-                              </Button>
-                        }
+                            </Button>
+                        )}
                     </div>
                 </Card>
                 ))}
@@ -100,14 +100,11 @@ export default function InfoCardMateri({
             <Modal show={isDeleteModalOpen} onClose={closeDeleteModal}>
                 <Modal.Header>Konfirmasi Penghapusan</Modal.Header>
                 <Modal.Body>
-                    <p>Apakah Anda yakin ingin menghapus pelajaran <strong>{selectMateri?.nama_materi}</strong>?</p>
+                    <p>Apakah Anda yakin ingin menghapus tugas <strong>{selectTugas?.nama_tugas}</strong>?</p>
                 </Modal.Body>
                 <Modal.Footer>
-                    <Button color="failure" onClick={handleDeleteMateri} disabled={isLoadingDeleteMateri}>
-                    {isLoadingDeleteMateri ?
-                    <Spinner/> :
-                    "Hapus"
-                    }
+                    <Button color="failure" onClick={handleDeleteTugas} disabled={isLoadingDeleteTugas}>
+                    {isLoadingDeleteTugas ? <Spinner/> : "Hapus"}
                     </Button>
                     <Button color="gray" onClick={closeDeleteModal}>
                     Batal
@@ -125,5 +122,5 @@ export default function InfoCardMateri({
                 </div>
             )}
         </>
-    )
+    );
 }

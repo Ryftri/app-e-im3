@@ -6,6 +6,7 @@ import LoadingSkeletonListPelajaran from './loading';
 import { Pagination } from 'flowbite-react';
 import PelajaranDashboardSiswa from '@/components/pelajaran/siswa/PelajaranDashboardSiswa';
 import { useSearchParams } from 'next/navigation';
+import { getCookie } from 'cookies-next';
 
 export default function PelajaranPage() {
   const searchParams = useSearchParams(); 
@@ -14,7 +15,8 @@ export default function PelajaranPage() {
 
   const { data: getPelajaran, isLoading: isLoadingPelajaran, isError: isErrorPelajaran, refetch: refetchPelajaran, isFetching: isRefetchPelajaran } = usePelajaranControllerFindBySekolahAndJenjangQuery({
     sekolah: asalSekolah as string,
-    jenjang: Number(jenjang), // Pastikan jenjang dikirim dalam format angka
+    jenjang: Number(jenjang),
+    authorization: `Bearer ${getCookie('refreshToken')}`
   });
 
   const [currentPage, setCurrentPage] = useState(1);

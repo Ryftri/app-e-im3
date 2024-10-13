@@ -6,9 +6,12 @@ import { useUserControllerGetAllSiswaQuery, useUserControllerToggleActiveStatusM
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import FlexibleLoadingText from "@/components/animations/FlexibleLoadingTextToPage";
+import { getCookie } from "cookies-next";
 
 export default function ListSiswaAdminPage() {
-    const { data, error, isLoading, isError, refetch, isFetching } = useUserControllerGetAllSiswaQuery();
+    const { data, error, isLoading, isError, refetch, isFetching } = useUserControllerGetAllSiswaQuery({
+        authorization: `Bearer ${getCookie('refreshToken')}`
+    });
     const [toggleActiveUser, { isLoading: isLoadingActivateUser }] = useUserControllerToggleActiveStatusMutation();
     const [activeTab, setActiveTab] = useState("active");
     const router = useRouter();
@@ -75,6 +78,7 @@ export default function ListSiswaAdminPage() {
                                                                     updateIsActiveDto: {
                                                                         isActive: false,
                                                                     },
+                                                                    authorization: `Bearer ${getCookie('refreshToken')}`
                                                                 }).unwrap();
                                                             } catch (error) {
                                                                 console.log(error);
@@ -145,6 +149,7 @@ export default function ListSiswaAdminPage() {
                                                                     updateIsActiveDto: {
                                                                         isActive: true,
                                                                     },
+                                                                    authorization: `Bearer ${getCookie('refreshToken')}`
                                                                 }).unwrap();
                                                             } catch (error) {
                                                                 console.log(error);
