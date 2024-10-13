@@ -26,7 +26,7 @@ export function NavbarComponent() {
       </button>
       }
       <Navbar.Brand as={Link} href="/">
-        <span className="self-center whitespace-nowrap text-xl font-semibold dark:text-white">Aplikasi E-iM3</span>
+        <span className="self-center whitespace-nowrap text-3xl font-bold dark:text-white">Aplikasi E-iM3</span>
       </Navbar.Brand>
 
       {/* <div>

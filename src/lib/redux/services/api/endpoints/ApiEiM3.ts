@@ -590,11 +590,11 @@ export type TugasControllerRemoveApiArg = {
   /** Bearer [token] */
   authorization: string;
 };
-export type PengumpulanControllerCreateApiResponse = unknown;
+export type PengumpulanControllerCreateApiResponse = GlobalResponse;
 export type PengumpulanControllerCreateApiArg = {
   /** Bearer [token] */
   authorization: string;
-  createPengumpulanDto: CreatePengumpulanDto;
+  createPengumpulanDto: FormData;
 };
 export type PengumpulanControllerFindAllApiResponse = unknown;
 export type PengumpulanControllerFindAllApiArg = void;
@@ -603,10 +603,10 @@ export type PengumpulanControllerFindOneApiArg = {
   id: number;
   authorization: string;
 };
-export type PengumpulanControllerUpdateApiResponse = unknown;
+export type PengumpulanControllerUpdateApiResponse = GlobalResponse;
 export type PengumpulanControllerUpdateApiArg = {
   id: number;
-  updatePengumpulanDto: UpdatePengumpulanDto;
+  updatePengumpulanDto: FormData;
   authorization: string;
 };
 export type PengumpulanControllerRemoveApiResponse = GlobalResponse;
