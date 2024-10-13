@@ -8,13 +8,15 @@ import { useUserControllerUpdateMutation, useUserControllerFinOneGuruQuery } fro
 import { daftarSekolah } from '@/types/ListSekolah';
 import { GlobalResponse } from '@/types/GlobalResponse';
 import { useRouter } from 'next/navigation';
+import { getCookie } from 'cookies-next';
 
 function EditGuru({ params }: { params: { id: string } }) {
   const router = useRouter();
   const { id } = params;
 
   const { data: guruData, isLoading: isLoadingGuru, error: errorGuru } = useUserControllerFinOneGuruQuery({
-    id: Number(id)
+    id: Number(id),
+    authorization: `Bearer ${getCookie('refreshToken')}`
   });
   
   const [updateUser, { isLoading, isError, error: errorToUpdate, data }] = useUserControllerUpdateMutation();
@@ -60,7 +62,8 @@ function EditGuru({ params }: { params: { id: string } }) {
   
       const response = await updateUser({
         id: Number(id),
-        updateUserDto: updatedUserData
+        updateUserDto: updatedUserData,
+        authorization: `Bearer ${getCookie('refreshToken')}`
       });
 
       const error: GlobalResponse = response.error as GlobalResponse;

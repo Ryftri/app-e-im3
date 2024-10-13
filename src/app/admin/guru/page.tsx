@@ -6,9 +6,12 @@ import { useUserControllerGetAllGuruQuery, useUserControllerToggleActiveStatusMu
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import FlexibleLoadingText from "@/components/animations/FlexibleLoadingTextToPage";
+import { getCookie } from "cookies-next";
 
 export default function ListGuruAdminPage () {
-    const { data, error, isLoading, isError, refetch, isFetching } = useUserControllerGetAllGuruQuery();
+    const { data, error, isLoading, isError, refetch, isFetching } = useUserControllerGetAllGuruQuery({
+        authorization: `Bearer ${getCookie('refreshToken')}`
+    });
     const [ toggleActiveUser, { isLoading: isLoadingActivateUser } ] = useUserControllerToggleActiveStatusMutation();
     const [activeTab, setActiveTab] = useState("active");
     const router = useRouter()
@@ -74,7 +77,8 @@ export default function ListGuruAdminPage () {
                                                     id: Number(guru.id),
                                                     updateIsActiveDto: {
                                                         isActive: false
-                                                    }
+                                                    },
+                                                    authorization: `Bearer ${getCookie('refreshToken')}`
                                                 }).unwrap();
                                             } catch (error) {
                                                 console.log(error);
@@ -136,7 +140,8 @@ export default function ListGuruAdminPage () {
                                                     id: Number(guru.id),
                                                     updateIsActiveDto: {
                                                         isActive: true
-                                                    }
+                                                    },
+                                                    authorization: `Bearer ${getCookie('refreshToken')}`
                                                 }).unwrap();
                                             } catch (error) {
                                                 console.log(error);

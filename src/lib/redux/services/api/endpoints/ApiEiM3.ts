@@ -12,29 +12,27 @@ import { AutoLoginResponse } from "@/types/AutoLoginResponse";
 import { GetPelajaranbyQueryParams } from "@/types/response/GetPelajaranByQueryParams";
 import { GetGuruByID } from "@/types/getGuruById";
 import { GetSiswaByID } from "@/types/GetSiswaById";
+import { GetTugasByID } from "@/types/response/GetTugasById";
+import { GetPengumpulanByID } from "@/types/response/GetPengumpulanById";
 
-export const injectedRtkApi = api.injectEndpoints({
+const injectedRtkApi = api.injectEndpoints({
   endpoints: (build) => ({
     userControllerGetAllGuru: build.query<
       UserControllerGetAllGuruApiResponse,
       UserControllerGetAllGuruApiArg
     >({
-      query: () => ({
+      query: (queryArg) => ({
         url: `/users/get-all-guru`,
-        headers: {
-          "Authorization": `Bearer ${getCookie('refreshToken')}`
-        },
+        headers: { Authorization: queryArg.authorization },
       }),
     }),
     userControllerGetAllSiswa: build.query<
       UserControllerGetAllSiswaApiResponse,
       UserControllerGetAllSiswaApiArg
     >({
-      query: () => ({
+      query: (queryArg) => ({
         url: `/users/get-all-siswa`,
-        headers: {
-          "Authorization": `Bearer ${getCookie('refreshToken')}`
-        },
+        headers: { Authorization: queryArg.authorization },
       }),
     }),
     userControllerCreate: build.mutation<
@@ -45,37 +43,34 @@ export const injectedRtkApi = api.injectEndpoints({
         url: `/users/create`,
         method: "POST",
         body: queryArg.createUserDto,
-        headers: {
-          "Authorization": `Bearer ${getCookie('refreshToken')}`
-        },
+        headers: { Authorization: queryArg.authorization },
       }),
     }),
     userControllerGetAll: build.query<
       UserControllerGetAllApiResponse,
       UserControllerGetAllApiArg
     >({
-      query: () => ({ url: `/users/get-all` }),
+      query: (queryArg) => ({
+        url: `/users/get-all`,
+        headers: { Authorization: queryArg.authorization },
+      }),
     }),
     userControllerFinOneGuru: build.query<
       UserControllerFinOneGuruApiResponse,
       UserControllerFinOneGuruApiArg
     >({
-      query: (queryArg) => ({ 
+      query: (queryArg) => ({
         url: `/users/find-one-guru/${queryArg.id}`,
-        headers: {
-          "Authorization": `Bearer ${getCookie('refreshToken')}`
-        },
+        headers: { Authorization: queryArg.authorization },
       }),
     }),
     userControllerFinOneSiswa: build.query<
       UserControllerFinOneSiswaApiResponse,
       UserControllerFinOneSiswaApiArg
     >({
-      query: (queryArg) => ({ 
+      query: (queryArg) => ({
         url: `/users/find-one-siswa/${queryArg.id}`,
-        headers: {
-          "Authorization": `Bearer ${getCookie('refreshToken')}`
-        }, 
+        headers: { Authorization: queryArg.authorization },
       }),
     }),
     userControllerUpdate: build.mutation<
@@ -86,9 +81,7 @@ export const injectedRtkApi = api.injectEndpoints({
         url: `/users/update/${queryArg.id}`,
         method: "PATCH",
         body: queryArg.updateUserDto,
-        headers: {
-          "Authorization": `Bearer ${getCookie('refreshToken')}`
-        },
+        headers: { Authorization: queryArg.authorization },
       }),
     }),
     userControllerToggleActiveStatus: build.mutation<
@@ -99,9 +92,7 @@ export const injectedRtkApi = api.injectEndpoints({
         url: `/users/toggle-active/${queryArg.id}`,
         method: "PATCH",
         body: queryArg.updateIsActiveDto,
-        headers: {
-          "Authorization": `Bearer ${getCookie('refreshToken')}`
-        },
+        headers: { Authorization: queryArg.authorization },
       }),
     }),
     userControllerDelete: build.mutation<
@@ -111,16 +102,17 @@ export const injectedRtkApi = api.injectEndpoints({
       query: (queryArg) => ({
         url: `/users/delete/${queryArg.id}`,
         method: "DELETE",
-        headers: {
-          "Authorization": `Bearer ${getCookie('refreshToken')}`
-        },
+        headers: { Authorization: queryArg.authorization },
       }),
     }),
     userControllerUserGetMe: build.query<
       UserControllerUserGetMeApiResponse,
       UserControllerUserGetMeApiArg
     >({
-      query: () => ({ url: `/users/get-me` }),
+      query: (queryArg) => ({
+        url: `/users/get-me`,
+        headers: { Authorization: queryArg.authorization },
+      }),
     }),
     userControllerUpdateProfileUSer: build.mutation<
       UserControllerUpdateProfileUSerApiResponse,
@@ -130,6 +122,7 @@ export const injectedRtkApi = api.injectEndpoints({
         url: `/users/update-profile`,
         method: "PATCH",
         body: queryArg.updateUserDto,
+        headers: { Authorization: queryArg.authorization },
       }),
     }),
     pelajaranControllerCreate: build.mutation<
@@ -140,20 +133,16 @@ export const injectedRtkApi = api.injectEndpoints({
         url: `/pelajaran/create`,
         method: "POST",
         body: queryArg.createPelajaranDto,
-        headers: {
-          "Authorization": `Bearer ${getCookie('refreshToken')}`
-        },
+        headers: { Authorization: queryArg.authorization },
       }),
     }),
     pelajaranControllerFindAll: build.query<
       PelajaranControllerFindAllApiResponse,
       PelajaranControllerFindAllApiArg
     >({
-      query: () => ({
+      query: (queryArg) => ({
         url: `/pelajaran/get-all`,
-        headers: {
-          "Authorization": `Bearer ${getCookie('refreshToken')}`
-        },
+        headers: { Authorization: queryArg.authorization },
       }),
     }),
     pelajaranControllerFindOne: build.query<
@@ -162,9 +151,7 @@ export const injectedRtkApi = api.injectEndpoints({
     >({
       query: (queryArg) => ({
         url: `/pelajaran/get-by-id/${queryArg.id}`,
-        headers: {
-          "Authorization": `Bearer ${getCookie('refreshToken')}`
-        },
+        headers: { Authorization: queryArg.authorization },
       }),
     }),
     pelajaranControllerFindBySekolahAndJenjang: build.query<
@@ -173,10 +160,8 @@ export const injectedRtkApi = api.injectEndpoints({
     >({
       query: (queryArg) => ({
         url: `/pelajaran/get-by-sekolah-jenjang`,
+        headers: { Authorization: queryArg.authorization },
         params: { sekolah: queryArg.sekolah, jenjang: queryArg.jenjang },
-        headers: {
-          "Authorization": `Bearer ${getCookie('refreshToken')}`
-        },
       }),
     }),
     pelajaranControllerUpdate: build.mutation<
@@ -187,9 +172,7 @@ export const injectedRtkApi = api.injectEndpoints({
         url: `/pelajaran/update/${queryArg.id}`,
         method: "PATCH",
         body: queryArg.updatePelajaranDto,
-        headers: {
-          "Authorization": `Bearer ${getCookie('refreshToken')}`
-        },
+        headers: { Authorization: queryArg.authorization },
       }),
     }),
     pelajaranControllerRemove: build.mutation<
@@ -199,9 +182,7 @@ export const injectedRtkApi = api.injectEndpoints({
       query: (queryArg) => ({
         url: `/pelajaran/delete/${queryArg.id}`,
         method: "DELETE",
-        headers: {
-          "Authorization": `Bearer ${getCookie('refreshToken')}`
-        }
+        headers: { Authorization: queryArg.authorization },
       }),
     }),
     materiControllerCreate: build.mutation<
@@ -212,17 +193,17 @@ export const injectedRtkApi = api.injectEndpoints({
         url: `/materi/create`,
         method: "POST",
         body: queryArg.createMateriDto,
-        headers: {
-          "Authorization": `Bearer ${getCookie('refreshToken')}`,
-          'Content-Type': 'multipart/form-data',
-        }
+        headers: { Authorization: queryArg.authorization },
       }),
     }),
     materiControllerFindAll: build.query<
       MateriControllerFindAllApiResponse,
       MateriControllerFindAllApiArg
     >({
-      query: () => ({ url: `/materi/get-all` }),
+      query: (queryArg) => ({
+        url: `/materi/get-all`,
+        headers: { Authorization: queryArg.authorization },
+      }),
     }),
     materiControllerFindOne: build.query<
       MateriControllerFindOneApiResponse,
@@ -230,9 +211,7 @@ export const injectedRtkApi = api.injectEndpoints({
     >({
       query: (queryArg) => ({
         url: `/materi/get-by-id/${queryArg.id}`,
-        headers: {
-          "Authorization": `Bearer ${getCookie('refreshToken')}`,
-        }
+        headers: { Authorization: queryArg.authorization },
       }),
     }),
     materiControllerUpdate: build.mutation<
@@ -243,9 +222,7 @@ export const injectedRtkApi = api.injectEndpoints({
         url: `/materi/update/${queryArg.id}`,
         method: "PATCH",
         body: queryArg.updateMateriDto,
-        headers: {
-          "Authorization": `Bearer ${getCookie('refreshToken')}`,
-        }
+        headers: { Authorization: queryArg.authorization },
       }),
     }),
     materiControllerRemove: build.mutation<
@@ -255,9 +232,7 @@ export const injectedRtkApi = api.injectEndpoints({
       query: (queryArg) => ({
         url: `/materi/delete/${queryArg.id}`,
         method: "DELETE",
-        headers: {
-          "Authorization": `Bearer ${getCookie('refreshToken')}`,
-        }
+        headers: { Authorization: queryArg.authorization },
       }),
     }),
     tugasControllerCreate: build.mutation<
@@ -268,19 +243,26 @@ export const injectedRtkApi = api.injectEndpoints({
         url: `/tugas/create`,
         method: "POST",
         body: queryArg.createTugasDto,
+        headers: { Authorization: queryArg.authorization },
       }),
     }),
     tugasControllerFindAll: build.query<
       TugasControllerFindAllApiResponse,
       TugasControllerFindAllApiArg
     >({
-      query: () => ({ url: `/tugas/get-all` }),
+      query: (queryArg) => ({
+        url: `/tugas/get-all`,
+        headers: { Authorization: queryArg.authorization },
+      }),
     }),
     tugasControllerFindOne: build.query<
       TugasControllerFindOneApiResponse,
       TugasControllerFindOneApiArg
     >({
-      query: (queryArg) => ({ url: `/tugas/get-by-id/${queryArg.id}` }),
+      query: (queryArg) => ({
+        url: `/tugas/get-by-id/${queryArg.id}`,
+        headers: { Authorization: queryArg.authorization },
+      }),
     }),
     tugasControllerUpdate: build.mutation<
       TugasControllerUpdateApiResponse,
@@ -290,6 +272,7 @@ export const injectedRtkApi = api.injectEndpoints({
         url: `/tugas/update/${queryArg.id}`,
         method: "PATCH",
         body: queryArg.updateTugasDto,
+        headers: { Authorization: queryArg.authorization },
       }),
     }),
     tugasControllerRemove: build.mutation<
@@ -299,6 +282,7 @@ export const injectedRtkApi = api.injectEndpoints({
       query: (queryArg) => ({
         url: `/tugas/delete/${queryArg.id}`,
         method: "DELETE",
+        headers: { Authorization: queryArg.authorization },
       }),
     }),
     pengumpulanControllerCreate: build.mutation<
@@ -309,6 +293,7 @@ export const injectedRtkApi = api.injectEndpoints({
         url: `/pengumpulan/create`,
         method: "POST",
         body: queryArg.createPengumpulanDto,
+        headers: { Authorization: queryArg.authorization },
       }),
     }),
     pengumpulanControllerFindAll: build.query<
@@ -321,7 +306,10 @@ export const injectedRtkApi = api.injectEndpoints({
       PengumpulanControllerFindOneApiResponse,
       PengumpulanControllerFindOneApiArg
     >({
-      query: (queryArg) => ({ url: `/pengumpulan/get-by-id/${queryArg.id}` }),
+      query: (queryArg) => ({ 
+        url: `/pengumpulan/get-by-id/${queryArg.id}`,
+        headers: { Authorization: queryArg.authorization }
+      }),
     }),
     pengumpulanControllerUpdate: build.mutation<
       PengumpulanControllerUpdateApiResponse,
@@ -331,6 +319,7 @@ export const injectedRtkApi = api.injectEndpoints({
         url: `/pengumpulan/update/${queryArg.id}`,
         method: "PATCH",
         body: queryArg.updatePengumpulanDto,
+        headers: { Authorization: queryArg.authorization },
       }),
     }),
     pengumpulanControllerRemove: build.mutation<
@@ -340,6 +329,7 @@ export const injectedRtkApi = api.injectEndpoints({
       query: (queryArg) => ({
         url: `/pengumpulan/delete/${queryArg.id}`,
         method: "DELETE",
+        headers: { Authorization: queryArg.authorization },
       }),
     }),
     nilaiControllerCreate: build.mutation<
@@ -383,47 +373,6 @@ export const injectedRtkApi = api.injectEndpoints({
         method: "DELETE",
       }),
     }),
-    userOnMateriControllerCreate: build.mutation<
-      UserOnMateriControllerCreateApiResponse,
-      UserOnMateriControllerCreateApiArg
-    >({
-      query: (queryArg) => ({
-        url: `/user-on-materi/create`,
-        method: "POST",
-        body: queryArg.createUserOnMateriDto,
-      }),
-    }),
-    userOnMateriControllerFindAll: build.query<
-      UserOnMateriControllerFindAllApiResponse,
-      UserOnMateriControllerFindAllApiArg
-    >({
-      query: () => ({ url: `/user-on-materi/get-all` }),
-    }),
-    userOnMateriControllerFindOneByMateriId: build.query<
-      UserOnMateriControllerFindOneByMateriIdApiResponse,
-      UserOnMateriControllerFindOneByMateriIdApiArg
-    >({
-      query: (queryArg) => ({
-        url: `/user-on-materi/get-by-materi-id/${queryArg.materiId}`,
-      }),
-    }),
-    userOnMateriControllerFindOneByUserId: build.query<
-      UserOnMateriControllerFindOneByUserIdApiResponse,
-      UserOnMateriControllerFindOneByUserIdApiArg
-    >({
-      query: (queryArg) => ({
-        url: `/user-on-materi/get-by-user-id/${queryArg.userId}`,
-      }),
-    }),
-    userOnMateriControllerRemove: build.mutation<
-      UserOnMateriControllerRemoveApiResponse,
-      UserOnMateriControllerRemoveApiArg
-    >({
-      query: (queryArg) => ({
-        url: `/user-on-materi/delete/${queryArg.userId}/${queryArg.materiId}`,
-        method: "DELETE",
-      }),
-    }),
     authControllerRegister: build.mutation<
       AuthControllerRegisterApiResponse,
       AuthControllerRegisterApiArg
@@ -448,155 +397,222 @@ export const injectedRtkApi = api.injectEndpoints({
       AuthControllerLogoutApiResponse,
       AuthControllerLogoutApiArg
     >({
-      query: () => ({
-        url: `/auth/logout`, method: "POST",
-        headers: {
-          'Authorization': `Bearer ${getCookie('refreshToken')}`,
-        }
+      query: (queryArg) => ({
+        url: `/auth/logout`,
+        method: "POST",
+        headers: { Authorization: queryArg.authorization },
       }),
     }),
     authControllerAutoLogin: build.mutation<
       AuthControllerAutoLoginApiResponse,
       AuthControllerAutoLoginApiArg
     >({
-      query: () => ({ 
-        url: `/auth/autologin`, method: "POST",
-        headers: {
-          'Authorization': `Bearer ${getCookie('refreshToken')}`,
-        }, 
+      query: (queryArg) => ({
+        url: `/auth/autologin`,
+        method: "POST",
+        headers: { Authorization: queryArg.authorization },
       }),
     }),
     authControllerGetMe: build.query<
       AuthControllerGetMeApiResponse,
       AuthControllerGetMeApiArg
     >({
-      query: () => ({ url: `/auth/get-me` }),
+      query: (queryArg) => ({
+        url: `/auth/get-me`,
+        headers: { Authorization: queryArg.authorization },
+      }),
     }),
   }),
   overrideExisting: false,
 });
 export { injectedRtkApi as ApiEiM3 };
 export type UserControllerGetAllGuruApiResponse = GetAllGuru;
-export type UserControllerGetAllGuruApiArg = void;
+export type UserControllerGetAllGuruApiArg = {
+  /** Bearer [token] */
+  authorization: string;
+};
 export type UserControllerGetAllSiswaApiResponse = GetAllSiswa;
-export type UserControllerGetAllSiswaApiArg = void;
+export type UserControllerGetAllSiswaApiArg = {
+  /** Bearer [token] */
+  authorization: string;
+};
 export type UserControllerCreateApiResponse = GlobalResponse;
 export type UserControllerCreateApiArg = {
+  /** Bearer [token] */
+  authorization: string;
   /** Create a new User */
   createUserDto: CreateUserDto;
 };
 export type UserControllerGetAllApiResponse = unknown;
-export type UserControllerGetAllApiArg = void;
+export type UserControllerGetAllApiArg = {
+  /** Bearer [token] */
+  authorization: string;
+};
 export type UserControllerFinOneGuruApiResponse = GetGuruByID;
 export type UserControllerFinOneGuruApiArg = {
   id: number;
+  /** Bearer [token] */
+  authorization: string;
 };
 export type UserControllerFinOneSiswaApiResponse = GetSiswaByID;
 export type UserControllerFinOneSiswaApiArg = {
   id: number;
+  /** Bearer [token] */
+  authorization: string;
 };
 export type UserControllerUpdateApiResponse = GlobalResponse;
 export type UserControllerUpdateApiArg = {
   id: number;
+  /** Bearer [token] */
+  authorization: string;
   /** Update User */
   updateUserDto: UpdateUserDto;
 };
 export type UserControllerToggleActiveStatusApiResponse = GlobalResponse;
 export type UserControllerToggleActiveStatusApiArg = {
   id: number;
+  /** Bearer [token] */
+  authorization: string;
   updateIsActiveDto: UpdateIsActiveDto;
 };
 export type UserControllerDeleteApiResponse = GlobalResponse;
 export type UserControllerDeleteApiArg = {
   id: number;
+  /** Bearer [token] */
+  authorization: string;
 };
 export type UserControllerUserGetMeApiResponse = unknown;
-export type UserControllerUserGetMeApiArg = void;
+export type UserControllerUserGetMeApiArg = {
+  /** Bearer [token] */
+  authorization: string;
+};
 export type UserControllerUpdateProfileUSerApiResponse = unknown;
 export type UserControllerUpdateProfileUSerApiArg = {
+  /** Bearer [token] */
+  authorization: string;
   /** Update User */
   updateUserDto: UpdateUserDto;
 };
 export type PelajaranControllerCreateApiResponse = GlobalResponse;
 export type PelajaranControllerCreateApiArg = {
+  /** Bearer [token] */
+  authorization: string;
   createPelajaranDto: CreatePelajaranDto;
 };
 export type PelajaranControllerFindAllApiResponse = GetAllPelajaran;
-export type PelajaranControllerFindAllApiArg = void;
+export type PelajaranControllerFindAllApiArg = {
+  /** Bearer [token] */
+  authorization: string;
+};
 export type PelajaranControllerFindOneApiResponse = GetOnePelajaran;
 export type PelajaranControllerFindOneApiArg = {
   id: number;
+  /** Bearer [token] */
+  authorization: string;
 };
 export type PelajaranControllerFindBySekolahAndJenjangApiResponse = GetPelajaranbyQueryParams;
 export type PelajaranControllerFindBySekolahAndJenjangApiArg = {
   sekolah: string;
   jenjang: number;
+  /** Bearer [token] */
+  authorization: string;
 };
 export type PelajaranControllerUpdateApiResponse = GlobalResponse;
 export type PelajaranControllerUpdateApiArg = {
   id: number;
+  /** Bearer [token] */
+  authorization: string;
   updatePelajaranDto: UpdatePelajaranDto;
 };
 export type PelajaranControllerRemoveApiResponse = unknown;
 export type PelajaranControllerRemoveApiArg = {
   id: number;
+  /** Bearer [token] */
+  authorization: string;
 };
 export type MateriControllerCreateApiResponse = GlobalResponse;
 export type MateriControllerCreateApiArg = {
+  /** Bearer [token] */
+  authorization: string;
   createMateriDto: FormData;
 };
 export type MateriControllerFindAllApiResponse = unknown;
-export type MateriControllerFindAllApiArg = void;
+export type MateriControllerFindAllApiArg = {
+  /** Bearer [token] */
+  authorization: string;
+};
 export type MateriControllerFindOneApiResponse = GetOneMateri;
 export type MateriControllerFindOneApiArg = {
   id: number;
+  /** Bearer [token] */
+  authorization: string;
 };
 export type MateriControllerUpdateApiResponse = GlobalResponse;
 export type MateriControllerUpdateApiArg = {
   id: number;
+  /** Bearer [token] */
+  authorization: string;
   updateMateriDto: FormData;
 };
 export type MateriControllerRemoveApiResponse = GlobalResponse;
 export type MateriControllerRemoveApiArg = {
   id: number;
+  /** Bearer [token] */
+  authorization: string;
 };
-export type TugasControllerCreateApiResponse = unknown;
+export type TugasControllerCreateApiResponse = GlobalResponse;
 export type TugasControllerCreateApiArg = {
-  createTugasDto: CreateTugasDto;
+  /** Bearer [token] */
+  authorization: string;
+  createTugasDto: FormData;
 };
 export type TugasControllerFindAllApiResponse = unknown;
-export type TugasControllerFindAllApiArg = void;
-export type TugasControllerFindOneApiResponse = unknown;
+export type TugasControllerFindAllApiArg = {
+  /** Bearer [token] */
+  authorization: string;
+};
+export type TugasControllerFindOneApiResponse = GetTugasByID;
 export type TugasControllerFindOneApiArg = {
   id: number;
+  /** Bearer [token] */
+  authorization: string;
 };
-export type TugasControllerUpdateApiResponse = unknown;
+export type TugasControllerUpdateApiResponse = GlobalResponse;
 export type TugasControllerUpdateApiArg = {
   id: number;
-  updateTugasDto: UpdateTugasDto;
+  /** Bearer [token] */
+  authorization: string;
+  updateTugasDto: FormData;
 };
-export type TugasControllerRemoveApiResponse = unknown;
+export type TugasControllerRemoveApiResponse = GlobalResponse;
 export type TugasControllerRemoveApiArg = {
   id: number;
+  /** Bearer [token] */
+  authorization: string;
 };
-export type PengumpulanControllerCreateApiResponse = unknown;
+export type PengumpulanControllerCreateApiResponse = GlobalResponse;
 export type PengumpulanControllerCreateApiArg = {
-  createPengumpulanDto: CreatePengumpulanDto;
+  /** Bearer [token] */
+  authorization: string;
+  createPengumpulanDto: FormData;
 };
 export type PengumpulanControllerFindAllApiResponse = unknown;
 export type PengumpulanControllerFindAllApiArg = void;
-export type PengumpulanControllerFindOneApiResponse = unknown;
+export type PengumpulanControllerFindOneApiResponse = GetPengumpulanByID;
 export type PengumpulanControllerFindOneApiArg = {
   id: number;
+  authorization: string;
 };
-export type PengumpulanControllerUpdateApiResponse = unknown;
+export type PengumpulanControllerUpdateApiResponse = GlobalResponse;
 export type PengumpulanControllerUpdateApiArg = {
   id: number;
-  updatePengumpulanDto: UpdatePengumpulanDto;
+  updatePengumpulanDto: FormData;
+  authorization: string;
 };
-export type PengumpulanControllerRemoveApiResponse = unknown;
+export type PengumpulanControllerRemoveApiResponse = GlobalResponse;
 export type PengumpulanControllerRemoveApiArg = {
   id: number;
+  authorization: string;
 };
 export type NilaiControllerCreateApiResponse = unknown;
 export type NilaiControllerCreateApiArg = {
@@ -617,25 +633,6 @@ export type NilaiControllerRemoveApiResponse = unknown;
 export type NilaiControllerRemoveApiArg = {
   id: number;
 };
-export type UserOnMateriControllerCreateApiResponse = unknown;
-export type UserOnMateriControllerCreateApiArg = {
-  createUserOnMateriDto: CreateUserOnMateriDto;
-};
-export type UserOnMateriControllerFindAllApiResponse = unknown;
-export type UserOnMateriControllerFindAllApiArg = void;
-export type UserOnMateriControllerFindOneByMateriIdApiResponse = unknown;
-export type UserOnMateriControllerFindOneByMateriIdApiArg = {
-  materiId: number;
-};
-export type UserOnMateriControllerFindOneByUserIdApiResponse = unknown;
-export type UserOnMateriControllerFindOneByUserIdApiArg = {
-  userId: number;
-};
-export type UserOnMateriControllerRemoveApiResponse = unknown;
-export type UserOnMateriControllerRemoveApiArg = {
-  userId: number;
-  materiId: number;
-};
 export type AuthControllerRegisterApiResponse = RegisterResponse;
 export type AuthControllerRegisterApiArg = {
   registerDto: RegisterDto;
@@ -645,11 +642,20 @@ export type AuthControllerLoginApiArg = {
   loginDto: LoginDto;
 };
 export type AuthControllerLogoutApiResponse = unknown;
-export type AuthControllerLogoutApiArg = void;
+export type AuthControllerLogoutApiArg = {
+  /** Bearer [token] */
+  authorization: string;
+};
 export type AuthControllerAutoLoginApiResponse = AutoLoginResponse;
-export type AuthControllerAutoLoginApiArg = void;
+export type AuthControllerAutoLoginApiArg = {
+  /** Bearer [token] */
+  authorization: string;
+};
 export type AuthControllerGetMeApiResponse = unknown;
-export type AuthControllerGetMeApiArg = void;
+export type AuthControllerGetMeApiArg = {
+  /** Bearer [token] */
+  authorization: string;
+};
 export type CreateUserDto = {
   nama_lengkap: string;
   email?: string;
@@ -699,36 +705,44 @@ export type UpdateMateriDto = {
   isi_materi: string;
 };
 export type CreateTugasDto = {
-  /** ID materi yang terkait dengan tugas */
-  materiId: number;
+  /** ID pelajaran yang terkait dengan tugas */
+  pelajaranId: number;
+  /** ID dari user yang membuat tugas */
+  creatorId: number;
   /** Nama tugas */
   nama_tugas: string;
-  /** Isi tugas dalam format JSON */
-  isi_tugas: string[];
+  /** Isi tugas */
+  isi_tugas: string;
+  /** Tanggal tugas dibuka */
+  openIn: string;
   /** Tanggal batas waktu tugas */
   deadline: string;
 };
 export type UpdateTugasDto = {
-  /** ID materi yang terkait dengan tugas */
-  materiId: number;
+  /** ID pelajaran yang terkait dengan tugas */
+  pelajaranId: number;
+  /** ID dari user yang membuat tugas */
+  creatorId: number;
   /** Nama tugas */
   nama_tugas: string;
-  /** Isi tugas dalam format JSON */
-  isi_tugas: string[];
+  /** Isi tugas */
+  isi_tugas: string;
+  /** Tanggal tugas dibuka */
+  openIn: string;
   /** Tanggal batas waktu tugas */
   deadline: string;
 };
 export type CreatePengumpulanDto = {
   /** ID tugas yang terkait dengan pengumpulan */
   tugasId: number;
-  /** Isi pengumpulan dalam format JSON */
-  isi_pengumpulan: string[];
+  /** Isi detail pengumpulan */
+  detail_pengumpulan: string;
 };
 export type UpdatePengumpulanDto = {
   /** ID tugas yang terkait dengan pengumpulan */
   tugasId: number;
-  /** Isi pengumpulan dalam format JSON */
-  isi_pengumpulan: string[];
+  /** Isi detail pengumpulan */
+  detail_pengumpulan: string;
 };
 export type CreateNilaiDto = {
   /** ID Pengumpulan yang terkait dengan nilai */
@@ -741,10 +755,6 @@ export type UpdateNilaiDto = {
   pengumpulanId: number;
   /** Nilai yang diberikan */
   nilai: number;
-};
-export type CreateUserOnMateriDto = {
-  /** ID materi yang terkait dengan pengguna */
-  materiId: number;
 };
 export type RegisterDto = {
   nama_lengkap: string;
@@ -799,11 +809,6 @@ export const {
   useNilaiControllerFindOneQuery,
   useNilaiControllerUpdateMutation,
   useNilaiControllerRemoveMutation,
-  useUserOnMateriControllerCreateMutation,
-  useUserOnMateriControllerFindAllQuery,
-  useUserOnMateriControllerFindOneByMateriIdQuery,
-  useUserOnMateriControllerFindOneByUserIdQuery,
-  useUserOnMateriControllerRemoveMutation,
   useAuthControllerRegisterMutation,
   useAuthControllerLoginMutation,
   useAuthControllerLogoutMutation,

@@ -8,43 +8,59 @@
 // match the expected interface, even if the JSON is valid.
 
 export interface GetOnePelajaran {
-    status: string;
-    message: string;
+    status:    string;
+    message:   string;
     pelajaran: Pelajaran;
 }
 
 export interface Pelajaran {
-    id: number;
-    jenjang_kelas: number;
-    asal_sekolah: string;
-    creatorId: number;
+    id:             number;
+    jenjang_kelas:  number;
+    asal_sekolah:   string;
+    creatorId:      number;
     nama_pelajaran: string;
-    createdAt: Date;
-    updatedAt: Date;
-    creator: Creator;
-    materi: Materi[];
+    createdAt:      Date;
+    updatedAt:      Date;
+    creator:        Creator;
+    materi:         Materi[];
+    tugas:          Tugas[];
 }
 
 export interface Creator {
-    id: number;
+    id:           number;
     nama_lengkap: string;
 }
 
 export interface Materi {
-    id: number;
+    id:          number;
     pelajaranId: number;
-    creatorId: number;
+    creatorId:   number;
     nama_materi: string;
-    isi_materi: string;
-    files: File[];
-    createdAt: Date;
-    updatedAt: Date;
+    isi_materi:  string;
+    files:       File[];
+    createdAt:   Date;
+    updatedAt:   Date;
+    creator:     Creator;
 }
 
 export interface File {
-    fileUrl: string;
-    fileName: string;
+    fileUrl:      string;
+    fileName:     string;
     originalName: string;
+}
+
+export interface Tugas {
+    id:          number;
+    pelajaranId: number;
+    creatorId:   number;
+    nama_tugas:  string;
+    isi_tugas:   string;
+    files:       File[];
+    openIn:      Date;
+    deadline:    Date;
+    createdAt:   Date;
+    updatedAt:   Date;
+    creator:     Creator;
 }
 
 // Converts JSON strings to/from your types
@@ -111,7 +127,7 @@ function transform(val: any, typ: any, getProps: any, key: any = '', parent: any
             const typ = typs[i];
             try {
                 return transform(val, typ, getProps);
-            } catch (_) { }
+            } catch (_) {}
         }
         return invalidValue(typs, val, key, parent);
     }
@@ -170,9 +186,9 @@ function transform(val: any, typ: any, getProps: any, key: any = '', parent: any
     if (Array.isArray(typ)) return transformEnum(typ, val);
     if (typeof typ === "object") {
         return typ.hasOwnProperty("unionMembers") ? transformUnion(typ.unionMembers, val)
-            : typ.hasOwnProperty("arrayItems") ? transformArray(typ.arrayItems, val)
-                : typ.hasOwnProperty("props") ? transformObject(getProps(typ), typ.additional, val)
-                    : invalidValue(typ, val, key, parent);
+            : typ.hasOwnProperty("arrayItems")    ? transformArray(typ.arrayItems, val)
+            : typ.hasOwnProperty("props")         ? transformObject(getProps(typ), typ.additional, val)
+            : invalidValue(typ, val, key, parent);
     }
     // Numbers can be parsed by Date but shouldn't be.
     if (typ === Date && typeof val !== "number") return transformDate(val);
@@ -227,6 +243,7 @@ const typeMap: any = {
         { json: "updatedAt", js: "updatedAt", typ: Date },
         { json: "creator", js: "creator", typ: r("Creator") },
         { json: "materi", js: "materi", typ: a(r("Materi")) },
+        { json: "tugas", js: "tugas", typ: a(r("Tugas")) },
     ], false),
     "Creator": o([
         { json: "id", js: "id", typ: 0 },
@@ -241,10 +258,24 @@ const typeMap: any = {
         { json: "files", js: "files", typ: a(r("File")) },
         { json: "createdAt", js: "createdAt", typ: Date },
         { json: "updatedAt", js: "updatedAt", typ: Date },
+        { json: "creator", js: "creator", typ: r("Creator") },
     ], false),
     "File": o([
         { json: "fileUrl", js: "fileUrl", typ: "" },
         { json: "fileName", js: "fileName", typ: "" },
         { json: "originalName", js: "originalName", typ: "" },
+    ], false),
+    "Tugas": o([
+        { json: "id", js: "id", typ: 0 },
+        { json: "pelajaranId", js: "pelajaranId", typ: 0 },
+        { json: "creatorId", js: "creatorId", typ: 0 },
+        { json: "nama_tugas", js: "nama_tugas", typ: "" },
+        { json: "isi_tugas", js: "isi_tugas", typ: "" },
+        { json: "files", js: "files", typ: a(r("File")) },
+        { json: "openIn", js: "openIn", typ: Date },
+        { json: "deadline", js: "deadline", typ: Date },
+        { json: "createdAt", js: "createdAt", typ: Date },
+        { json: "updatedAt", js: "updatedAt", typ: Date },
+        { json: "creator", js: "creator", typ: r("Creator") },
     ], false),
 };

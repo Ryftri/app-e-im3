@@ -8,38 +8,47 @@
 // match the expected interface, even if the JSON is valid.
 
 export interface GetOneMateri {
-    status: string;
+    status:  string;
     message: string;
-    materi: Materi;
+    materi:  Materi;
 }
 
 export interface Materi {
-    id: number;
+    id:          number;
     pelajaranId: number;
-    creatorId: number;
+    creatorId:   number;
     nama_materi: string;
-    isi_materi: string;
-    files: File[];
-    createdAt: Date;
-    updatedAt: Date;
-    pelajaran: Pelajaran;
-    tugas: any[];
+    isi_materi:  string;
+    files:       File[];
+    createdAt:   Date;
+    updatedAt:   Date;
+    pelajaran:   Pelajaran;
+    creator:     Creator;
+}
+
+export interface Creator {
+    id:           number;
+    nama_lengkap: string;
+    roleId:       number;
+    asal_sekolah: null | string;
+    createdAt:    Date;
+    updatedAt:    Date;
 }
 
 export interface File {
-    fileUrl: string;
-    fileName: string;
+    fileUrl:      string;
+    fileName:     string;
     originalName: string;
 }
 
 export interface Pelajaran {
-    id: number;
-    jenjang_kelas: number;
-    asal_sekolah: string;
-    creatorId: number;
+    id:             number;
+    jenjang_kelas:  number;
+    asal_sekolah:   string;
+    creatorId:      number;
     nama_pelajaran: string;
-    createdAt: Date;
-    updatedAt: Date;
+    createdAt:      Date;
+    updatedAt:      Date;
 }
 
 // Converts JSON strings to/from your types
@@ -106,7 +115,7 @@ function transform(val: any, typ: any, getProps: any, key: any = '', parent: any
             const typ = typs[i];
             try {
                 return transform(val, typ, getProps);
-            } catch (_) { }
+            } catch (_) {}
         }
         return invalidValue(typs, val, key, parent);
     }
@@ -165,9 +174,9 @@ function transform(val: any, typ: any, getProps: any, key: any = '', parent: any
     if (Array.isArray(typ)) return transformEnum(typ, val);
     if (typeof typ === "object") {
         return typ.hasOwnProperty("unionMembers") ? transformUnion(typ.unionMembers, val)
-            : typ.hasOwnProperty("arrayItems") ? transformArray(typ.arrayItems, val)
-                : typ.hasOwnProperty("props") ? transformObject(getProps(typ), typ.additional, val)
-                    : invalidValue(typ, val, key, parent);
+            : typ.hasOwnProperty("arrayItems")    ? transformArray(typ.arrayItems, val)
+            : typ.hasOwnProperty("props")         ? transformObject(getProps(typ), typ.additional, val)
+            : invalidValue(typ, val, key, parent);
     }
     // Numbers can be parsed by Date but shouldn't be.
     if (typ === Date && typeof val !== "number") return transformDate(val);
@@ -222,7 +231,15 @@ const typeMap: any = {
         { json: "createdAt", js: "createdAt", typ: Date },
         { json: "updatedAt", js: "updatedAt", typ: Date },
         { json: "pelajaran", js: "pelajaran", typ: r("Pelajaran") },
-        { json: "tugas", js: "tugas", typ: a("any") },
+        { json: "creator", js: "creator", typ: r("Creator") },
+    ], false),
+    "Creator": o([
+        { json: "id", js: "id", typ: 0 },
+        { json: "nama_lengkap", js: "nama_lengkap", typ: "" },
+        { json: "roleId", js: "roleId", typ: 0 },
+        { json: "asal_sekolah", js: "asal_sekolah", typ: u(null, "") },
+        { json: "createdAt", js: "createdAt", typ: Date },
+        { json: "updatedAt", js: "updatedAt", typ: Date },
     ], false),
     "File": o([
         { json: "fileUrl", js: "fileUrl", typ: "" },

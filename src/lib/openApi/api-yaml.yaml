@@ -4,7 +4,13 @@ paths:
     get:
       operationId: UserController_getAllGuru
       summary: Get All Guru
-      parameters: []
+      parameters:
+        - name: Authorization
+          in: header
+          description: Bearer [token]
+          required: true
+          schema:
+            type: string
       responses:
         '200':
           description: ''
@@ -14,7 +20,13 @@ paths:
     get:
       operationId: UserController_getAllSiswa
       summary: Get All Siswa
-      parameters: []
+      parameters:
+        - name: Authorization
+          in: header
+          description: Bearer [token]
+          required: true
+          schema:
+            type: string
       responses:
         '200':
           description: ''
@@ -24,7 +36,13 @@ paths:
     post:
       operationId: UserController_create
       summary: Create User
-      parameters: []
+      parameters:
+        - name: Authorization
+          in: header
+          description: Bearer [token]
+          required: true
+          schema:
+            type: string
       requestBody:
         required: true
         description: Create a new User
@@ -41,7 +59,13 @@ paths:
     get:
       operationId: UserController_getAll
       summary: Get All User
-      parameters: []
+      parameters:
+        - name: Authorization
+          in: header
+          description: Bearer [token]
+          required: true
+          schema:
+            type: string
       responses:
         '200':
           description: ''
@@ -57,6 +81,12 @@ paths:
           in: path
           schema:
             type: number
+        - name: Authorization
+          in: header
+          description: Bearer [token]
+          required: true
+          schema:
+            type: string
       responses:
         '200':
           description: ''
@@ -72,6 +102,12 @@ paths:
           in: path
           schema:
             type: number
+        - name: Authorization
+          in: header
+          description: Bearer [token]
+          required: true
+          schema:
+            type: string
       responses:
         '200':
           description: ''
@@ -87,6 +123,12 @@ paths:
           in: path
           schema:
             type: number
+        - name: Authorization
+          in: header
+          description: Bearer [token]
+          required: true
+          schema:
+            type: string
       requestBody:
         required: true
         description: Update User
@@ -109,6 +151,12 @@ paths:
           in: path
           schema:
             type: number
+        - name: Authorization
+          in: header
+          description: Bearer [token]
+          required: true
+          schema:
+            type: string
       requestBody:
         required: true
         content:
@@ -130,6 +178,12 @@ paths:
           in: path
           schema:
             type: number
+        - name: Authorization
+          in: header
+          description: Bearer [token]
+          required: true
+          schema:
+            type: string
       responses:
         '200':
           description: ''
@@ -139,7 +193,13 @@ paths:
     get:
       operationId: UserController_userGetMe
       summary: User Get Me
-      parameters: []
+      parameters:
+        - name: Authorization
+          in: header
+          description: Bearer [token]
+          required: true
+          schema:
+            type: string
       responses:
         '200':
           description: ''
@@ -149,7 +209,13 @@ paths:
     patch:
       operationId: UserController_updateProfileUSer
       summary: Update User
-      parameters: []
+      parameters:
+        - name: Authorization
+          in: header
+          description: Bearer [token]
+          required: true
+          schema:
+            type: string
       requestBody:
         required: true
         description: Update User
@@ -166,7 +232,13 @@ paths:
     post:
       operationId: PelajaranController_create
       summary: Create Pelajaran
-      parameters: []
+      parameters:
+        - name: Authorization
+          in: header
+          description: Bearer [token]
+          required: true
+          schema:
+            type: string
       requestBody:
         required: true
         content:
@@ -182,7 +254,13 @@ paths:
     get:
       operationId: PelajaranController_findAll
       summary: Get All Pelajaran
-      parameters: []
+      parameters:
+        - name: Authorization
+          in: header
+          description: Bearer [token]
+          required: true
+          schema:
+            type: string
       responses:
         '200':
           description: ''
@@ -198,6 +276,12 @@ paths:
           in: path
           schema:
             type: number
+        - name: Authorization
+          in: header
+          description: Bearer [token]
+          required: true
+          schema:
+            type: string
       responses:
         '200':
           description: ''
@@ -218,6 +302,12 @@ paths:
           in: query
           schema:
             type: number
+        - name: Authorization
+          in: header
+          description: Bearer [token]
+          required: true
+          schema:
+            type: string
       responses:
         '200':
           description: ''
@@ -233,6 +323,12 @@ paths:
           in: path
           schema:
             type: number
+        - name: Authorization
+          in: header
+          description: Bearer [token]
+          required: true
+          schema:
+            type: string
       requestBody:
         required: true
         content:
@@ -254,6 +350,12 @@ paths:
           in: path
           schema:
             type: number
+        - name: Authorization
+          in: header
+          description: Bearer [token]
+          required: true
+          schema:
+            type: string
       responses:
         '200':
           description: ''
@@ -263,7 +365,13 @@ paths:
     post:
       operationId: MateriController_create
       summary: Create Materi
-      parameters: []
+      parameters:
+        - name: Authorization
+          in: header
+          description: Bearer [token]
+          required: true
+          schema:
+            type: string
       requestBody:
         required: true
         content:
@@ -279,7 +387,13 @@ paths:
     get:
       operationId: MateriController_findAll
       summary: Get All Materi
-      parameters: []
+      parameters:
+        - name: Authorization
+          in: header
+          description: Bearer [token]
+          required: true
+          schema:
+            type: string
       responses:
         '200':
           description: ''
@@ -295,6 +409,12 @@ paths:
           in: path
           schema:
             type: number
+        - name: Authorization
+          in: header
+          description: Bearer [token]
+          required: true
+          schema:
+            type: string
       responses:
         '200':
           description: ''
@@ -310,6 +430,12 @@ paths:
           in: path
           schema:
             type: number
+        - name: Authorization
+          in: header
+          description: Bearer [token]
+          required: true
+          schema:
+            type: string
       requestBody:
         required: true
         content:
@@ -331,6 +457,12 @@ paths:
           in: path
           schema:
             type: number
+        - name: Authorization
+          in: header
+          description: Bearer [token]
+          required: true
+          schema:
+            type: string
       responses:
         '200':
           description: ''
@@ -340,7 +472,13 @@ paths:
     post:
       operationId: TugasController_create
       summary: Create Tugas
-      parameters: []
+      parameters:
+        - name: Authorization
+          in: header
+          description: Bearer [token]
+          required: true
+          schema:
+            type: string
       requestBody:
         required: true
         content:
@@ -352,20 +490,22 @@ paths:
           description: ''
       tags:
         - Tugas
-      security:
-        - bearer: []
   /tugas/get-all:
     get:
       operationId: TugasController_findAll
       summary: Get All Tugas
-      parameters: []
+      parameters:
+        - name: Authorization
+          in: header
+          description: Bearer [token]
+          required: true
+          schema:
+            type: string
       responses:
         '200':
           description: ''
       tags:
         - Tugas
-      security:
-        - bearer: []
   /tugas/get-by-id/{id}:
     get:
       operationId: TugasController_findOne
@@ -376,13 +516,17 @@ paths:
           in: path
           schema:
             type: number
+        - name: Authorization
+          in: header
+          description: Bearer [token]
+          required: true
+          schema:
+            type: string
       responses:
         '200':
           description: ''
       tags:
         - Tugas
-      security:
-        - bearer: []
   /tugas/update/{id}:
     patch:
       operationId: TugasController_update
@@ -393,6 +537,12 @@ paths:
           in: path
           schema:
             type: number
+        - name: Authorization
+          in: header
+          description: Bearer [token]
+          required: true
+          schema:
+            type: string
       requestBody:
         required: true
         content:
@@ -404,8 +554,6 @@ paths:
           description: ''
       tags:
         - Tugas
-      security:
-        - bearer: []
   /tugas/delete/{id}:
     delete:
       operationId: TugasController_remove
@@ -416,18 +564,28 @@ paths:
           in: path
           schema:
             type: number
+        - name: Authorization
+          in: header
+          description: Bearer [token]
+          required: true
+          schema:
+            type: string
       responses:
         '200':
           description: ''
       tags:
         - Tugas
-      security:
-        - bearer: []
   /pengumpulan/create:
     post:
       operationId: PengumpulanController_create
       summary: Create Pengumpulan
-      parameters: []
+      parameters:
+        - name: Authorization
+          in: header
+          description: Bearer [token]
+          required: true
+          schema:
+            type: string
       requestBody:
         required: true
         content:
@@ -577,92 +735,6 @@ paths:
           description: ''
       tags:
         - Nilai
-  /user-on-materi/create:
-    post:
-      operationId: UserOnMateriController_create
-      summary: Create UserOnMateri
-      parameters: []
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/CreateUserOnMateriDto'
-      responses:
-        '201':
-          description: ''
-      tags:
-        - User On Materi
-      security:
-        - bearer: []
-  /user-on-materi/get-all:
-    get:
-      operationId: UserOnMateriController_findAll
-      summary: Get All UserOnMateri
-      parameters: []
-      responses:
-        '200':
-          description: ''
-      tags:
-        - User On Materi
-      security:
-        - bearer: []
-  /user-on-materi/get-by-materi-id/{materiId}:
-    get:
-      operationId: UserOnMateriController_findOneByMateriId
-      summary: Get One By Materi Id UserOnMateri
-      parameters:
-        - name: materiId
-          required: true
-          in: path
-          schema:
-            type: number
-      responses:
-        '200':
-          description: ''
-      tags:
-        - User On Materi
-      security:
-        - bearer: []
-  /user-on-materi/get-by-user-id/{userId}:
-    get:
-      operationId: UserOnMateriController_findOneByUserId
-      summary: Get One By User Id UserOnMateri
-      parameters:
-        - name: userId
-          required: true
-          in: path
-          schema:
-            type: number
-      responses:
-        '200':
-          description: ''
-      tags:
-        - User On Materi
-      security:
-        - bearer: []
-  /user-on-materi/delete/{userId}/{materiId}:
-    delete:
-      operationId: UserOnMateriController_remove
-      summary: Delete UserOnMateri
-      parameters:
-        - name: userId
-          required: true
-          in: path
-          schema:
-            type: number
-        - name: materiId
-          required: true
-          in: path
-          schema:
-            type: number
-      responses:
-        '200':
-          description: ''
-      tags:
-        - User On Materi
-      security:
-        - bearer: []
   /auth/register:
     post:
       operationId: AuthController_register
@@ -721,7 +793,13 @@ paths:
     post:
       operationId: AuthController_logout
       summary: Logout
-      parameters: []
+      parameters:
+        - name: Authorization
+          in: header
+          description: Bearer [token]
+          required: true
+          schema:
+            type: string
       responses:
         '201':
           description: ''
@@ -731,7 +809,13 @@ paths:
     post:
       operationId: AuthController_autoLogin
       summary: Autologin
-      parameters: []
+      parameters:
+        - name: Authorization
+          in: header
+          description: Bearer [token]
+          required: true
+          schema:
+            type: string
       responses:
         '201':
           description: ''
@@ -741,16 +825,22 @@ paths:
     get:
       operationId: AuthController_getMe
       summary: Get Me
-      parameters: []
+      parameters:
+        - name: Authorization
+          in: header
+          description: Bearer [token]
+          required: true
+          schema:
+            type: string
       responses:
         '200':
           description: ''
       tags:
         - Authentication
 info:
-  title: API E-iM3
+  title: API E-iM3-1.1.0-demo
   description: API Development Aplikasi E-iM3
-  version: 0.1.9-demo
+  version: 1.1.0-demo
   contact: {}
 tags: []
 servers:
@@ -894,94 +984,72 @@ components:
     CreateTugasDto:
       type: object
       properties:
-        materiId:
+        pelajaranId:
           type: number
-          description: ID materi yang terkait dengan tugas
+          description: ID pelajaran yang terkait dengan tugas
+          example: 1
+        creatorId:
+          type: number
+          description: ID dari user yang membuat tugas
           example: 1
         nama_tugas:
           type: string
           description: Nama tugas
           example: Tugas Matematika
         isi_tugas:
-          description: Isi tugas dalam format JSON
-          example:
-            - id: 5
-              title: Apa simbol kimia untuk air?
-              answer: H2O
-              points: 5
-              content: Apa simbol kimia untuk air?
-            - id: 6
-              type: multiple-choice
-              title: Apa ibu kota dari Australia?
-              points: 10
-              content: Apa ibu kota dari Australia?
-              options:
-                - text: Sydney
-                  isCorrect: false
-                - text: Melbourne
-                  isCorrect: false
-                - text: Canberra
-                  isCorrect: true
-                - text: Brisbane
-                  isCorrect: false
-          type: array
-          items:
-            type: string
+          type: string
+          description: Isi tugas
+        openIn:
+          format: date-time
+          type: string
+          description: Tanggal tugas dibuka
+          example: '2024-12-31T23:59:59Z'
         deadline:
           format: date-time
           type: string
           description: Tanggal batas waktu tugas
           example: '2024-12-31T23:59:59Z'
       required:
-        - materiId
+        - pelajaranId
+        - creatorId
         - nama_tugas
         - isi_tugas
+        - openIn
         - deadline
     UpdateTugasDto:
       type: object
       properties:
-        materiId:
+        pelajaranId:
           type: number
-          description: ID materi yang terkait dengan tugas
+          description: ID pelajaran yang terkait dengan tugas
+          example: 1
+        creatorId:
+          type: number
+          description: ID dari user yang membuat tugas
           example: 1
         nama_tugas:
           type: string
           description: Nama tugas
           example: Tugas Matematika
         isi_tugas:
-          description: Isi tugas dalam format JSON
-          example:
-            - id: 5
-              title: Apa simbol kimia untuk air?
-              answer: H2O
-              points: 5
-              content: Apa simbol kimia untuk air?
-            - id: 6
-              type: multiple-choice
-              title: Apa ibu kota dari Australia?
-              points: 10
-              content: Apa ibu kota dari Australia?
-              options:
-                - text: Sydney
-                  isCorrect: false
-                - text: Melbourne
-                  isCorrect: false
-                - text: Canberra
-                  isCorrect: true
-                - text: Brisbane
-                  isCorrect: false
-          type: array
-          items:
-            type: string
+          type: string
+          description: Isi tugas
+        openIn:
+          format: date-time
+          type: string
+          description: Tanggal tugas dibuka
+          example: '2024-12-31T23:59:59Z'
         deadline:
           format: date-time
           type: string
           description: Tanggal batas waktu tugas
           example: '2024-12-31T23:59:59Z'
       required:
-        - materiId
+        - pelajaranId
+        - creatorId
         - nama_tugas
         - isi_tugas
+        - openIn
         - deadline
     CreatePengumpulanDto:
       type: object
@@ -990,19 +1058,13 @@ components:
           type: number
           description: ID tugas yang terkait dengan pengumpulan
           example: 1
-        isi_pengumpulan:
-          description: Isi pengumpulan dalam format JSON
-          example:
-            - id: 5
-              answer: H2O
-            - id: 6
-              answer: Canberra
-          type: array
-          items:
-            type: string
+        detail_pengumpulan:
+          type: string
+          description: Isi detail pengumpulan
+          example: Detail Pengumpulan
       required:
         - tugasId
-        - isi_pengumpulan
+        - detail_pengumpulan
     UpdatePengumpulanDto:
       type: object
       properties:
@@ -1010,19 +1072,13 @@ components:
           type: number
           description: ID tugas yang terkait dengan pengumpulan
           example: 1
-        isi_pengumpulan:
-          description: Isi pengumpulan dalam format JSON
-          example:
-            - id: 5
-              answer: H2O
-            - id: 6
-              answer: Canberra
-          type: array
-          items:
-            type: string
+        detail_pengumpulan:
+          type: string
+          description: Isi detail pengumpulan
+          example: Detail Pengumpulan
       required:
         - tugasId
-        - isi_pengumpulan
+        - detail_pengumpulan
     CreateNilaiDto:
       type: object
       properties:
@@ -1051,15 +1107,6 @@ components:
       required:
         - pengumpulanId
         - nilai
-    CreateUserOnMateriDto:
-      type: object
-      properties:
-        materiId:
-          type: number
-          description: ID materi yang terkait dengan pengguna
-          example: 1
-      required:
-        - materiId
     RegisterDto:
       type: object
       properties:

@@ -9,10 +9,12 @@ import { isGlobalResponse } from '@/lib/utils/isGlobalResponse';
 import { GlobalResponse } from '@/types/GlobalResponse';
 import { useRouter } from 'next/navigation';
 import LoadingSkeletonEditPelajaran from './loading';
+import { getCookie } from 'cookies-next';
 
 export default function EditPelajaranPage({ params }: { params: { id: string } }) {
     const { data: getPelajaran, isLoading: isLoadingPelajaran, isError: isErrorPelajaran, refetch: refetchPelajaran, isFetching: isRefetchPelajaran } = usePelajaranControllerFindOneQuery({
-        id: Number(params.id)
+        id: Number(params.id),
+        authorization: `Bearer ${getCookie('refreshToken')}`
     });
     const router = useRouter();
     const [updatePelajaran, { isLoading: isLoadingUpdatePelajaran, error: errorCreatePelajaran }] = usePelajaranControllerUpdateMutation()
@@ -94,7 +96,8 @@ export default function EditPelajaranPage({ params }: { params: { id: string } }
         try {
             const response = await updatePelajaran({
                 updatePelajaranDto: formData,
-                id: Number(params.id)
+                id: Number(params.id),
+                authorization: `Bearer ${getCookie('refreshToken')}`
             }).unwrap()
 
             setToastMessage(response.message as string)

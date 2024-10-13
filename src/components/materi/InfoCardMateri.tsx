@@ -1,14 +1,15 @@
 'use client'
 
 import { useMateriControllerRemoveMutation } from "@/lib/redux/services/api/endpoints/ApiEiM3";
-import { Materi } from "@/types/GetAllPelajaran";
-import { Button, Card, Modal, Spinner } from "flowbite-react";
+import { Materi } from "@/types/response/GetOnePelajaran";
+import { Button, Card, HR, Modal, Spinner } from "flowbite-react";
 import { useState } from "react";
 import moment from 'moment';
 import 'moment/locale/id';
 import 'moment-timezone';
 import ToastNotification from "../ToastNotification";
 import { useRouter } from "next/navigation";
+import { getCookie } from "cookies-next";
 
 export default function InfoCardMateri({ 
     materis,
@@ -39,7 +40,10 @@ export default function InfoCardMateri({
         if (selectMateri) {
             try {
                 setIsLoadingDeleteMateri(true)
-                const response = await deleteMateri({ id: selectMateri.id }).unwrap();
+                const response = await deleteMateri({ 
+                    id: selectMateri.id,
+                    authorization: `Bearer ${getCookie('refreshToken')}`
+                }).unwrap();
                 setToastType('success')
                 setToastMessage(`${response.message}`)
                 refetchPelajaran();
@@ -65,8 +69,9 @@ export default function InfoCardMateri({
                 {materis.map((materi) => (
                 <Card className="max-w-sm" key={materi.id}>
                     <h5 className="text-xl font-bold">{materi.nama_materi}</h5>
+                    <HR />
                     <p className="text-gray-700 dark:text-gray-300">
-                    <strong>Kreator :</strong> {materi.creatorId}
+                    <strong>Kreator :</strong> {materi.creator.nama_lengkap}
                     </p>
                     <p className="text-gray-700 dark:text-gray-300">
                     <strong>Dibuat :</strong> {moment.tz(materi.createdAt, 'Asia/Jakarta').locale('id').format('dddd, D MMMM YYYY')}

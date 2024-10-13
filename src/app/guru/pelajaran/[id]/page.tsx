@@ -9,41 +9,48 @@ import 'moment/locale/id';
 import 'moment-timezone';
 import { useRouter } from "next/navigation";
 import InfoCardMateri from "@/components/materi/InfoCardMateri";
+import { getCookie } from "cookies-next";
+import InfoCardTugas from "@/components/tugas/InfoCardTugas";
 
 export default function PelajaranPageById({ params }: { params: { id: string } }) {
   const { data: getPelajaran, isLoading: isLoadingPelajaran, isError: isErrorPelajaran, refetch: refetchPelajaran, isFetching: isRefetchPelajaran } = usePelajaranControllerFindOneQuery({
-    id: Number(params.id)
+    id: Number(params.id),
+    authorization: `Bearer ${getCookie('refreshToken')}`
   });
-  const router = useRouter()
+  const router = useRouter();
 
-  const [currentPage, setCurrentPage] = useState(1);
+  const [currentPageMateri, setCurrentPageMateri] = useState(1);
+  const [currentPageTugas, setCurrentPageTugas] = useState(1);
   const itemsPerPage = 6;
-  
+
   useEffect(() => {
-    refetchPelajaran()
-  }, [refetchPelajaran])
+    refetchPelajaran();
+  }, [refetchPelajaran]);
 
   function handleEditPelajaran(id: number) {
     router.push(`/guru/pelajaran/edit/${id}`);
-    // alert(`Id Pelajaran ${id}`)
   }
 
-  function handleEditMateri(id: number) {
-    router.push(`/guru/materi/edit/${id}`);
-    // alert(`Id Pelajaran ${id}`)
-  }
-
-  if(isLoadingPelajaran || isRefetchPelajaran) {
-    return <LoadingSkeletonGetOnePelajaran/>
+  if (isLoadingPelajaran || isRefetchPelajaran) {
+    return <LoadingSkeletonGetOnePelajaran />;
   }
 
   const materiData = getPelajaran?.pelajaran.materi || [];
+  const tugasData = getPelajaran?.pelajaran.tugas || [];
+  
   const totalMateri = materiData.length;
-  const totalPages = Math.ceil(totalMateri / itemsPerPage);
+  const totalTugas = tugasData.length;
+  
+  const totalPagesMateri = Math.ceil(totalMateri / itemsPerPage);
+  const totalPagesTugas = Math.ceil(totalTugas / itemsPerPage);
 
-  const indexOfLastMateri = currentPage * itemsPerPage;
+  const indexOfLastMateri = currentPageMateri * itemsPerPage;
   const indexOfFirstMateri = indexOfLastMateri - itemsPerPage;
   const currentMateri = materiData.slice(indexOfFirstMateri, indexOfLastMateri);
+
+  const indexOfLastTugas = currentPageTugas * itemsPerPage;
+  const indexOfFirstTugas = indexOfLastTugas - itemsPerPage;
+  const currentTugas = tugasData.slice(indexOfFirstTugas, indexOfLastTugas);
 
   return (
     <>
@@ -66,7 +73,6 @@ export default function PelajaranPageById({ params }: { params: { id: string } }
             <p className="text-gray-700 dark:text-gray-300">
               <strong>Kreator :</strong> {getPelajaran.pelajaran.creator.nama_lengkap}
             </p>
-            {/* Tombol Edit Pelajaran */}
             <Button 
               className="mt-4 w-auto px-4 mx-auto"
               onClick={() => handleEditPelajaran(getPelajaran.pelajaran.id)}
@@ -90,14 +96,43 @@ export default function PelajaranPageById({ params }: { params: { id: string } }
               materis={currentMateri}
               refetchPelajaran={refetchPelajaran}
               routeRole="guru"
-              setCurrentPage={setCurrentPage}
+              setCurrentPage={setCurrentPageMateri}
             />
-
             <div className="flex justify-center mt-4">
                 <Pagination
-                  currentPage={currentPage}
-                  totalPages={totalPages}
-                  onPageChange={(page) => setCurrentPage(page)}
+                  currentPage={currentPageMateri}
+                  totalPages={totalPagesMateri}
+                  onPageChange={(page) => setCurrentPageMateri(page)}
+                  showIcons
+                  previousLabel="Kembali"
+                  nextLabel="Lanjutkan"
+                />
+            </div>
+          </>
+          )}
+
+          <div className="flex justify-between items-center mb-4 mt-8">
+            <h3 className="text-2xl font-bold">List Tugas</h3>
+            <Button onClick={() => router.push(`/guru/tugas/create?pelajaranId=${getPelajaran.pelajaran.id}&namaPelajaran=${getPelajaran.pelajaran.nama_pelajaran}`)}>
+              Tambah Tugas
+            </Button>
+          </div>
+
+          {getPelajaran.pelajaran.tugas.length === 0 ? (
+            <p className="text-gray-400">Tugas masih kosong</p>
+          ) : (
+          <>
+            <InfoCardTugas 
+              tugas={currentTugas}
+              refetchPelajaran={refetchPelajaran}
+              routeRole="guru"
+              setCurrentPage={setCurrentPageTugas}
+            />
+            <div className="flex justify-center mt-4">
+                <Pagination
+                  currentPage={currentPageTugas}
+                  totalPages={totalPagesTugas}
+                  onPageChange={(page) => setCurrentPageTugas(page)}
                   showIcons
                   previousLabel="Kembali"
                   nextLabel="Lanjutkan"

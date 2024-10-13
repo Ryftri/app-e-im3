@@ -9,41 +9,44 @@ import 'moment/locale/id';
 import 'moment-timezone';
 import { useRouter } from "next/navigation";
 import InfoCardMateri from "@/components/materi/InfoCardMateri";
+import { getCookie } from "cookies-next";
+import InfoCardTugas from "@/components/tugas/InfoCardTugas";
 
 export default function PelajaranPageById({ params }: { params: { id: string } }) {
   const { data: getPelajaran, isLoading: isLoadingPelajaran, isError: isErrorPelajaran, refetch: refetchPelajaran, isFetching: isRefetchPelajaran } = usePelajaranControllerFindOneQuery({
-    id: Number(params.id)
+    id: Number(params.id),
+    authorization: `Bearer ${getCookie('refreshToken')}`
   });
   const router = useRouter()
 
-  const [currentPage, setCurrentPage] = useState(1);
+  const [currentPageMateri, setCurrentPageMateri] = useState(1);
+  const [currentPageTugas, setCurrentPageTugas] = useState(1);
   const itemsPerPage = 6;
   
   useEffect(() => {
     refetchPelajaran()
   }, [refetchPelajaran])
 
-  function handleEditPelajaran(id: number) {
-    router.push(`/siswa/pelajaran/edit/${id}`);
-    // alert(`Id Pelajaran ${id}`)
-  }
-
-  function handleEditMateri(id: number) {
-    router.push(`/siswa/materi/edit/${id}`);
-    // alert(`Id Pelajaran ${id}`)
-  }
-
   if(isLoadingPelajaran || isRefetchPelajaran) {
     return <LoadingSkeletonGetOnePelajaran/>
   }
 
   const materiData = getPelajaran?.pelajaran.materi || [];
+  const tugasData = getPelajaran?.pelajaran.tugas || [];
+  
   const totalMateri = materiData.length;
-  const totalPages = Math.ceil(totalMateri / itemsPerPage);
+  const totalTugas = tugasData.length;
+  
+  const totalPagesMateri = Math.ceil(totalMateri / itemsPerPage);
+  const totalPagesTugas = Math.ceil(totalTugas / itemsPerPage);
 
-  const indexOfLastMateri = currentPage * itemsPerPage;
+  const indexOfLastMateri = currentPageMateri * itemsPerPage;
   const indexOfFirstMateri = indexOfLastMateri - itemsPerPage;
   const currentMateri = materiData.slice(indexOfFirstMateri, indexOfLastMateri);
+
+  const indexOfLastTugas = currentPageTugas * itemsPerPage;
+  const indexOfFirstTugas = indexOfLastTugas - itemsPerPage;
+  const currentTugas = tugasData.slice(indexOfFirstTugas, indexOfLastTugas);
 
   return (
     <>
@@ -79,14 +82,38 @@ export default function PelajaranPageById({ params }: { params: { id: string } }
               materis={currentMateri}
               refetchPelajaran={refetchPelajaran}
               routeRole="siswa"
-              setCurrentPage={setCurrentPage}
+              setCurrentPage={setCurrentPageMateri}
             />
-
             <div className="flex justify-center mt-4">
                 <Pagination
-                  currentPage={currentPage}
-                  totalPages={totalPages}
-                  onPageChange={(page) => setCurrentPage(page)}
+                  currentPage={currentPageMateri}
+                  totalPages={totalPagesMateri}
+                  onPageChange={(page) => setCurrentPageMateri(page)}
+                  showIcons
+                  previousLabel="Kembali"
+                  nextLabel="Lanjutkan"
+                />
+            </div>
+          </>
+          )}
+
+          <h3 className="text-2xl font-bold">List Materi</h3>
+
+          {getPelajaran.pelajaran.tugas.length === 0 ? (
+            <p className="text-gray-400">Tugas masih kosong</p>
+          ) : (
+          <>
+            <InfoCardTugas 
+              tugas={currentTugas}
+              refetchPelajaran={refetchPelajaran}
+              routeRole="siswa"
+              setCurrentPage={setCurrentPageTugas}
+            />
+            <div className="flex justify-center mt-4">
+                <Pagination
+                  currentPage={currentPageTugas}
+                  totalPages={totalPagesTugas}
+                  onPageChange={(page) => setCurrentPageTugas(page)}
                   showIcons
                   previousLabel="Kembali"
                   nextLabel="Lanjutkan"
