@@ -78,15 +78,13 @@ export default function InfoCardPengumpulan({
 
                         <div className="flex w-full justify-between space-x-4 mt-4">
                             <Button className="flex-grow" 
-                                onClick={() => router.push(`/guru/pengumpulan/${pengumpulan.id}`)} // Sesuaikan dengan rute detail pengumpulan
+                                onClick={() => router.push(`/${routeRole}/pengumpulan/${pengumpulan.id}`)} // Sesuaikan dengan rute detail pengumpulan
                             >
                                 Detail
                             </Button>
-                            {routeRole !== 'siswa' && (
-                                <Button className="flex-grow" color={'failure'} onClick={() => openDeleteModal(pengumpulan)}>
-                                    Hapus
-                                </Button>
-                            )}
+                            <Button className="flex-grow" color={'failure'} onClick={() => openDeleteModal(pengumpulan)}>
+                                Hapus
+                            </Button>
                         </div>
                     </Card>
                 ))}
