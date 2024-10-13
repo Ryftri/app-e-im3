@@ -2,7 +2,7 @@
 
 import { useTugasControllerRemoveMutation } from "@/lib/redux/services/api/endpoints/ApiEiM3";
 import { Tugas } from "@/types/response/GetOnePelajaran";
-import { Button, Card, Modal, Spinner } from "flowbite-react";
+import { Button, Card, HR, Modal, Spinner } from "flowbite-react";
 import { useState } from "react";
 import moment from 'moment';
 import 'moment/locale/id';
@@ -68,6 +68,7 @@ export default function InfoCardTugas({
                 {tugas.map((tugas) => (
                 <Card className="max-w-sm" key={tugas.id}>
                     <h5 className="text-xl font-bold">{tugas.nama_tugas}</h5>
+                    <HR />
                     <p className="text-gray-700 dark:text-gray-300">
                         <strong>Kreator :</strong> {tugas.creator.nama_lengkap}
                     </p>
