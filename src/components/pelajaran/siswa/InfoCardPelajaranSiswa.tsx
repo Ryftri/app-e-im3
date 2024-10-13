@@ -2,6 +2,7 @@
 
 import { usePelajaranControllerRemoveMutation } from "@/lib/redux/services/api/endpoints/ApiEiM3";
 import { Pelajaran } from "@/types/response/GetPelajaranByQueryParams";
+import { getCookie } from "cookies-next";
 import { Button, Card, Modal, Spinner } from "flowbite-react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -32,7 +33,10 @@ export const InfoCardPelajaranSiswa = ({
       if (selectedPelajaran) {
         try {
           setIsLoadingDeletePelajaran(true)
-          await deletePelajaran({ id: selectedPelajaran.id });
+          await deletePelajaran({ 
+            id: selectedPelajaran.id,
+            authorization: `Bearer ${getCookie('refreshToken')}`
+          });
           refetchPelajaran();
           setIsDeleteModalOpen(false);
           setCurrentPage(1)
