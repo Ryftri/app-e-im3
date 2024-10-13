@@ -6,10 +6,13 @@ import { useSelector } from "react-redux"
 import DashboardLayoutGuru from "@/components/DashboardLayoutGuru"
 import { useEffect } from "react";
 import LoadingSkeletonDashboardGuru from "./loading";
+import { getCookie } from "cookies-next";
 
 export default function GuruPage () {
     const user = useSelector((state: RootState) => state.user)
-    const { data: getAllPelajaran, isLoading: isLoadingAllPelajaran, isError: isErrorAllPelajaran, refetch: refetchPelajaran, isFetching: isRefetchPelajaran } = usePelajaranControllerFindAllQuery();
+    const { data: getAllPelajaran, isLoading: isLoadingAllPelajaran, isError: isErrorAllPelajaran, refetch: refetchPelajaran, isFetching: isRefetchPelajaran } = usePelajaranControllerFindAllQuery({
+        authorization: `Bearer ${getCookie('refreshToken')}`
+    });
 
     useEffect(() => {
         refetchPelajaran();

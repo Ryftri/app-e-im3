@@ -8,6 +8,7 @@ import { useUserControllerCreateMutation } from '@/lib/redux/services/api/endpoi
 import { daftarSekolah } from '@/types/ListSekolah';
 import { GlobalResponse } from '@/types/GlobalResponse';
 import { useRouter } from 'next/navigation';
+import { getCookie } from 'cookies-next';
 
 function CreateGuru() {
   const router = useRouter();
@@ -45,7 +46,10 @@ function CreateGuru() {
         isActive: true,
       };
   
-      const response = await createUser({ createUserDto: userData })
+      const response = await createUser({ 
+        createUserDto: userData,
+        authorization: `Bearer ${getCookie('refreshToken')}` 
+      })
   
       console.log(response)
       const error : GlobalResponse = response.error as GlobalResponse

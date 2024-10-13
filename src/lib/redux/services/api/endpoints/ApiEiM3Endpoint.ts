@@ -1,18 +1,16 @@
 import { GetAllGuru } from "@/types/GetAllGuru";
 import { ApiEiM3Slice as api } from "../ApiEiM3Slice";
 import { GetAllSiswa } from "@/types/GetAllSiswa";
-import { GetAllPelajaran } from "@/types/GetAllPelajaran";
-import { GetMeResponse } from "@/types/GetMeResponse";
-import { RegisterResponse } from "@/types/RegisterResponse";
-import { getCookie } from "cookies-next";
 import { GlobalResponse } from "@/types/GlobalResponse";
-import { GetOnePelajaran } from "@/types/response/GetOnePelajaran";
-import { GetOneMateri } from "@/types/GetMateriByIdResponse";
-import { AutoLoginResponse } from "@/types/AutoLoginResponse";
-import { GetPelajaranbyQueryParams } from "@/types/response/GetPelajaranByQueryParams";
 import { GetGuruByID } from "@/types/getGuruById";
 import { GetSiswaByID } from "@/types/GetSiswaById";
-
+import { GetAllPelajaran } from "@/types/GetAllPelajaran";
+import { GetOnePelajaran } from "@/types/response/GetOnePelajaran";
+import { GetPelajaranbyQueryParams } from "@/types/response/GetPelajaranByQueryParams";
+import { GetOneMateri } from "@/types/GetMateriByIdResponse";
+import { RegisterResponse } from "@/types/RegisterResponse";
+import { GetMeResponse } from "@/types/GetMeResponse";
+import { AutoLoginResponse } from "@/types/AutoLoginResponse";
 const injectedRtkApi = api.injectEndpoints({
   endpoints: (build) => ({
     userControllerGetAllGuru: build.query<
@@ -577,7 +575,7 @@ export type TugasControllerUpdateApiArg = {
   authorization: string;
   updateTugasDto: UpdateTugasDto;
 };
-export type TugasControllerRemoveApiResponse = GlobalResponse;
+export type TugasControllerRemoveApiResponse = unknown;
 export type TugasControllerRemoveApiArg = {
   id: number;
   /** Bearer [token] */

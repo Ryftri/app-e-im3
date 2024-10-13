@@ -8,6 +8,7 @@ import ToastNotification from '@/components/ToastNotification';
 import { isGlobalResponse } from '@/lib/utils/isGlobalResponse';
 import { GlobalResponse } from '@/types/GlobalResponse';
 import { useRouter } from 'next/navigation';
+import { getCookie } from 'cookies-next';
 
 export default function CreatePelajaranPage() {
     const router = useRouter();
@@ -78,7 +79,8 @@ export default function CreatePelajaranPage() {
 
         try {
             const response = await createPelajaran({
-                createPelajaranDto: formData
+                createPelajaranDto: formData,
+                authorization: `Bearer ${getCookie('refreshToken')}`
             }).unwrap()
 
             setToastMessage(response.message as string)

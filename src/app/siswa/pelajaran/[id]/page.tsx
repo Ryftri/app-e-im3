@@ -9,10 +9,12 @@ import 'moment/locale/id';
 import 'moment-timezone';
 import { useRouter } from "next/navigation";
 import InfoCardMateri from "@/components/materi/InfoCardMateri";
+import { getCookie } from "cookies-next";
 
 export default function PelajaranPageById({ params }: { params: { id: string } }) {
   const { data: getPelajaran, isLoading: isLoadingPelajaran, isError: isErrorPelajaran, refetch: refetchPelajaran, isFetching: isRefetchPelajaran } = usePelajaranControllerFindOneQuery({
-    id: Number(params.id)
+    id: Number(params.id),
+    authorization: `Bearer ${getCookie('refreshToken')}`
   });
   const router = useRouter()
 

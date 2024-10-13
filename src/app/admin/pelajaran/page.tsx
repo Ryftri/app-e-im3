@@ -6,10 +6,13 @@ import { Button, Pagination } from "flowbite-react";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import LoadingSkeletonListPelajaran from "./loading";
+import { getCookie } from "cookies-next";
 
 
 export default function PelajaranPage() {
-  const { data: getAllPelajaran, isLoading: isLoadingAllPelajaran, isError: isErrorAllPelajaran, refetch: refetchPelajaran, isFetching: isRefetchPelajaran } = usePelajaranControllerFindAllQuery();
+  const { data: getAllPelajaran, isLoading: isLoadingAllPelajaran, isError: isErrorAllPelajaran, refetch: refetchPelajaran, isFetching: isRefetchPelajaran } = usePelajaranControllerFindAllQuery({
+    authorization: `Bearer ${getCookie('refreshToken')}`
+  });
   const router = useRouter();
 
   const [currentPage, setCurrentPage] = useState(1);

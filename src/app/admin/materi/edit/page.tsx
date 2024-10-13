@@ -7,13 +7,17 @@ import { useMateriControllerUpdateMutation, useMateriControllerFindOneQuery } fr
 import ToastNotification from '@/components/ToastNotification';
 import TiptapEditor from '@/components/TiptapEditor';
 import LoadingSkeletonUpdateMateri from './loading';
+import { getCookie } from 'cookies-next';
 
 const EditMateri = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
   const materiId = searchParams.get('materiId');
   
-  const { data: getMateri, isLoading: isLoadingGetMateri } = useMateriControllerFindOneQuery({ id: Number(materiId ?? 0) });
+  const { data: getMateri, isLoading: isLoadingGetMateri } = useMateriControllerFindOneQuery({ 
+    id: Number(materiId ?? 0),
+    authorization: `Bearer ${getCookie('refreshToken')}` 
+  });
   const [updateMateri, { isLoading: isLoadingUpdateMateri }] = useMateriControllerUpdateMutation();
 
   const pelajaranId = searchParams.get('pelajaranId')
@@ -90,7 +94,8 @@ const EditMateri = () => {
 
         const response = await updateMateri({
             id: Number(materiId),
-            updateMateriDto: formData
+            updateMateriDto: formData,
+            authorization: `Bearer ${getCookie('refreshToken')}`
         }).unwrap();
 
         setToastMessage(response.message as string);

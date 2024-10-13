@@ -11,6 +11,7 @@ import { useRouter } from 'next/navigation';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/lib/redux/store';
 import FlexibleLoadingText from '@/components/animations/FlexibleLoadingTextToPage';
+import { getCookie } from 'cookies-next';
 
 export default function CreatePelajaranPage() {
     const router = useRouter();
@@ -82,7 +83,8 @@ export default function CreatePelajaranPage() {
 
         try {
             const response = await createPelajaran({
-                createPelajaranDto: formData
+                createPelajaranDto: formData,
+                authorization: `Bearer ${getCookie('refreshToken')}`
             }).unwrap()
 
             setToastMessage(response.message as string)

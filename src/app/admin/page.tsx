@@ -8,12 +8,19 @@ import { Spinner } from "flowbite-react";
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
 import LoadingSkeletonDashboardAdmin from "./loading";
+import { getCookie } from "cookies-next";
 
 export default function AdminPage () {
     const user = useSelector((state: RootState) => state.user)
-    const { data: getAllGuru, isLoading: loadingAllGuru, isError: isErrorAllGuru, refetch: refetchGuru, isFetching: isRefetchGuru } = useUserControllerGetAllGuruQuery();
-    const { data: getAllSiswa, isLoading: loadingAllSiswa, isError: isErrorAllSiswa, refetch: refetchSiswa, isFetching: isRefetchSiswa } = useUserControllerGetAllSiswaQuery();
-    const { data: getAllPelajaran, isLoading: loadingAllPelajaran, isError: isErrorAllPelajaran, refetch: refetchPelajaran, isFetching: isRefetchPelajaran } = usePelajaranControllerFindAllQuery();
+    const { data: getAllGuru, isLoading: loadingAllGuru, isError: isErrorAllGuru, refetch: refetchGuru, isFetching: isRefetchGuru } = useUserControllerGetAllGuruQuery({
+        authorization: `Bearer ${getCookie('refreshToken')}`
+    });
+    const { data: getAllSiswa, isLoading: loadingAllSiswa, isError: isErrorAllSiswa, refetch: refetchSiswa, isFetching: isRefetchSiswa } = useUserControllerGetAllSiswaQuery({
+        authorization: `Bearer ${getCookie('refreshToken')}`
+    });
+    const { data: getAllPelajaran, isLoading: loadingAllPelajaran, isError: isErrorAllPelajaran, refetch: refetchPelajaran, isFetching: isRefetchPelajaran } = usePelajaranControllerFindAllQuery({
+        authorization: `Bearer ${getCookie('refreshToken')}`
+    });
     
     useEffect(() => {
         refetchGuru();
