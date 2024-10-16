@@ -1,16 +1,16 @@
 // To parse this data:
 //
-//   import { Convert, GetPengumpulanByID } from "./file";
+//   import { Convert, GetAllPengumpulan } from "./file";
 //
-//   const getPengumpulanByID = Convert.toGetPengumpulanByID(json);
+//   const getAllPengumpulan = Convert.toGetAllPengumpulan(json);
 //
 // These functions will throw an error if the JSON doesn't
 // match the expected interface, even if the JSON is valid.
 
-export interface GetPengumpulanByID {
+export interface GetAllPengumpulan {
     status:      string;
     message:     string;
-    pengumpulan: Pengumpulan;
+    pengumpulan: Pengumpulan[];
 }
 
 export interface Pengumpulan {
@@ -22,8 +22,6 @@ export interface Pengumpulan {
     createdAt:          Date;
     updatedAt:          Date;
     pengumpul:          Pengumpul;
-    tugas:              Tugas;
-    nilai:              Nilai | null;
 }
 
 export interface File {
@@ -32,44 +30,23 @@ export interface File {
     originalName: string;
 }
 
-export interface Nilai {
-    id:            number;
-    pengumpulanId: number;
-    nilai:         number;
-    createdAt:     Date;
-    updatedAt:     Date;
-}
-
 export interface Pengumpul {
     id:           number;
     nama_lengkap: string;
     roleId:       number;
-    createdAt:    Date;
-    updatedAt:    Date;
-}
-
-export interface Tugas {
-    id:          number;
-    pelajaranId: number;
-    creatorId:   number;
-    nama_tugas:  string;
-    isi_tugas:   string;
-    files:       File[];
-    openIn:      Date;
-    deadline:    Date;
-    createdAt:   Date;
-    updatedAt:   Date;
+    asal_sekolah: null;
+    isActive:     boolean;
 }
 
 // Converts JSON strings to/from your types
 // and asserts the results of JSON.parse at runtime
 export class Convert {
-    public static toGetPengumpulanByID(json: string): GetPengumpulanByID {
-        return cast(JSON.parse(json), r("GetPengumpulanByID"));
+    public static toGetAllPengumpulan(json: string): GetAllPengumpulan {
+        return cast(JSON.parse(json), r("GetAllPengumpulan"));
     }
 
-    public static getPengumpulanByIDToJson(value: GetPengumpulanByID): string {
-        return JSON.stringify(uncast(value, r("GetPengumpulanByID")), null, 2);
+    public static getAllPengumpulanToJson(value: GetAllPengumpulan): string {
+        return JSON.stringify(uncast(value, r("GetAllPengumpulan")), null, 2);
     }
 }
 
@@ -226,10 +203,10 @@ function r(name: string) {
 }
 
 const typeMap: any = {
-    "GetPengumpulanByID": o([
+    "GetAllPengumpulan": o([
         { json: "status", js: "status", typ: "" },
         { json: "message", js: "message", typ: "" },
-        { json: "pengumpulan", js: "pengumpulan", typ: r("Pengumpulan") },
+        { json: "pengumpulan", js: "pengumpulan", typ: a(r("Pengumpulan")) },
     ], false),
     "Pengumpulan": o([
         { json: "id", js: "id", typ: 0 },
@@ -240,38 +217,17 @@ const typeMap: any = {
         { json: "createdAt", js: "createdAt", typ: Date },
         { json: "updatedAt", js: "updatedAt", typ: Date },
         { json: "pengumpul", js: "pengumpul", typ: r("Pengumpul") },
-        { json: "tugas", js: "tugas", typ: r("Tugas") },
-        { json: "nilai", js: "nilai", typ: u(r("Nilai"), null) },
     ], false),
     "File": o([
         { json: "fileUrl", js: "fileUrl", typ: "" },
         { json: "fileName", js: "fileName", typ: "" },
         { json: "originalName", js: "originalName", typ: "" },
     ], false),
-    "Nilai": o([
-        { json: "id", js: "id", typ: 0 },
-        { json: "pengumpulanId", js: "pengumpulanId", typ: 0 },
-        { json: "nilai", js: "nilai", typ: 0 },
-        { json: "createdAt", js: "createdAt", typ: Date },
-        { json: "updatedAt", js: "updatedAt", typ: Date },
-    ], false),
     "Pengumpul": o([
         { json: "id", js: "id", typ: 0 },
         { json: "nama_lengkap", js: "nama_lengkap", typ: "" },
         { json: "roleId", js: "roleId", typ: 0 },
-        { json: "createdAt", js: "createdAt", typ: Date },
-        { json: "updatedAt", js: "updatedAt", typ: Date },
-    ], false),
-    "Tugas": o([
-        { json: "id", js: "id", typ: 0 },
-        { json: "pelajaranId", js: "pelajaranId", typ: 0 },
-        { json: "creatorId", js: "creatorId", typ: 0 },
-        { json: "nama_tugas", js: "nama_tugas", typ: "" },
-        { json: "isi_tugas", js: "isi_tugas", typ: "" },
-        { json: "files", js: "files", typ: a(r("File")) },
-        { json: "openIn", js: "openIn", typ: Date },
-        { json: "deadline", js: "deadline", typ: Date },
-        { json: "createdAt", js: "createdAt", typ: Date },
-        { json: "updatedAt", js: "updatedAt", typ: Date },
+        { json: "asal_sekolah", js: "asal_sekolah", typ: null },
+        { json: "isActive", js: "isActive", typ: true },
     ], false),
 };

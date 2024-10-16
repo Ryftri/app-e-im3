@@ -1,20 +1,4 @@
-import { GetAllGuru } from "@/types/GetAllGuru";
 import { ApiEiM3Slice as api } from "../ApiEiM3Slice";
-import { GetAllSiswa } from "@/types/GetAllSiswa";
-import { GetAllPelajaran } from "@/types/GetAllPelajaran";
-import { GetMeResponse } from "@/types/GetMeResponse";
-import { RegisterResponse } from "@/types/RegisterResponse";
-import { GlobalResponse } from "@/types/GlobalResponse";
-import { GetOnePelajaran } from "@/types/response/GetOnePelajaran";
-import { GetOneMateri } from "@/types/GetMateriByIdResponse";
-import { AutoLoginResponse } from "@/types/AutoLoginResponse";
-import { GetPelajaranbyQueryParams } from "@/types/response/GetPelajaranByQueryParams";
-import { GetGuruByID } from "@/types/getGuruById";
-import { GetSiswaByID } from "@/types/GetSiswaById";
-import { GetTugasByID } from "@/types/response/GetTugasById";
-import { GetPengumpulanByID } from "@/types/response/GetPengumpulanById";
-import { GetAllPengumpulan } from "@/types/response/GetAllPengumpulan";
-
 const injectedRtkApi = api.injectEndpoints({
   endpoints: (build) => ({
     userControllerGetAllGuru: build.query<
@@ -300,19 +284,13 @@ const injectedRtkApi = api.injectEndpoints({
       PengumpulanControllerFindAllApiResponse,
       PengumpulanControllerFindAllApiArg
     >({
-      query: (queryArg) => ({ 
-        url: `/pengumpulan/get-all`,
-        headers: { Authorization: queryArg.authorization },
-      }),
+      query: () => ({ url: `/pengumpulan/get-all` }),
     }),
     pengumpulanControllerFindOne: build.query<
       PengumpulanControllerFindOneApiResponse,
       PengumpulanControllerFindOneApiArg
     >({
-      query: (queryArg) => ({ 
-        url: `/pengumpulan/get-by-id/${queryArg.id}`,
-        headers: { Authorization: queryArg.authorization }
-      }),
+      query: (queryArg) => ({ url: `/pengumpulan/get-by-id/${queryArg.id}` }),
     }),
     pengumpulanControllerUpdate: build.mutation<
       PengumpulanControllerUpdateApiResponse,
@@ -322,7 +300,6 @@ const injectedRtkApi = api.injectEndpoints({
         url: `/pengumpulan/update/${queryArg.id}`,
         method: "PATCH",
         body: queryArg.updatePengumpulanDto,
-        headers: { Authorization: queryArg.authorization },
       }),
     }),
     pengumpulanControllerRemove: build.mutation<
@@ -332,7 +309,6 @@ const injectedRtkApi = api.injectEndpoints({
       query: (queryArg) => ({
         url: `/pengumpulan/delete/${queryArg.id}`,
         method: "DELETE",
-        headers: { Authorization: queryArg.authorization },
       }),
     }),
     nilaiControllerCreate: build.mutation<
@@ -438,17 +414,17 @@ const injectedRtkApi = api.injectEndpoints({
   overrideExisting: false,
 });
 export { injectedRtkApi as ApiEiM3 };
-export type UserControllerGetAllGuruApiResponse = GetAllGuru;
+export type UserControllerGetAllGuruApiResponse = unknown;
 export type UserControllerGetAllGuruApiArg = {
   /** Bearer [token] */
   authorization: string;
 };
-export type UserControllerGetAllSiswaApiResponse = GetAllSiswa;
+export type UserControllerGetAllSiswaApiResponse = unknown;
 export type UserControllerGetAllSiswaApiArg = {
   /** Bearer [token] */
   authorization: string;
 };
-export type UserControllerCreateApiResponse = GlobalResponse;
+export type UserControllerCreateApiResponse = unknown;
 export type UserControllerCreateApiArg = {
   /** Bearer [token] */
   authorization: string;
@@ -460,19 +436,19 @@ export type UserControllerGetAllApiArg = {
   /** Bearer [token] */
   authorization: string;
 };
-export type UserControllerFinOneGuruApiResponse = GetGuruByID;
+export type UserControllerFinOneGuruApiResponse = unknown;
 export type UserControllerFinOneGuruApiArg = {
   id: number;
   /** Bearer [token] */
   authorization: string;
 };
-export type UserControllerFinOneSiswaApiResponse = GetSiswaByID;
+export type UserControllerFinOneSiswaApiResponse = unknown;
 export type UserControllerFinOneSiswaApiArg = {
   id: number;
   /** Bearer [token] */
   authorization: string;
 };
-export type UserControllerUpdateApiResponse = GlobalResponse;
+export type UserControllerUpdateApiResponse = unknown;
 export type UserControllerUpdateApiArg = {
   id: number;
   /** Bearer [token] */
@@ -480,14 +456,14 @@ export type UserControllerUpdateApiArg = {
   /** Update User */
   updateUserDto: UpdateUserDto;
 };
-export type UserControllerToggleActiveStatusApiResponse = GlobalResponse;
+export type UserControllerToggleActiveStatusApiResponse = unknown;
 export type UserControllerToggleActiveStatusApiArg = {
   id: number;
   /** Bearer [token] */
   authorization: string;
   updateIsActiveDto: UpdateIsActiveDto;
 };
-export type UserControllerDeleteApiResponse = GlobalResponse;
+export type UserControllerDeleteApiResponse = unknown;
 export type UserControllerDeleteApiArg = {
   id: number;
   /** Bearer [token] */
@@ -505,31 +481,31 @@ export type UserControllerUpdateProfileUSerApiArg = {
   /** Update User */
   updateUserDto: UpdateUserDto;
 };
-export type PelajaranControllerCreateApiResponse = GlobalResponse;
+export type PelajaranControllerCreateApiResponse = unknown;
 export type PelajaranControllerCreateApiArg = {
   /** Bearer [token] */
   authorization: string;
   createPelajaranDto: CreatePelajaranDto;
 };
-export type PelajaranControllerFindAllApiResponse = GetAllPelajaran;
+export type PelajaranControllerFindAllApiResponse = unknown;
 export type PelajaranControllerFindAllApiArg = {
   /** Bearer [token] */
   authorization: string;
 };
-export type PelajaranControllerFindOneApiResponse = GetOnePelajaran;
+export type PelajaranControllerFindOneApiResponse = unknown;
 export type PelajaranControllerFindOneApiArg = {
   id: number;
   /** Bearer [token] */
   authorization: string;
 };
-export type PelajaranControllerFindBySekolahAndJenjangApiResponse = GetPelajaranbyQueryParams;
+export type PelajaranControllerFindBySekolahAndJenjangApiResponse = unknown;
 export type PelajaranControllerFindBySekolahAndJenjangApiArg = {
   sekolah: string;
   jenjang: number;
   /** Bearer [token] */
   authorization: string;
 };
-export type PelajaranControllerUpdateApiResponse = GlobalResponse;
+export type PelajaranControllerUpdateApiResponse = unknown;
 export type PelajaranControllerUpdateApiArg = {
   id: number;
   /** Bearer [token] */
@@ -542,93 +518,88 @@ export type PelajaranControllerRemoveApiArg = {
   /** Bearer [token] */
   authorization: string;
 };
-export type MateriControllerCreateApiResponse = GlobalResponse;
+export type MateriControllerCreateApiResponse = unknown;
 export type MateriControllerCreateApiArg = {
   /** Bearer [token] */
   authorization: string;
-  createMateriDto: FormData;
+  createMateriDto: CreateMateriDto;
 };
 export type MateriControllerFindAllApiResponse = unknown;
 export type MateriControllerFindAllApiArg = {
   /** Bearer [token] */
   authorization: string;
 };
-export type MateriControllerFindOneApiResponse = GetOneMateri;
+export type MateriControllerFindOneApiResponse = unknown;
 export type MateriControllerFindOneApiArg = {
   id: number;
   /** Bearer [token] */
   authorization: string;
 };
-export type MateriControllerUpdateApiResponse = GlobalResponse;
+export type MateriControllerUpdateApiResponse = unknown;
 export type MateriControllerUpdateApiArg = {
   id: number;
   /** Bearer [token] */
   authorization: string;
-  updateMateriDto: FormData;
+  updateMateriDto: UpdateMateriDto;
 };
-export type MateriControllerRemoveApiResponse = GlobalResponse;
+export type MateriControllerRemoveApiResponse = unknown;
 export type MateriControllerRemoveApiArg = {
   id: number;
   /** Bearer [token] */
   authorization: string;
 };
-export type TugasControllerCreateApiResponse = GlobalResponse;
+export type TugasControllerCreateApiResponse = unknown;
 export type TugasControllerCreateApiArg = {
   /** Bearer [token] */
   authorization: string;
-  createTugasDto: FormData;
+  createTugasDto: CreateTugasDto;
 };
 export type TugasControllerFindAllApiResponse = unknown;
 export type TugasControllerFindAllApiArg = {
   /** Bearer [token] */
   authorization: string;
 };
-export type TugasControllerFindOneApiResponse = GetTugasByID;
+export type TugasControllerFindOneApiResponse = unknown;
 export type TugasControllerFindOneApiArg = {
   id: number;
   /** Bearer [token] */
   authorization: string;
 };
-export type TugasControllerUpdateApiResponse = GlobalResponse;
+export type TugasControllerUpdateApiResponse = unknown;
 export type TugasControllerUpdateApiArg = {
   id: number;
   /** Bearer [token] */
   authorization: string;
-  updateTugasDto: FormData;
+  updateTugasDto: UpdateTugasDto;
 };
-export type TugasControllerRemoveApiResponse = GlobalResponse;
+export type TugasControllerRemoveApiResponse = unknown;
 export type TugasControllerRemoveApiArg = {
   id: number;
   /** Bearer [token] */
   authorization: string;
 };
-export type PengumpulanControllerCreateApiResponse = GlobalResponse;
+export type PengumpulanControllerCreateApiResponse = unknown;
 export type PengumpulanControllerCreateApiArg = {
   /** Bearer [token] */
   authorization: string;
-  createPengumpulanDto: FormData;
+  createPengumpulanDto: CreatePengumpulanDto;
 };
-export type PengumpulanControllerFindAllApiResponse = GetAllPengumpulan;
-export type PengumpulanControllerFindAllApiArg = {
-  authorization: string;
-};
-export type PengumpulanControllerFindOneApiResponse = GetPengumpulanByID;
+export type PengumpulanControllerFindAllApiResponse = unknown;
+export type PengumpulanControllerFindAllApiArg = void;
+export type PengumpulanControllerFindOneApiResponse = unknown;
 export type PengumpulanControllerFindOneApiArg = {
   id: number;
-  authorization: string;
 };
-export type PengumpulanControllerUpdateApiResponse = GlobalResponse;
+export type PengumpulanControllerUpdateApiResponse = unknown;
 export type PengumpulanControllerUpdateApiArg = {
   id: number;
-  updatePengumpulanDto: FormData;
-  authorization: string;
+  updatePengumpulanDto: UpdatePengumpulanDto;
 };
-export type PengumpulanControllerRemoveApiResponse = GlobalResponse;
+export type PengumpulanControllerRemoveApiResponse = unknown;
 export type PengumpulanControllerRemoveApiArg = {
   id: number;
-  authorization: string;
 };
-export type NilaiControllerCreateApiResponse = GlobalResponse;
+export type NilaiControllerCreateApiResponse = unknown;
 export type NilaiControllerCreateApiArg = {
   /** Bearer [token] */
   authorization: string;
@@ -645,24 +616,24 @@ export type NilaiControllerFindOneApiArg = {
   /** Bearer [token] */
   authorization: string;
 };
-export type NilaiControllerUpdateApiResponse = GlobalResponse;
+export type NilaiControllerUpdateApiResponse = unknown;
 export type NilaiControllerUpdateApiArg = {
   id: number;
   /** Bearer [token] */
   authorization: string;
   updateNilaiDto: UpdateNilaiDto;
 };
-export type NilaiControllerRemoveApiResponse = GlobalResponse;
+export type NilaiControllerRemoveApiResponse = unknown;
 export type NilaiControllerRemoveApiArg = {
   id: number;
   /** Bearer [token] */
   authorization: string;
 };
-export type AuthControllerRegisterApiResponse = RegisterResponse;
+export type AuthControllerRegisterApiResponse = unknown;
 export type AuthControllerRegisterApiArg = {
   registerDto: RegisterDto;
 };
-export type AuthControllerLoginApiResponse = GetMeResponse;
+export type AuthControllerLoginApiResponse = unknown;
 export type AuthControllerLoginApiArg = {
   loginDto: LoginDto;
 };
@@ -671,7 +642,7 @@ export type AuthControllerLogoutApiArg = {
   /** Bearer [token] */
   authorization: string;
 };
-export type AuthControllerAutoLoginApiResponse = AutoLoginResponse;
+export type AuthControllerAutoLoginApiResponse = unknown;
 export type AuthControllerAutoLoginApiArg = {
   /** Bearer [token] */
   authorization: string;

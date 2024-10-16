@@ -32,7 +32,7 @@ export default function ListGuruAdminPage () {
     return (
         <>
         <div className="flex justify-between items-center mb-4">
-            <h1 className="text-2xl font-bold">List Guru</h1>
+            <h1 className="text-2xl font-bold">Daftar Guru</h1>
             <Button onClick={() => router.push('/admin/guru/create')}>
                 Tambah Guru
             </Button>

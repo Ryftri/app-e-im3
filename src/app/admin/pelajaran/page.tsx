@@ -41,7 +41,7 @@ export default function PelajaranPage() {
   return (
     <>
       <div className="flex justify-between items-center mb-4">
-        <h1 className="text-2xl font-bold">List Pelajaran</h1>
+        <h1 className="text-2xl font-bold">Daftar Pelajaran</h1>
         <Button onClick={() => router.push('/admin/pelajaran/create')}>
           Tambah Pelajaran
         </Button>

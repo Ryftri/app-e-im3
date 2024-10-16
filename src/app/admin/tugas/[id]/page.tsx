@@ -72,7 +72,7 @@ export default function TugasPageById({ params }: { params: { id: string } }) {
                 </Card>
 
                 <div className="flex justify-between items-center mb-4">
-                <h3 className="text-2xl font-bold">List Pengumpulan</h3>
+                <h3 className="text-2xl font-bold">Daftar Pengumpulan</h3>
                 </div>
 
                 {getTugas.tugas.pengumpulan.length === 0 ? (

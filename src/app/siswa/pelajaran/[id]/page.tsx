@@ -72,7 +72,7 @@ export default function PelajaranPageById({ params }: { params: { id: string } }
             {/* Tombol Edit Pelajaran */}
           </Card>
 
-          <h3 className="text-2xl font-bold">List Materi</h3>
+          <h3 className="text-2xl font-bold">Daftar Materi</h3>
 
           {getPelajaran.pelajaran.materi.length === 0 ? (
             <p className="text-gray-400">Materi masih kosong</p>
@@ -97,7 +97,7 @@ export default function PelajaranPageById({ params }: { params: { id: string } }
           </>
           )}
 
-          <h3 className="text-2xl font-bold">List Materi</h3>
+          <h3 className="text-2xl font-bold">Daftar Tugas</h3>
 
           {getPelajaran.pelajaran.tugas.length === 0 ? (
             <p className="text-gray-400">Tugas masih kosong</p>

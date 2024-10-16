@@ -86,7 +86,7 @@ const TambahTugas = () => {
     return (
       <>
         <form onSubmit={handleSubmit} className="max-w-lg mx-auto p-5 space-y-4">
-          <h2 className="text-2xl font-bold">Tambah Tugas</h2>
+          <h2 className="text-2xl font-bold">Form Tugas</h2>
   
           {errorMessage && (
             <Alert color="failure" onDismiss={() => setErrorMessage('')}>
@@ -159,7 +159,7 @@ const TambahTugas = () => {
           </div>
   
           <Button type="submit" className="bg-blue-500 text-white" disabled={isLoadingCreateTugas}>
-            {isLoadingCreateTugas ? <Spinner /> : 'Tambah Tugas'}
+            {isLoadingCreateTugas ? <Spinner /> : 'Simpan Tugas'}
           </Button>
         </form>
         {showToast && (

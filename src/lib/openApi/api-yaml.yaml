@@ -662,7 +662,13 @@ paths:
     post:
       operationId: NilaiController_create
       summary: Create Nilai
-      parameters: []
+      parameters:
+        - name: Authorization
+          in: header
+          description: Bearer [token]
+          required: true
+          schema:
+            type: string
       requestBody:
         required: true
         content:
@@ -678,7 +684,13 @@ paths:
     get:
       operationId: NilaiController_findAll
       summary: Get All Nilai
-      parameters: []
+      parameters:
+        - name: Authorization
+          in: header
+          description: Bearer [token]
+          required: true
+          schema:
+            type: string
       responses:
         '200':
           description: ''
@@ -694,6 +706,12 @@ paths:
           in: path
           schema:
             type: number
+        - name: Authorization
+          in: header
+          description: Bearer [token]
+          required: true
+          schema:
+            type: string
       responses:
         '200':
           description: ''
@@ -709,6 +727,12 @@ paths:
           in: path
           schema:
             type: number
+        - name: Authorization
+          in: header
+          description: Bearer [token]
+          required: true
+          schema:
+            type: string
       requestBody:
         required: true
         content:
@@ -730,6 +754,12 @@ paths:
           in: path
           schema:
             type: number
+        - name: Authorization
+          in: header
+          description: Bearer [token]
+          required: true
+          schema:
+            type: string
       responses:
         '200':
           description: ''

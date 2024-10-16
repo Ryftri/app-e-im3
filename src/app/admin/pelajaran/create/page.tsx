@@ -101,7 +101,7 @@ export default function CreatePelajaranPage() {
     return (
     <>
         <div className="flex justify-between items-center mb-4">
-        <h1 className="text-2xl font-bold">Tambah Pelajaran</h1>
+        <h1 className="text-2xl font-bold">Form Tambah Pelajaran</h1>
         </div>
 
         <form className="space-y-4" onSubmit={handleSubmit}>

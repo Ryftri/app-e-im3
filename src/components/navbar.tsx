@@ -15,7 +15,7 @@ export function NavbarComponent() {
     const isShow = useSelector((state: RootState) => state.showSideBar.isShow);
   return (    
     <Navbar fluid>
-      {pathname === '/' ? <></> :
+      {pathname === '/' || pathname === '/register-guru' || pathname === '/register-siswa' ? <></> :
       <button 
       aria-controls="sidebar-multi-level-sidebar" 
       type="button" 
