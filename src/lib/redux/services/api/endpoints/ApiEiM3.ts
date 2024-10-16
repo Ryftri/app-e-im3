@@ -13,6 +13,7 @@ import { GetGuruByID } from "@/types/getGuruById";
 import { GetSiswaByID } from "@/types/GetSiswaById";
 import { GetTugasByID } from "@/types/response/GetTugasById";
 import { GetPengumpulanByID } from "@/types/response/GetPengumpulanById";
+import { GetAllPengumpulan } from "@/types/response/GetAllPengumpulan";
 
 const injectedRtkApi = api.injectEndpoints({
   endpoints: (build) => ({
@@ -299,7 +300,10 @@ const injectedRtkApi = api.injectEndpoints({
       PengumpulanControllerFindAllApiResponse,
       PengumpulanControllerFindAllApiArg
     >({
-      query: () => ({ url: `/pengumpulan/get-all` }),
+      query: (queryArg) => ({ 
+        url: `/pengumpulan/get-all`,
+        headers: { Authorization: queryArg.authorization },
+      }),
     }),
     pengumpulanControllerFindOne: build.query<
       PengumpulanControllerFindOneApiResponse,
@@ -604,8 +608,10 @@ export type PengumpulanControllerCreateApiArg = {
   authorization: string;
   createPengumpulanDto: FormData;
 };
-export type PengumpulanControllerFindAllApiResponse = unknown;
-export type PengumpulanControllerFindAllApiArg = void;
+export type PengumpulanControllerFindAllApiResponse = GetAllPengumpulan;
+export type PengumpulanControllerFindAllApiArg = {
+  authorization: string;
+};
 export type PengumpulanControllerFindOneApiResponse = GetPengumpulanByID;
 export type PengumpulanControllerFindOneApiArg = {
   id: number;

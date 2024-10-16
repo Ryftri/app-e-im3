@@ -89,7 +89,7 @@ export default function PelajaranPageById({ params }: { params: { id: string } }
           </Card>
 
           <div className="flex justify-between items-center mb-4">
-            <h3 className="text-2xl font-bold">List Materi</h3>
+            <h3 className="text-2xl font-bold">Daftar Materi</h3>
             <Button onClick={() => router.push(`/admin/materi/create?pelajaranId=${getPelajaran.pelajaran.id}&namaPelajaran=${getPelajaran.pelajaran.nama_pelajaran}`)}>
               Tambah Materi
             </Button>
@@ -120,7 +120,7 @@ export default function PelajaranPageById({ params }: { params: { id: string } }
           )}
 
           <div className="flex justify-between items-center mb-4 mt-8">
-            <h3 className="text-2xl font-bold">List Tugas</h3>
+            <h3 className="text-2xl font-bold">Daftar Tugas</h3>
             <Button onClick={() => router.push(`/admin/tugas/create?pelajaranId=${getPelajaran.pelajaran.id}&namaPelajaran=${getPelajaran.pelajaran.nama_pelajaran}`)}>
               Tambah Tugas
             </Button>

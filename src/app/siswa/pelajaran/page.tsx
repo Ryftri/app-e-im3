@@ -44,7 +44,7 @@ export default function PelajaranPage() {
 
   return (
     <>
-      <h1 className="text-2xl font-bold">List Pelajaran</h1>
+      <h1 className="text-2xl font-bold">Daftar Pelajaran</h1>
 
       {/* Dashboard Pelajaran */}
       <PelajaranDashboardSiswa

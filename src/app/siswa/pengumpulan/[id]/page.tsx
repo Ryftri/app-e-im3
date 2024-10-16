@@ -72,6 +72,15 @@ export default function PengumpulanPageById({ params }: { params: { id: string }
                             <p><strong>Dibuka pada:</strong> {moment.tz(getPengumpulan.pengumpulan.tugas.openIn, 'Asia/Jakarta').locale('id').format('DD MMMM YYYY, HH:mm')}</p>
                             <p><strong>Batas Waktu:</strong> {moment.tz(getPengumpulan.pengumpulan.tugas.deadline, 'Asia/Jakarta').locale('id').format('DD MMMM YYYY, HH:mm')}</p>
                         </div>
+
+                        <div className="mt-6">
+                            <h3 className="text-lg font-semibold">Nilai Pengumpulan</h3>
+                            {getPengumpulan.pengumpulan.nilai ? (
+                                <p><strong>Nilai:</strong> {getPengumpulan?.pengumpulan.nilai.nilai}</p>
+                            ) : (
+                                <p>Pengumpulan ini belum dinilai.</p>
+                            )}
+                        </div>
                     </Card>
                 </div>
             ) : (

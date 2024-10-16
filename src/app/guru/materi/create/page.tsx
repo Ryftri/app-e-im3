@@ -64,7 +64,7 @@ const TambahMateri = () => {
   return (
     <>
       <form onSubmit={handleSubmit} className="max-w-lg mx-auto p-5 space-y-4">
-        <h2 className="text-2xl font-bold">Tambah Materi</h2>
+        <h2 className="text-2xl font-bold">Form Tambah Materi</h2>
 
         {errorMessage && (
           <Alert color="failure" onDismiss={() => setErrorMessage('')}>
@@ -127,7 +127,7 @@ const TambahMateri = () => {
 
         <Button type="submit" className="bg-blue-500 text-white" disabled={isLoadingCreateMateri}>
           {isLoadingCreateMateri ? 
-            <Spinner/> : "Tambah Materi"
+            <Spinner/> : "Simpan Materi"
           }
         </Button>
       </form>

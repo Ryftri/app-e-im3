@@ -32,7 +32,7 @@ export default function ListSiswaAdminPage() {
     return (
         <>
             <div className="flex justify-between items-center mb-4">
-                <h1 className="text-2xl font-bold">List Siswa</h1>
+                <h1 className="text-2xl font-bold">Daftar Siswa</h1>
                 <Button onClick={() => router.push('/admin/siswa/create')}>
                     Tambah Siswa
                 </Button>
