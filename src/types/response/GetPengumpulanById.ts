@@ -23,12 +23,21 @@ export interface Pengumpulan {
     updatedAt:          Date;
     pengumpul:          Pengumpul;
     tugas:              Tugas;
+    nilai:              Nilai | null;
 }
 
 export interface File {
     fileUrl:      string;
     fileName:     string;
     originalName: string;
+}
+
+export interface Nilai {
+    id:            number;
+    pengumpulanId: number;
+    nilai:         number;
+    createdAt:     Date;
+    updatedAt:     Date;
 }
 
 export interface Pengumpul {
@@ -232,11 +241,19 @@ const typeMap: any = {
         { json: "updatedAt", js: "updatedAt", typ: Date },
         { json: "pengumpul", js: "pengumpul", typ: r("Pengumpul") },
         { json: "tugas", js: "tugas", typ: r("Tugas") },
+        { json: "nilai", js: "nilai", typ: u(r("Nilai"), null) },
     ], false),
     "File": o([
         { json: "fileUrl", js: "fileUrl", typ: "" },
         { json: "fileName", js: "fileName", typ: "" },
         { json: "originalName", js: "originalName", typ: "" },
+    ], false),
+    "Nilai": o([
+        { json: "id", js: "id", typ: 0 },
+        { json: "pengumpulanId", js: "pengumpulanId", typ: 0 },
+        { json: "nilai", js: "nilai", typ: 0 },
+        { json: "createdAt", js: "createdAt", typ: Date },
+        { json: "updatedAt", js: "updatedAt", typ: Date },
     ], false),
     "Pengumpul": o([
         { json: "id", js: "id", typ: 0 },
