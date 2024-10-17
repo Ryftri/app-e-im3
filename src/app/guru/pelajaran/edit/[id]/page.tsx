@@ -154,7 +154,7 @@ export default function EditPelajaranPage({ params }: { params: { id: string } }
                     disabled
                     required
                 />
-                <Button onClick={handleOpenSekolahModal} className="ml-2">Pilih Sekolah</Button>
+                {/* <Button onClick={handleOpenSekolahModal} className="ml-2">Pilih Sekolah</Button> */}
                 </div>
             </div>
 
@@ -171,7 +171,7 @@ export default function EditPelajaranPage({ params }: { params: { id: string } }
                     disabled
                     required
                 />
-                {/* <Button onClick={handleOpenJenjangModal} className="ml-2">Pilih Jenjang</Button> */}
+                <Button onClick={handleOpenJenjangModal} className="ml-2">Pilih Jenjang</Button>
                 </div>
             </div>
 
