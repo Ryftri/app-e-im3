@@ -14,7 +14,7 @@ export default function SiswaDetailPage({ params }: { params: { id: string } }) 
         id: Number(id),
         authorization: `Bearer ${getCookie('refreshToken')}`
     });
-    const [deleteGuru, { isLoading: isLoadingDelete }] = useUserControllerDeleteMutation();
+    const [deleteSiswa, { isLoading: isLoadingDelete }] = useUserControllerDeleteMutation();
     const router = useRouter();
 
     const [toast, setToast] = useState<ToastNotificationProps | null>(null);
@@ -25,20 +25,20 @@ export default function SiswaDetailPage({ params }: { params: { id: string } }) 
 
     const handleDelete = async () => {
         try {
-            await deleteGuru({
+            await deleteSiswa({
                 id: Number(id),
                 authorization: `Bearer ${getCookie('refreshToken')}`
             }).unwrap();
             setToast({
-                message: "Guru berhasil dihapus!",
+                message: "Siswa berhasil dihapus!",
                 type: "success",
                 onClose: () => setToast(null),
             });
             router.back(); // Redirect setelah menghapus
         } catch (err) {
-            console.error("Failed to delete guru:", err);
+            console.error("Failed to delete siswa:", err);
             setToast({
-                message: "Terjadi kesalahan saat menghapus guru.",
+                message: "Terjadi kesalahan saat menghapus siswa.",
                 type: "error",
                 onClose: () => setToast(null),
             });
@@ -55,7 +55,7 @@ export default function SiswaDetailPage({ params }: { params: { id: string } }) 
 
     return (
         <div className="p-4">
-            <h1 className="text-2xl font-bold mb-4">Detail Guru</h1>
+            <h1 className="text-2xl font-bold mb-4">Detail Siswa</h1>
             <Card>
                 <h5 className="text-xl font-bold">{data?.siswa.nama_lengkap}</h5>
                 <p className="mt-2"><strong>Username:</strong> {data?.siswa.username}</p>
